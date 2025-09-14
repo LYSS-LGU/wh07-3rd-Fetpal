@@ -1,0 +1,37 @@
+# Fetpal 3차 프로젝트 문서 - Git 제외 목록
+
+# 발표 전략 및 내부 자료
+07_발표전략_및_추가자료.md
+*_발표*
+*_전략*
+*_내부*
+
+# 개인 메모 및 초안
+*_draft*
+*_메모*
+*_todo*
+
+# 백업 파일들
+docs/*_backup*
+assets/*_backup*
+
+# 임시 파일들
+*.tmp
+*.bak
+*~
+
+# 시스템 파일들
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE 파일들  
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 학원 제출용이 아닌 개발 관련 파일들
+node_modules/
+.env*
+*.log

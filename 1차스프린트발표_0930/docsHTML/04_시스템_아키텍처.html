@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fetpal 시스템 아키텍처</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <style>
+      @media print {
+        body {
+          margin: 0;
+          font-size: 12px;
+        }
+        .page-break {
+          page-break-before: always;
+        }
+        .no-print {
+          display: none;
+        }
+      }
+      body {
+        font-family: "Malgun Gothic", Arial, sans-serif;
+        line-height: 1.6;
+        margin: 20px;
+        color: #333;
+        font-size: 13px;
+      }
+      .header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding: 15px;
+        border-bottom: 3px solid #fdcb6e;
+      }
+      h1 {
+        color: #2c3e50;
+        font-size: 22px;
+        margin-bottom: 10px;
+      }
+      h2 {
+        color: #2d3436;
+        border-left: 4px solid #fdcb6e;
+        padding-left: 15px;
+        margin-top: 25px;
+        font-size: 16px;
+        background-color: #dfe6e9;
+        padding: 10px 15px;
+      }
+      h3 {
+        color: #2c3e50;
+        margin-top: 20px;
+        font-size: 14px;
+      }
+      h4 {
+        color: #7f8c8d;
+        margin-top: 15px;
+        font-size: 13px;
+      }
+      .overview-box {
+        background-color: #fff3cd;
+        border: 1px solid #ffc107;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 15px 0;
+      }
+      .mermaid-placeholder {
+        background-color: #e8f4f8;
+        border: 2px dashed #3498db;
+        border-radius: 8px;
+        padding: 40px;
+        margin: 20px 0;
+        text-align: center;
+        color: #2c3e50;
+      }
+      .component-box {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 15px 0;
+      }
+      .frontend-box {
+        background-color: #d1ecf1;
+        border-left: 4px solid #17a2b8;
+        padding: 15px;
+        margin: 10px 0;
+      }
+      .backend-box {
+        background-color: #d4edda;
+        border-left: 4px solid #28a745;
+        padding: 15px;
+        margin: 10px 0;
+      }
+      .external-box {
+        background-color: #f8d7da;
+        border-left: 4px solid #dc3545;
+        padding: 15px;
+        margin: 10px 0;
+      }
+      .data-flow-box {
+        background-color: #e2e3e5;
+        border: 1px solid #6c757d;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 15px 0;
+      }
+      ul,
+      ol {
+        margin: 8px 0;
+        padding-left: 20px;
+      }
+      li {
+        margin: 3px 0;
+      }
+      .footer {
+        text-align: center;
+        margin-top: 30px;
+        padding-top: 15px;
+        border-top: 1px solid #dee2e6;
+        color: #7f8c8d;
+        font-size: 11px;
+      }
+      .tech-stack {
+        background-color: #667eea;
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 15px 0;
+      }
+      strong {
+        color: #2c3e50;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>🐾 Fetpal 시스템 아키텍처</h1>
+      <p><strong>LGU+ why not camp 7기 3차 프로젝트</strong></p>
+    </div>
+
+    <h2>1. 시스템 개요</h2>
+
+    <div class="overview-box">
+      <p>
+        <strong>Fetpal 플랫폼</strong>은 최신 웹 기술과 AI 모델, 그리고 강력한
+        백엔드 서비스를 결합한
+        <strong
+          >MSA(Microservice Architecture) 기반의 클라이언트-서버
+          아키텍처</strong
+        >를 채택합니다.
+      </p>
+
+      <p>
+        사용자는 Next.js로 구축된 웹 애플리케이션과 상호작용하며, 데이터와
+        비즈니스 로직은 Supabase BaaS와 별도의 Python AI 서버에서 처리됩니다.
+      </p>
+    </div>
+
+    <h2>2. 아키텍처 다이어그램</h2>
+
+    <!-- prettier-ignore-start -->
+    <!-- beautify ignore:start -->
+    <pre class="mermaid">
+graph TD
+    subgraph "사용자 영역"
+        A["사용자 (웹 브라우저)"]
+    end
+
+    subgraph "프론트엔드 (Vercel)"
+        B["Next.js / React 앱"]
+    end
+
+    subgraph "백엔드 서비스"
+        C["Supabase BaaS"]
+        D["Python AI 서버 (FastAPI)"]
+    end
+
+    subgraph "Supabase 내부"
+        C1["Authentication"]
+        C2["PostgreSQL DB"]
+        C3["Storage"]
+        C4["Realtime"]
+    end
+
+    subgraph "AI 서버 내부"
+        D1["API Endpoint (/analyze)"]
+        D2["YOLO & OpenCV 모델"]
+        D3["RAG/LLM 모듈"]
+    end
+
+    subgraph "외부 서비스 API"
+        E["LLM Provider"]
+        F["Kakao Map API"]
+        G["YouTube Data API"]
+    end
+
+    A -- HTTPS --> B
+
+    B -- "데이터 CRUD" --> C2
+    B -- "사용자 인증" --> C1
+    B -- "파일 업로드" --> C3
+    B -- "실시간 채팅" --> C4
+
+    B -- "이미지 분석 요청 (REST)" --> D1
+    B -- "지도/장소 요청 (REST)" --> F
+    B -- "영상 검색 요청 (REST)" --> G
+
+    D1 -- "모델 추론" --> D2
+    D1 -- "정보 생성" --> D3
+    D3 -- "API 호출" --> E
+    </pre>
+    <!-- beautify ignore:end -->
+    <!-- prettier-ignore-end -->
+
+    <div class="page-break"></div>
+
+    <h2>3. 구성 요소별 역할</h2>
+
+    <h3>3.1. 프론트엔드 (Client)</h3>
+
+    <div class="frontend-box">
+      <h4>🖥️ 기술 스택 및 역할</h4>
+      <ul>
+        <li><strong>기술 스택</strong>: Next.js (React)</li>
+        <li><strong>배포 환경</strong>: Vercel</li>
+      </ul>
+
+      <h4>📋 주요 역할</h4>
+      <ul>
+        <li>사용자 인터페이스(UI) 및 사용자 경험(UX) 제공</li>
+        <li>상태 관리, 라우팅 등 클라이언트 사이드 로직 처리</li>
+        <li>Supabase 및 AI 서버와 API 통신을 통해 데이터를 송수신</li>
+        <li>지도, 영상 등 외부 API 연동 결과를 사용자에게 시각화</li>
+      </ul>
+    </div>
+
+    <h3>3.2. 백엔드 (Backend)</h3>
+
+    <h4>3.2.1. Supabase (BaaS - Backend as a Service)</h4>
+
+    <div class="backend-box">
+      <h4>🔧 핵심 백엔드 인프라 제공</h4>
+
+      <p><strong>📊 PostgreSQL DB</strong></p>
+      <ul>
+        <li>
+          사용자, 반려동물, 커뮤니티, 플래너 등 모든 정형 데이터를 저장 및 관리
+        </li>
+        <li>47개의 RLS(Row Level Security) 정책으로 데이터 보안 강화</li>
+      </ul>
+
+      <p><strong>🔐 Authentication</strong></p>
+      <ul>
+        <li>이메일/소셜 로그인을 통한 사용자 인증 및 세션 관리</li>
+        <li>JWT 토큰 기반 보안 인증 시스템</li>
+      </ul>
+
+      <p><strong>📁 Storage</strong></p>
+      <ul>
+        <li>사용자가 업로드하는 모든 이미지 파일 저장</li>
+        <li>프로필, 분석용 사진, 게시글 이미지 등</li>
+        <li>CDN을 통한 빠른 이미지 제공</li>
+      </ul>
+
+      <p><strong>⚡ Realtime</strong></p>
+      <ul>
+        <li>커뮤니티 이벤트의 실시간 채팅 기능</li>
+        <li>WebSocket 기반 메시지 브로드캐스팅</li>
+      </ul>
+    </div>
+
+    <h4>3.2.2. Python AI 서버</h4>
+
+    <div class="backend-box">
+      <h4>🤖 AI 기반 임시진단 마이크로서비스</h4>
+
+      <div class="tech-stack">
+        <p><strong>기술 스택</strong>: FastAPI, PyTorch, YOLOv8, OpenCV</p>
+      </div>
+
+      <p><strong>🔌 API Endpoint</strong></p>
+      <ul>
+        <li>프론트엔드로부터 이미지 분석 요청을 받는 REST API 인터페이스</li>
+        <li>/analyze 엔드포인트를 통한 이미지 분석 서비스</li>
+      </ul>
+
+      <p><strong>🧠 AI 모델</strong></p>
+      <ul>
+        <li>YOLOv8과 OpenCV를 사용하여 이미지 내 객체(병변)를 탐지하고 분석</li>
+        <li>217,547개 이미지로 훈련된 검증된 모델</li>
+        <li>신뢰도, 정확도, 심각도 레벨 제공</li>
+      </ul>
+
+      <p><strong>💬 RAG/LLM 연동</strong></p>
+      <ul>
+        <li>분석 결과를 바탕으로 LLM Provider API를 호출</li>
+        <li>검증된 정보를 조합하여 대처 방안 및 추천 정보를 생성</li>
+        <li>수의사법을 준수하는 비진단적 소견 제공</li>
+      </ul>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h3>3.3. 외부 서비스 (3rd Party APIs)</h3>
+
+    <div class="external-box">
+      <h4>🌐 외부 API 연동 서비스</h4>
+
+      <p><strong>🤖 LLM Provider</strong></p>
+      <ul>
+        <li>OpenAI(GPT) 또는 Google(Gemini) 등의 대규모 언어 모델 API</li>
+        <li>RAG 모듈의 핵심 지능을 담당</li>
+        <li>검증된 수의학 지식 기반 답변 생성</li>
+      </ul>
+
+      <p><strong>🗺️ Kakao Map API</strong></p>
+      <ul>
+        <li>위치 기반 서비스(병원/매장 추천, 거리 계산)</li>
+        <li>지도 및 장소 데이터 제공</li>
+        <li>실시간 영업시간, 연락처 정보</li>
+      </ul>
+
+      <p><strong>📺 YouTube Data API</strong></p>
+      <ul>
+        <li>커뮤니티의 #해시태그와 연관된 동영상 검색</li>
+        <li>케어 방법, 전문가 설명 영상 임베드</li>
+        <li>교육적 콘텐츠 제공</li>
+      </ul>
+    </div>
+
+    <h2>4. 데이터 흐름 예시 (AI 임시진단)</h2>
+
+    <div class="data-flow-box">
+      <h3>🔄 AI 임시진단 데이터 흐름 과정</h3>
+
+      <ol>
+        <li>
+          <strong>사용자</strong>가 프론트엔드 앱에서 반려동물 사진을 업로드
+        </li>
+        <li>
+          <strong>프론트엔드</strong>는 먼저 이미지를 Supabase
+          <strong>Storage</strong>에 업로드하고, 반환된 이미지 URL을 확보
+        </li>
+        <li>
+          프론트엔드는 해당 이미지 URL을 포함하여 Python
+          <strong>AI 서버</strong>의 /analyze 엔드포인트로 API 요청
+        </li>
+        <li>
+          <strong>AI 서버</strong>는 URL의 이미지를 다운로드하여
+          <strong>YOLO/OpenCV 모델</strong>로 분석
+        </li>
+        <li>
+          분석 결과를 바탕으로 <strong>RAG 모듈</strong>이
+          <strong>LLM Provider</strong> API를 호출하여 상황 대처 방안 텍스트를
+          생성
+        </li>
+        <li>
+          AI 서버는 최종 분석 결과(바운딩 박스 좌표, 신뢰도, LLM 생성 텍스트
+          등)를 프론트엔드에 반환
+        </li>
+        <li><strong>프론트엔드</strong>는 결과를 사용자에게 시각적으로 표시</li>
+        <li>분석 기록은 Supabase <strong>PostgreSQL DB</strong>에 저장</li>
+      </ol>
+    </div>
+
+    <div class="component-box">
+      <h3>💡 아키텍처의 장점</h3>
+
+      <h4>🔧 MSA(Microservice Architecture) 이점</h4>
+      <ul>
+        <li>
+          <strong>독립적 확장</strong>: 각 서비스별로 독립적인 확장 및 업데이트
+          가능
+        </li>
+        <li>
+          <strong>기술 다양성</strong>: 각 서비스에 최적화된 기술 스택 선택
+        </li>
+        <li>
+          <strong>장애 격리</strong>: 한 서비스의 장애가 전체 시스템에 미치는
+          영향 최소화
+        </li>
+        <li><strong>개발 효율성</strong>: 팀별/기능별 독립적 개발 가능</li>
+      </ul>
+
+      <h4>🚀 성능 최적화</h4>
+      <ul>
+        <li>
+          <strong>CDN 활용</strong>: Supabase Storage를 통한 빠른 이미지 로딩
+        </li>
+        <li><strong>캐싱 전략</strong>: API 응답 캐싱으로 응답 시간 단축</li>
+        <li>
+          <strong>비동기 처리</strong>: AI 분석 중 사용자 경험 향상을 위한 로딩
+          상태 관리
+        </li>
+      </ul>
+
+      <h4>🔒 보안 강화</h4>
+      <ul>
+        <li><strong>RLS 정책</strong>: 47개의 세밀한 데이터 접근 제어</li>
+        <li><strong>JWT 인증</strong>: 안전한 사용자 세션 관리</li>
+        <li><strong>HTTPS 통신</strong>: 모든 데이터 전송 암호화</li>
+      </ul>
+    </div>
+
+    <div class="footer">
+      <p>
+        <strong>LGU+ why not camp 7기 3차 프로젝트 Fetpal 프로토타입</strong>
+      </p>
+      <p>Generated on: 2025년 9월 30일</p>
+    </div>
+
+    <script>
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "default",
+        flowchart: {
+          useMaxWidth: true,
+          htmlLabels: true,
+        },
+      });
+    </script>
+  </body>
+</html>

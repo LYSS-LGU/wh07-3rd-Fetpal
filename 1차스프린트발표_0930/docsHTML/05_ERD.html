@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fetpal ERD (Entity-Relationship Diagram)</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <style>
+      @media print {
+        body {
+          margin: 0;
+          font-size: 11px;
+        }
+        .page-break {
+          page-break-before: always;
+        }
+        .no-print {
+          display: none;
+        }
+      }
+      body {
+        font-family: "Malgun Gothic", Arial, sans-serif;
+        line-height: 1.5;
+        margin: 20px;
+        color: #333;
+        font-size: 12px;
+      }
+      .header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding: 15px;
+        border-bottom: 3px solid #00b894;
+      }
+      h1 {
+        color: #2c3e50;
+        font-size: 22px;
+        margin-bottom: 10px;
+      }
+      h2 {
+        color: #2d3436;
+        border-left: 4px solid #00b894;
+        padding-left: 15px;
+        margin-top: 25px;
+        font-size: 16px;
+        background-color: #dfe6e9;
+        padding: 10px 15px;
+      }
+      h3 {
+        color: #2c3e50;
+        margin-top: 20px;
+        font-size: 14px;
+      }
+      .mermaid-placeholder {
+        background-color: #d1f2eb;
+        border: 2px dashed #00b894;
+        border-radius: 8px;
+        padding: 30px;
+        margin: 20px 0;
+        text-align: center;
+        color: #2d3436;
+      }
+      .table-section {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 15px 0;
+      }
+      .user-tables {
+        background-color: #e8f4fd;
+        border-left: 4px solid #74b9ff;
+      }
+      .pal-tables {
+        background-color: #fff9db;
+        border-left: 4px solid #fdcb6e;
+      }
+      .community-tables {
+        background-color: #f8f0ff;
+        border-left: 4px solid #a29bfe;
+      }
+
+      /* 표 스타일 */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0;
+        font-size: 12px;
+      }
+      table th,
+      table td {
+        border: 1px solid #dee2e6;
+        padding: 8px;
+        text-align: left;
+        vertical-align: top;
+      }
+      table th {
+        background-color: #00b894;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+      }
+      table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      /* ERD 테이블 스타일 */
+      .erd-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 10px 0;
+        font-size: 11px;
+      }
+      .erd-table th,
+      .erd-table td {
+        border: 1px solid #dee2e6;
+        padding: 6px;
+        text-align: left;
+      }
+      .erd-table th {
+        background-color: #636e72;
+        color: white;
+        font-weight: bold;
+      }
+      .erd-table .pk {
+        background-color: #fff3cd;
+        font-weight: bold;
+      }
+      .erd-table .fk {
+        background-color: #d1ecf1;
+        font-style: italic;
+      }
+      .planner-tables {
+        background-color: #d1f2eb;
+        border-left: 4px solid #00b894;
+      }
+      .file-tables {
+        background-color: #fff5f5;
+        border-left: 4px solid #ff7675;
+      }
+      .table-card {
+        background-color: white;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        padding: 12px;
+        margin: 10px 0;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+      .table-name {
+        font-weight: bold;
+        color: #2c3e50;
+        font-size: 14px;
+        margin-bottom: 8px;
+        border-bottom: 1px solid #dee2e6;
+        padding-bottom: 5px;
+      }
+      .field-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .field-list li {
+        padding: 2px 0;
+        font-size: 11px;
+        border-bottom: 1px dotted #eee;
+      }
+      .field-type {
+        color: #6c757d;
+        font-style: italic;
+      }
+      .field-constraint {
+        color: #dc3545;
+        font-weight: bold;
+        font-size: 10px;
+      }
+      .relationship-section {
+        background-color: #fff9db;
+        border: 1px solid #fdcb6e;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 15px 0;
+      }
+      .footer {
+        text-align: center;
+        margin-top: 30px;
+        padding-top: 15px;
+        border-top: 1px solid #dee2e6;
+        color: #7f8c8d;
+        font-size: 11px;
+      }
+      .overview-box {
+        background-color: #d1f2eb;
+        border: 1px solid #00b894;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 15px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>🐾 Fetpal ERD (Entity-Relationship Diagram)</h1>
+      <p><strong>LGU+ why not camp 7기 3차 프로젝트</strong></p>
+    </div>
+
+    <div class="overview-box">
+      <p><strong>📊 ERD 개요</strong></p>
+      <p>
+        Supabase PostgreSQL 스키마를 기반으로 작성된 ERD입니다. 총 5개 주요
+        영역으로 구성되어 있으며, 47개의 RLS(Row Level Security) 정책으로 데이터
+        보안을 강화했습니다.
+      </p>
+    </div>
+
+    <div style="text-align: center; margin: 20px 0">
+      <h3>🗄️ 전체 데이터베이스 ERD</h3>
+      <img
+        src="Fetpal_0930_ERD.png"
+        alt="Fetpal ERD Diagram"
+        style="
+          max-width: 100%;
+          height: auto;
+          border: 1px solid #dee2e6;
+          border-radius: 8px;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+          display: block;
+          margin: 0 auto;
+        "
+      />
+      <br /><br />
+      <div
+        style="
+          text-align: center;
+          max-width: 600px;
+          margin: 0 auto;
+          background-color: #dfe6e9;
+          padding: 15px;
+          border-radius: 5px;
+        "
+      >
+        <p><strong>5개 주요 영역</strong></p>
+        <p>
+          🔵 <strong>사용자 및 인증</strong>: auth.users, profiles,
+          profileCompletion
+        </p>
+        <p>
+          🟠 <strong>반려동물</strong>: palProfiles, palHealthRecords,
+          palVaccinations
+        </p>
+        <p>
+          🟣 <strong>커뮤니티</strong>: communityPosts, postComments, postLikes,
+          events
+        </p>
+        <p>🟢 <strong>플래너</strong>: plannerEvents, plannerExpenses</p>
+        <p>🔴 <strong>파일 메타데이터</strong>: file_metadata</p>
+      </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>1. 사용자 및 인증 (User & Auth)</h2>
+
+    <div class="table-section user-tables">
+      <h3>🔵 사용자 관련 테이블</h3>
+
+      <div class="table-card">
+        <div class="table-name">auth.users</div>
+        <ul class="field-list">
+          <li>
+            id <span class="field-type">UUID</span>
+            <span class="field-constraint">PK</span>
+          </li>
+          <li>email <span class="field-type">TEXT</span></li>
+          <li>createdAt <span class="field-type">TIMESTAMP</span></li>
+        </ul>
+      </div>
+
+      <div class="table-card">
+        <div class="table-name">profiles</div>
+        <ul class="field-list">
+          <li>
+            id <span class="field-type">UUID</span>
+            <span class="field-constraint">PK, FK</span>
+          </li>
+          <li>email <span class="field-type">TEXT</span></li>
+          <li>displayName <span class="field-type">TEXT</span></li>
+          <li>avatarUrl <span class="field-type">TEXT</span></li>
+          <li>phone <span class="field-type">TEXT</span></li>
+          <li>address <span class="field-type">TEXT</span></li>
+          <li>detailAddress <span class="field-type">TEXT</span></li>
+          <li>zipCode <span class="field-type">TEXT</span></li>
+          <li>profileComplete <span class="field-type">BOOLEAN</span></li>
+          <li>uploadedImages <span class="field-type">JSONB</span></li>
+          <li>createdAt <span class="field-type">TIMESTAMP</span></li>
+          <li>updatedAt <span class="field-type">TIMESTAMP</span></li>
+        </ul>
+      </div>
+
+      <div class="table-card">
+        <div class="table-name">profileCompletion</div>
+        <ul class="field-list">
+          <li>
+            userId <span class="field-type">UUID</span>
+            <span class="field-constraint">PK, FK</span>
+          </li>
+          <li>completionScore <span class="field-type">INTEGER</span></li>
+          <li>hasBasicInfo <span class="field-type">BOOLEAN</span></li>
+          <li>hasAvatar <span class="field-type">BOOLEAN</span></li>
+          <li>hasPalProfile <span class="field-type">BOOLEAN</span></li>
+          <li>lastCalculated <span class="field-type">TIMESTAMP</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>2. 반려동물 (Pal)</h2>
+
+    <div class="table-section pal-tables">
+      <h3>🟠 반려동물 관련 테이블</h3>
+
+      <div class="table-card">
+        <div class="table-name">palProfiles</div>
+        <ul class="field-list">
+          <li>
+            palId <span class="field-type">UUID</span>
+            <span class="field-constraint">PK</span>
+          </li>
+          <li>
+            userId <span class="field-type">UUID</span>
+            <span class="field-constraint">FK</span>
+          </li>
+          <li>palName <span class="field-type">TEXT</span></li>
+          <li>
+            palUniqueName <span class="field-type">TEXT</span>
+            <span class="field-constraint">UK</span>
+          </li>
+          <li>palSex <span class="field-type">TEXT</span></li>
+          <li>palBirthdate <span class="field-type">DATE</span></li>
+          <li>palBreed <span class="field-type">TEXT</span></li>
+          <li>palWeight <span class="field-type">DECIMAL</span></li>
+          <li>palProfileImage <span class="field-type">TEXT</span></li>
+          <li>isPrimary <span class="field-type">BOOLEAN</span></li>
+          <li>animalType <span class="field-type">TEXT</span></li>
+          <li>uploadedimages <span class="field-type">JSONB</span></li>
+          <li>createdAt <span class="field-type">TIMESTAMP</span></li>
+          <li>updatedAt <span class="field-type">TIMESTAMP</span></li>
+        </ul>
+      </div>
+
+      <div class="table-card">
+        <div class="table-name">palHealthRecords</div>
+        <ul class="field-list">
+          <li>
+            id <span class="field-type">UUID</span>
+            <span class="field-constraint">PK</span>
+          </li>
+          <li>
+            palId <span class="field-type">UUID</span>
+            <span class="field-constraint">FK</span>
+          </li>
+          <li>recordType <span class="field-type">TEXT</span></li>
+          <li>recordDate <span class="field-type">DATE</span></li>
+          <li>title <span class="field-type">TEXT</span></li>
+          <li>description <span class="field-type">TEXT</span></li>
+          <li>nextSchedule <span class="field-type">DATE</span></li>
+        </ul>
+      </div>
+
+      <div class="table-card">
+        <div class="table-name">vaccinationTypes</div>
+        <ul class="field-list">
+          <li>
+            id <span class="field-type">INTEGER</span>
+            <span class="field-constraint">PK</span>
+          </li>
+          <li>animalType <span class="field-type">TEXT</span></li>
+          <li>vaccineName <span class="field-type">TEXT</span></li>
+          <li>vaccineCode <span class="field-type">TEXT</span></li>
+          <li>isRequired <span class="field-type">BOOLEAN</span></li>
+          <li>totalShots <span class="field-type">INTEGER</span></li>
+        </ul>
+      </div>
+
+      <div class="table-card">
+        <div class="table-name">palVaccinations</div>
+        <ul class="field-list">
+          <li>
+            id <span class="field-type">UUID</span>
+            <span class="field-constraint">PK</span>
+          </li>
+          <li>
+            palId <span class="field-type">UUID</span>
+            <span class="field-constraint">FK</span>
+          </li>
+          <li>
+            vaccinationTypeId <span class="field-type">INTEGER</span>
+            <span class="field-constraint">FK</span>
+          </li>
+          <li>shotNumber <span class="field-type">INTEGER</span></li>
+          <li>scheduledDate <span class="field-type">DATE</span></li>
+          <li>actualDate <span class="field-type">DATE</span></li>
+          <li>isCompleted <span class="field-type">BOOLEAN</span></li>
+          <li>nextDueDate <span class="field-type">DATE</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>3. 커뮤니티 (Community)</h2>
+
+    <div class="table-section community-tables">
+      <h3>🟣 커뮤니티 관련 테이블</h3>
+
+      <div class="table-card">
+        <div class="table-name">communityPosts</div>
+        <ul class="field-list">
+          <li>
+            id <span class="field-type">UUID</span>
+            <span class="field-constraint">PK</span>
+          </li>
+          <li>
+            userId <span class="field-type">UUID</span>
+            <span class="field-constraint">FK</span>
+          </li>
+          <li>authorType <span class="field-type">TEXT</span></li>
+          <li>authorId <span class="field-type">UUID</span></li>
+          <li>title <span class="field-type">TEXT</span></li>
+          <li>content <span class="field-type">TEXT</span></li>
+          <li>postImages <span class="field-type">TEXT[]</span></li>
+          <li>likes <span class="field-type">INTEGER</span></li>
+          <li>commentsCount <span class="field-type">INTEGER</span></li>
+          <li>createdAt <span class="field-type">TIMESTAMP</span></li>
+        </ul>
+      </div>
+
+      <div class="table-card">
+        <div class="table-name">postTags</div>
+        <ul class="field-list">
+          <li>
+            postId <span class="field-type">UUID</span>
+            <span class="field-constraint">PK, FK</span>
+          </li>
+          <li>
+            tagName <span class="field-type">VARCHAR</span>
+            <span class="field-constraint">PK, FK</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="table-card">
+        <div class="table-name">popularTags</div>
+        <ul class="field-list">
+          <li>
+            tagName <span class="field-type">VARCHAR</span>
+            <span class="field-constraint">PK</span>
+          </li>
+          <li>usageCount <span class="field-type">INTEGER</span></li>
+          <li>isRecommended <span class="field-type">BOOLEAN</span></li>
+        </ul>
+      </div>
+
+      <div class="table-card">
+        <div class="table-name">postLikes</div>
+        <ul class="field-list">
+          <li>
+            id <span class="field-type">UUID</span>
+            <span class="field-constraint">PK</span>
+          </li>
+          <li>
+            postId <span class="field-type">UUID</span>
+            <span class="field-constraint">FK</span>
+          </li>
+          <li>
+            userId <span class="field-type">UUID</span>
+            <span class="field-constraint">FK</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="table-card">
+        <div class="table-name">postComments</div>
+        <ul class="field-list">
+          <li>
+            id <span class="field-type">UUID</span>
+            <span class="field-constraint">PK</span>
+          </li>
+          <li>
+            postId <span class="field-type">UUID</span>
+            <span class="field-constraint">FK</span>
+          </li>
+          <li>
+            userId <span class="field-type">UUID</span>
+            <span class="field-constraint">FK</span>
+          </li>
+          <li>content <span class="field-type">TEXT</span></li>
+          <li>
+            parentCommentId <span class="field-type">UUID</span>
+            <span class="field-constraint">FK</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="table-card">
+        <div class="table-name">communityEvents</div>
+        <ul class="field-list">
+          <li>
+            id <span class="field-type">UUID</span>
+            <span class="field-constraint">PK</span>
+          </li>
+          <li>
+            userId <span class="field-type">UUID</span>
+            <span class="field-constraint">FK</span>
+          </li>
+          <li>title <span class="field-type">TEXT</span></li>
+          <li>eventDate <span class="field-type">TIMESTAMP</span></li>
+          <li>location <span class="field-type">TEXT</span></li>
+          <li>maxParticipants <span class="field-type">INTEGER</span></li>
+        </ul>
+      </div>
+
+      <div class="table-card">
+        <div class="table-name">eventParticipants</div>
+        <ul class="field-list">
+          <li>
+            id <span class="field-type">UUID</span>
+            <span class="field-constraint">PK</span>
+          </li>
+          <li>
+            eventId <span class="field-type">UUID</span>
+            <span class="field-constraint">FK</span>
+          </li>
+          <li>
+            userId <span class="field-type">UUID</span>
+            <span class="field-constraint">FK</span>
+          </li>
+          <li>status <span class="field-type">TEXT</span></li>
+        </ul>
+      </div>
+
+      <div class="table-card">
+        <div class="table-name">eventChat</div>
+        <ul class="field-list">
+          <li>
+            id <span class="field-type">UUID</span>
+            <span class="field-constraint">PK</span>
+          </li>
+          <li>
+            eventId <span class="field-type">UUID</span>
+            <span class="field-constraint">FK</span>
+          </li>
+          <li>
+            userId <span class="field-type">UUID</span>
+            <span class="field-constraint">FK</span>
+          </li>
+          <li>content <span class="field-type">TEXT</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>4. 플래너 (Planner)</h2>
+
+    <div class="table-section planner-tables">
+      <h3>🟢 플래너 관련 테이블</h3>
+
+      <div class="table-card">
+        <div class="table-name">plannerEvents</div>
+        <ul class="field-list">
+          <li>
+            id <span class="field-type">UUID</span>
+            <span class="field-constraint">PK</span>
+          </li>
+          <li>
+            userId <span class="field-type">UUID</span>
+            <span class="field-constraint">FK</span>
+          </li>
+          <li>
+            palId <span class="field-type">UUID</span>
+            <span class="field-constraint">FK</span>
+          </li>
+          <li>title <span class="field-type">TEXT</span></li>
+          <li>eventDate <span class="field-type">DATE</span></li>
+          <li>eventType <span class="field-type">TEXT</span></li>
+          <li>priority <span class="field-type">TEXT</span></li>
+          <li>isCompleted <span class="field-type">BOOLEAN</span></li>
+        </ul>
+      </div>
+
+      <div class="table-card">
+        <div class="table-name">plannerExpenses</div>
+        <ul class="field-list">
+          <li>
+            id <span class="field-type">UUID</span>
+            <span class="field-constraint">PK</span>
+          </li>
+          <li>
+            userId <span class="field-type">UUID</span>
+            <span class="field-constraint">FK</span>
+          </li>
+          <li>
+            palId <span class="field-type">UUID</span>
+            <span class="field-constraint">FK</span>
+          </li>
+          <li>title <span class="field-type">TEXT</span></li>
+          <li>amount <span class="field-type">DECIMAL</span></li>
+          <li>expenseDate <span class="field-type">DATE</span></li>
+          <li>category <span class="field-type">TEXT</span></li>
+        </ul>
+      </div>
+
+      <div class="table-card">
+        <div class="table-name">plannerEventTags</div>
+        <ul class="field-list">
+          <li>
+            eventId <span class="field-type">UUID</span>
+            <span class="field-constraint">PK, FK</span>
+          </li>
+          <li>
+            tagName <span class="field-type">VARCHAR</span>
+            <span class="field-constraint">PK, FK</span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="table-card">
+        <div class="table-name">plannerExpenseTags</div>
+        <ul class="field-list">
+          <li>
+            expenseId <span class="field-type">UUID</span>
+            <span class="field-constraint">PK, FK</span>
+          </li>
+          <li>
+            tagName <span class="field-type">VARCHAR</span>
+            <span class="field-constraint">PK, FK</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>5. 파일 메타데이터 (File Metadata)</h2>
+
+    <div class="table-section file-tables">
+      <h3>🔴 파일 관련 테이블</h3>
+
+      <div class="table-card">
+        <div class="table-name">file_metadata</div>
+        <ul class="field-list">
+          <li>
+            id <span class="field-type">UUID</span>
+            <span class="field-constraint">PK</span>
+          </li>
+          <li>file_url <span class="field-type">TEXT</span></li>
+          <li>file_path <span class="field-type">TEXT</span></li>
+          <li>
+            uploaded_by <span class="field-type">UUID</span>
+            <span class="field-constraint">FK</span>
+          </li>
+          <li>entity_type <span class="field-type">TEXT</span></li>
+          <li>entity_id <span class="field-type">UUID</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>6. 주요 관계 (Relationships)</h2>
+
+    <div class="erd_relationship-section">
+      <h3>🔗 테이블 간 주요 관계</h3>
+
+      <h4>👤 사용자 중심 관계</h4>
+      <ul>
+        <li>
+          <strong>auth.users</strong> ↔ <strong>profiles</strong> (1:1) - 사용자
+          기본 정보
+        </li>
+        <li>
+          <strong>auth.users</strong> ↔ <strong>profileCompletion</strong> (1:1)
+          - 프로필 완성도 추적
+        </li>
+        <li>
+          <strong>auth.users</strong> ↔ <strong>palProfiles</strong> (1:N) -
+          사용자가 여러 반려동물 소유
+        </li>
+      </ul>
+
+      <h4>🐾 반려동물 중심 관계</h4>
+      <ul>
+        <li>
+          <strong>palProfiles</strong> ↔ <strong>palHealthRecords</strong> (1:N)
+          - 반려동물별 건강 기록
+        </li>
+        <li>
+          <strong>palProfiles</strong> ↔ <strong>palVaccinations</strong> (1:N)
+          - 반려동물별 예방접종 기록
+        </li>
+        <li>
+          <strong>vaccinationTypes</strong> ↔
+          <strong>palVaccinations</strong> (1:N) - 백신 종류별 접종 기록
+        </li>
+      </ul>
+
+      <h4>💬 커뮤니티 중심 관계</h4>
+      <ul>
+        <li>
+          <strong>communityPosts</strong> ↔ <strong>postComments</strong> (1:N)
+          - 게시글별 댓글
+        </li>
+        <li>
+          <strong>communityPosts</strong> ↔ <strong>postLikes</strong> (1:N) -
+          게시글별 좋아요
+        </li>
+        <li>
+          <strong>communityPosts</strong> ↔ <strong>postTags</strong> (N:M) -
+          게시글과 해시태그
+        </li>
+        <li>
+          <strong>communityEvents</strong> ↔
+          <strong>eventParticipants</strong> (1:N) - 이벤트 참가자
+        </li>
+      </ul>
+
+      <h4>📅 플래너 중심 관계</h4>
+      <ul>
+        <li>
+          <strong>plannerEvents</strong> ↔
+          <strong>plannerEventTags</strong> (N:M) - 일정과 태그
+        </li>
+        <li>
+          <strong>plannerExpenses</strong> ↔
+          <strong>plannerExpenseTags</strong> (N:M) - 지출과 태그
+        </li>
+        <li><strong>popularTags</strong> - 모든 태그 테이블의 참조 테이블</li>
+      </ul>
+    </div>
+
+    <div class="overview-box">
+      <h3>🔒 보안 및 성능 특징</h3>
+      <ul>
+        <li>
+          <strong>RLS 정책</strong>: 47개의 세밀한 Row Level Security 정책으로
+          데이터 보안 강화
+        </li>
+        <li>
+          <strong>인덱스 최적화</strong>: 주요 검색 필드에 인덱스 적용으로 성능
+          향상
+        </li>
+        <li><strong>정규화</strong>: 3NF까지 정규화하여 데이터 중복 최소화</li>
+        <li>
+          <strong>트리거 함수</strong>: 자동 타임스탬프 업데이트, 프로필 완성도
+          계산 등
+        </li>
+        <li>
+          <strong>제약 조건</strong>: 데이터 무결성을 위한 다양한 제약 조건 적용
+        </li>
+      </ul>
+    </div>
+
+    <div class="footer">
+      <p>
+        <strong>LGU+ why not camp 7기 3차 프로젝트 Fetpal 프로토타입</strong>
+      </p>
+      <p>Generated on: 2025년 9월 30일</p>
+    </div>
+
+    <script>
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "default",
+        flowchart: {
+          useMaxWidth: true,
+          htmlLabels: true,
+        },
+      });
+    </script>
+  </body>
+</html>

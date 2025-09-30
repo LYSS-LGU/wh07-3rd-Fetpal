@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fetpal: AI 기반 반려동물 통합 케어 플랫폼</title>
+    <style>
+      @media print {
+        body {
+          margin: 0;
+          font-size: 11px;
+        }
+        .page-break {
+          page-break-before: always;
+        }
+        .no-print {
+          display: none;
+        }
+      }
+      body {
+        font-family: "Malgun Gothic", Arial, sans-serif;
+        line-height: 1.6;
+        margin: 20px;
+        color: #333;
+        font-size: 12px;
+      }
+      .header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding: 20px;
+        border-bottom: 3px solid #636e72;
+      }
+      h1 {
+        color: #2c3e50;
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+      h2 {
+        color: #2d3436;
+        border-left: 4px solid #74b9ff;
+        padding-left: 15px;
+        margin-top: 25px;
+        font-size: 16px;
+        background-color: #dfe6e9;
+        padding: 10px 15px;
+      }
+      h3 {
+        color: #2c3e50;
+        margin-top: 20px;
+        font-size: 14px;
+      }
+      h4 {
+        color: #7f8c8d;
+        margin-top: 15px;
+        font-size: 13px;
+      }
+      .team-profile {
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 20px 0;
+        text-align: center;
+      }
+      .profile-image {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        margin: 0 auto 15px;
+        background-color: #e9ecef;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 48px;
+      }
+      .contact-links {
+        margin: 10px 0;
+      }
+      .contact-links a {
+        text-decoration: none;
+        color: #3498db;
+        margin: 0 5px;
+      }
+      .role-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0;
+        font-size: 11px;
+      }
+      .role-table th,
+      .role-table td {
+        border: 1px solid #dee2e6;
+        padding: 8px;
+        text-align: center;
+      }
+      .role-table th {
+        background-color: #74b9ff;
+        color: white;
+        font-weight: bold;
+      }
+      .role-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+      .docs-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0;
+        font-size: 11px;
+      }
+      .docs-table th,
+      .docs-table td {
+        border: 1px solid #dee2e6;
+        padding: 8px;
+        text-align: left;
+      }
+      .docs-table th {
+        background-color: #636e72;
+        color: white;
+        font-weight: bold;
+      }
+      .problem-box {
+        background-color: #fff9db;
+        border: 1px solid #fdcb6e;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 15px 0;
+      }
+      .solution-box {
+        background-color: #d1f2eb;
+        border: 1px solid #00b894;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 15px 0;
+      }
+      .feature-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0;
+        font-size: 11px;
+      }
+      .feature-table th,
+      .feature-table td {
+        border: 1px solid #dee2e6;
+        padding: 8px;
+        text-align: left;
+        vertical-align: top;
+      }
+      .feature-table th {
+        background-color: #00b894;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+      }
+      .feature-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+      .tech-badge {
+        display: inline-block;
+        background-color: #74b9ff;
+        color: white;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-size: 10px;
+        margin: 2px;
+      }
+      .mermaid-placeholder {
+        background-color: #e8f4fd;
+        border: 2px dashed #74b9ff;
+        border-radius: 8px;
+        padding: 30px;
+        margin: 20px 0;
+        text-align: center;
+        color: #2d3436;
+      }
+      .phase-status {
+        background-color: #f1f3f4;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 15px 0;
+      }
+      .footer {
+        text-align: center;
+        margin-top: 30px;
+        padding-top: 15px;
+        border-top: 1px solid #dee2e6;
+        color: #7f8c8d;
+        font-size: 11px;
+      }
+      ul,
+      ol {
+        margin: 8px 0;
+        padding-left: 20px;
+      }
+      li {
+        margin: 3px 0;
+      }
+      .quote-box {
+        background-color: #e8f4fd;
+        border-left: 4px solid #74b9ff;
+        padding: 15px;
+        margin: 15px 0;
+        font-style: italic;
+      }
+      strong {
+        color: #2c3e50;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>🐾 Fetpal: AI 기반 반려동물 통합 케어 플랫폼</h1>
+      <p><strong>LGU+ why not camp 7기 3차 프로젝트</strong></p>
+      <p>프로젝트 기간: 2025.09.19 ~ 2025.11.20</p>
+    </div>
+
+    <h2>🐾 프로젝트 팀원 소개</h2>
+
+    <div class="team-profile">
+      <img
+        src="/assets/p3_profile.png"
+        alt="Profile Image"
+        style="
+          width: 120px;
+          height: 120px;
+          border-radius: 50%;
+          margin: 0 auto 15px;
+          display: block;
+          object-fit: cover;
+          border: 3px solid #74b9ff;
+        "
+      />
+      <h3><strong>이유석</strong></h3>
+      <p><strong>역할</strong>: 1인 개발자</p>
+      <p>
+        <em>"하나씩 배워가며 만드는 첫 작품, 혼자여도 포기하지 않는 마음!"</em>
+      </p>
+
+      <div class="contact-links">
+        <strong>Contact Me:</strong><br />
+        <a href="https://github.com/LYSS-LGU">GitHub</a> |
+        <a href="mailto:leeyss1991@gmail.com">Gmail</a> |
+        <a href="mailto:lyss91@naver.com">Naver</a>
+      </div>
+    </div>
+
+    <h3>👨‍💻 담당 업무</h3>
+
+    <table class="role-table">
+      <thead>
+        <tr>
+          <th>영역</th>
+          <th>기술 스택</th>
+          <th>세부 내용</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>기획</strong></td>
+          <td>프로젝트 매니지먼트</td>
+          <td>요구사항 분석, WBS 작성, 시스템 설계</td>
+        </tr>
+        <tr>
+          <td><strong>Frontend</strong></td>
+          <td>Next.js, React, TypeScript</td>
+          <td>사용자 인터페이스, 반응형 웹, 상태 관리</td>
+        </tr>
+        <tr>
+          <td><strong>Backend</strong></td>
+          <td>Supabase, FastAPI, PostgreSQL</td>
+          <td>데이터베이스 설계, API 개발, 인증 시스템</td>
+        </tr>
+        <tr>
+          <td><strong>AI/ML</strong></td>
+          <td>YOLOv8, OpenCV, PyTorch</td>
+          <td>이미지 분석, 객체 탐지, 모델 학습</td>
+        </tr>
+        <tr>
+          <td><strong>기타</strong></td>
+          <td>UI/UX, 아키텍처</td>
+          <td>디자인 시스템, 시스템 아키텍처 설계</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>📋 프로젝트 문서</h2>
+
+    <div class="quote-box">
+      <strong>📁 Github docs 폴더</strong>에서 상세한 프로젝트 문서를 확인할 수
+      있습니다.
+    </div>
+
+    <table class="docs-table">
+      <thead>
+        <tr>
+          <th>문서명</th>
+          <th>설명</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>02_WBS.md</strong></td>
+          <td>작업 분해 구조 및 일정 계획</td>
+        </tr>
+        <tr>
+          <td><strong>03_시스템_흐름도.md</strong></td>
+          <td>시스템 프로세스 및 데이터 흐름</td>
+        </tr>
+        <tr>
+          <td><strong>04_시스템_아키텍처.md</strong></td>
+          <td>기술 스택 및 시스템 구조</td>
+        </tr>
+        <tr>
+          <td><strong>05_ERD.md</strong></td>
+          <td>데이터베이스 설계 및 관계도</td>
+        </tr>
+        <tr>
+          <td><strong>06_요구사항_정의서.md</strong></td>
+          <td>기능적/비기능적 요구사항</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="page-break"></div>
+
+    <h2>1. 🐾 프로젝트 소개</h2>
+
+    <h3>프로젝트 개요</h3>
+
+    <p>
+      <strong>Fetpal (펫팔)</strong>은 AI 기술을 활용하여 반려동물의 건강 이상
+      징후를 초기에 파악하고, 상황별 대처 방안을 제시하여 보호자의 불안감을
+      해소하는 것을 목표로 하는
+      <strong>AI 기반 반려동물 통합 케어 플랫폼</strong>입니다.
+    </p>
+
+    <div class="quote-box">
+      <strong>💡 명칭의 의미</strong>: <strong>Family</strong>(가족) +
+      <strong>Vet</strong>(수의사) + <strong>Pet</strong>(반려동물) +
+      <strong>Pal</strong>(친구)의 합성어로, 가족과 반려동물이 함께하는 건강한
+      일상을 수의학적 지식과 친구 같은 AI가 도와준다는 의미를 담고 있습니다.
+    </div>
+
+    <h3>🚨 해결하고자 하는 문제</h3>
+
+    <div class="problem-box">
+      <h4>🏥 응급 상황 대처의 어려움</h4>
+      <p>
+        <em
+          >"새벽 2시, 강아지 눈이 갑자기 빨개졌는데 병원은 문을 닫았고, 응급실은
+          너무 멀어요. 지금 당장 가야 할까요?"</em
+        >
+      </p>
+      <p>
+        <em
+          >"피부에 뾰루지 같은 게 났는데, 병원 가기엔 애매하고 그냥 두기엔
+          불안해요."</em
+        >
+      </p>
+
+      <h4>🐶 초보 반려인의 일상 케어 고민</h4>
+      <p>
+        <em
+          >"타지에서 처음 강아지를 키우는데, 하루에 몇 번 밥을 줘야 하는지, 언제
+          산책을 시켜야 하는지, 기본적인 훈련은 어떻게 시켜야 하는지 아무것도
+          모르겠어요."</em
+        >
+      </p>
+
+      <p>
+        <strong
+          >반려동물 1500만 시대, 수많은 보호자들이 위와 같은 고민을 매일 겪고
+          있습니다.</strong
+        >
+      </p>
+    </div>
+
+    <h3>🎯 솔루션</h3>
+
+    <div class="solution-box">
+      <p>
+        Fetpal은 이러한 <strong>불안감과 정보 비대칭 문제</strong>를 해결하고자
+        합니다:
+      </p>
+
+      <h4>🐾 응급 상황 지원</h4>
+      <ul>
+        <li>
+          <strong>AI 기술</strong>로 시공간 제약 없이 반려동물의 상태를
+          객관적으로 확인
+        </li>
+        <li>
+          <strong>검증된 정보</strong>를 바탕으로 침착하게 다음 행동을 결정할 수
+          있도록 지원
+        </li>
+        <li>
+          <strong>응급 상황의 골든타임</strong>을 놓치지 않도록 즉시 대처 방안
+          제공
+        </li>
+      </ul>
+
+      <h4>🐾 초보 반려인 가이드</h4>
+      <ul>
+        <li>
+          <strong>일상 케어 가이드</strong>: 급식 시간, 산책 방법, 기본 훈련법
+          등 체계적 정보 제공
+        </li>
+        <li>
+          <strong>커뮤니티 연결</strong>: 경험 있는 반려인들과의 소통을 통한
+          실질적 조언
+        </li>
+        <li>
+          <strong>단계별 가이드</strong>: 반려동물 성장 단계별 맞춤 케어 정보
+          제공
+        </li>
+      </ul>
+
+      <h4>🐾 경제적 부담 완화</h4>
+      <ul>
+        <li>
+          <strong>불필요한 의료비 지출</strong>을 줄이고 적절한 시기의 병원 방문
+          유도
+        </li>
+        <li>보호자와 반려동물 모두의 <strong>삶의 질 향상</strong>을 목표</li>
+      </ul>
+    </div>
+
+    <div class="quote-box">
+      <h3>💝 프로젝트 미션</h3>
+      <p>
+        <strong
+          >"내 선택으로 내게 온 사랑스러운 반려동물, Fetpal이 함께
+          지켜드립니다."</strong
+        >
+      </p>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>2. 🐾 주요 기능</h2>
+
+    <table class="feature-table">
+      <thead>
+        <tr>
+          <th style="width: 15%">구분</th>
+          <th style="width: 20%">기능</th>
+          <th style="width: 65%">상세 설명</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>🩺 AI 임시진단</strong></td>
+          <td>이미지 기반 건강 분석</td>
+          <td>
+            스마트폰으로 촬영한 피부/안구 사진을
+            <strong>YOLOv8 & OpenCV</strong> 모델로 분석하여 이상 징후를
+            탐지하고, 신뢰도/심각도와 함께 시각적으로 보여줍니다.
+          </td>
+        </tr>
+        <tr>
+          <td><strong>💬 AI 어드바이저</strong></td>
+          <td>RAG/LLM 기반 대처 방안 제시</td>
+          <td>
+            분석 결과에 따라, 검증된 지식 기반의 <strong>RAG/LLM</strong>이
+            비진단적 소견과 응급 상황 대처법, 주변 병원/약국 추천 등 신뢰도 높은
+            정보를 제공합니다.
+          </td>
+        </tr>
+        <tr>
+          <td><strong>🗺️ 지도 연동</strong></td>
+          <td>주변 시설 검색 (LBS)</td>
+          <td>
+            <strong>Kakao Map API</strong>와 연동하여 내 위치 기반으로 24시
+            동물병원, 약국, 펫샵 등의 위치, 평점, 영업시간 등 상세 정보를 즉시
+            확인할 수 있습니다.
+          </td>
+        </tr>
+        <tr>
+          <td><strong>🐾 커뮤니티</strong></td>
+          <td>지식 공유 및 소셜 네트워킹</td>
+          <td>
+            <code>#해시태그</code>를 통해 관련 게시글과
+            <strong>YouTube 케어 영상</strong>을 한번에 보고, 위치 기반 모임과
+            <strong>실시간 채팅</strong>으로 동네 펫 친구들과 교류할 수
+            있습니다.
+          </td>
+        </tr>
+        <tr>
+          <td><strong>🗓️ 스마트 플래너</strong></td>
+          <td>일정 및 지출 통합 관리</td>
+          <td>
+            예방접종 자동 스케줄링, 병원/미용 예약, 사료 구매까지. 캘린더와
+            가계부를 통합하여 모든 케어 활동을 체계적으로 기록하고 관리합니다.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>3. 🐾 기술 스택 및 아키텍처</h2>
+
+    <p>
+      Fetpal은 <strong>MSA(Microservice Architecture)</strong> 기반의
+      클라이언트-서버 아키텍처를 채택하여 각 기능의 독립적인 확장과 업데이트가
+      용이하도록 설계되었습니다.
+    </p>
+
+    <h3>🐾 기술 스택</h3>
+
+    <h4>💻 사용 언어</h4>
+    <p>
+      <span class="tech-badge">Python</span>
+      <span class="tech-badge">JavaScript</span>
+      <span class="tech-badge">React</span>
+      <span class="tech-badge">Next.js</span>
+      <span class="tech-badge">TypeScript</span>
+    </p>
+
+    <h4>📊 데이터 분석 및 처리</h4>
+    <p>
+      <span class="tech-badge">Pandas</span>
+      <span class="tech-badge">NumPy</span>
+      <span class="tech-badge">OpenCV</span>
+    </p>
+
+    <h4>🤖 AI / ML</h4>
+    <ul>
+      <li><strong>모델</strong>: <span class="tech-badge">YOLO</span></li>
+      <li>
+        <strong>프레임워크</strong>: <span class="tech-badge">PyTorch</span>
+      </li>
+      <li>
+        <strong>AI 플랫폼</strong>: <span class="tech-badge">Hugging Face</span>
+      </li>
+      <li>
+        <strong>LLM</strong>: <span class="tech-badge">OpenAI</span>
+        <span class="tech-badge">Gemini</span>
+        <span class="tech-badge">Claude</span>
+      </li>
+    </ul>
+
+    <h4>🌐 인프라 & 배포 & 서버</h4>
+    <ul>
+      <li>
+        <strong>클라우드</strong>: <span class="tech-badge">AWS</span>
+        <span class="tech-badge">EC2</span>
+      </li>
+      <li>
+        <strong>데이터베이스</strong>:
+        <span class="tech-badge">PostgreSQL</span>
+        <span class="tech-badge">Supabase</span>
+      </li>
+      <li>
+        <strong>서버</strong>: <span class="tech-badge">FastAPI</span>
+        <span class="tech-badge">Next.js</span>
+        <span class="tech-badge">Vercel</span>
+      </li>
+    </ul>
+
+    <h3>3-1. 🐾 아키텍처 다이어그램</h3>
+
+    <div class="mermaid-placeholder">
+      <h3>🏗️ MSA 기반 시스템 아키텍처</h3>
+      <p>
+        <strong>사용자</strong> ↔ <strong>Next.js 프론트엔드</strong> ↔
+        <strong>Supabase BaaS + Python AI 서버</strong> ↔
+        <strong>외부 API</strong>
+      </p>
+      <br />
+      <div style="text-align: left; max-width: 600px; margin: 0 auto">
+        <p><strong>📱 사용자 영역:</strong> 웹 브라우저</p>
+        <p><strong>🖥️ 프론트엔드:</strong> Next.js/React (Vercel 배포)</p>
+        <p><strong>🔧 백엔드 서비스:</strong></p>
+        <ul style="list-style: none; padding-left: 20px">
+          <li>• Supabase BaaS (Auth, DB, Storage, Realtime)</li>
+          <li>• Python AI 서버 (FastAPI, YOLO, RAG/LLM)</li>
+        </ul>
+        <p>
+          <strong>🌐 외부 서비스:</strong> LLM Provider, Kakao Map, YouTube API
+        </p>
+      </div>
+      <small>※ 실제 Mermaid 다이어그램은 원본 문서에서 확인 가능</small>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>4. 🐾 데이터베이스 설계 (ERD)</h2>
+
+    <div class="quote-box">
+      Supabase PostgreSQL 스키마를 기반으로 설계되었습니다. 상세한 ERD는
+      <strong>05_ERD.md</strong>에서 확인할 수 있습니다.
+    </div>
+
+    <div class="mermaid-placeholder">
+      <h3>🗄️ 전체 데이터베이스 ERD</h3>
+      <p><strong>5개 주요 영역</strong></p>
+      <div style="text-align: left; max-width: 600px; margin: 0 auto">
+        <p>
+          🔵 <strong>사용자 및 인증</strong>: auth.users, profiles,
+          profileCompletion
+        </p>
+        <p>
+          🟠 <strong>반려동물</strong>: palProfiles, palHealthRecords,
+          palVaccinations
+        </p>
+        <p>
+          🟣 <strong>커뮤니티</strong>: communityPosts, postComments, postLikes,
+          events
+        </p>
+        <p>🟢 <strong>플래너</strong>: plannerEvents, plannerExpenses</p>
+        <p>🔴 <strong>파일 메타데이터</strong>: file_metadata</p>
+      </div>
+      <small>※ 실제 Mermaid ERD 다이어그램은 원본 문서에서 확인 가능</small>
+    </div>
+
+    <h2>5. 🐾 프로젝트 진행 계획 (WBS)</h2>
+
+    <p>
+      프로젝트는 총 7개의 Phase로 구성되어 있으며, 기획부터 개발, 배포,
+      유지보수까지 체계적으로 관리 예정입니다.
+    </p>
+
+    <div class="phase-status">
+      <ul>
+        <li><strong>Phase 1: 프로젝트 기획 및 설계</strong> (사전 완료)</li>
+        <li><strong>Phase 2: 백엔드 개발 (Supabase)</strong> (사전 완료)</li>
+        <li><strong>Phase 3: AI 서버 개발</strong> (진행 중)</li>
+        <li><strong>Phase 4: 프론트엔드 개발 (Next.js)</strong> (진행중)</li>
+        <li><strong>Phase 5: 통합 및 테스트</strong></li>
+        <li><strong>Phase 6: 배포 및 런칭</strong></li>
+        <li><strong>Phase 7: 유지보수 및 고도화</strong></li>
+      </ul>
+    </div>
+
+    <p>
+      현재 3차 프로젝트에서는
+      <strong>AI 서버 개발 및 실제 서비스 연동</strong>과
+      <strong>실시간 커뮤니티 기능 완성</strong>에 집중하고 있습니다.
+    </p>
+
+    <h2>6. 🐾 기대 효과</h2>
+
+    <ul>
+      <li>
+        <strong>보호자</strong>: 반려동물 양육에 대한 불안감을 줄이고, 객관적
+        데이터를 통해 수의사와 원활하게 소통할 수 있습니다.
+      </li>
+      <li>
+        <strong>반려동물</strong>: 이상 징후를 조기에 발견하여 질병을 예방하고
+        건강한 삶의 질을 향상시킬 수 있습니다.
+      </li>
+      <li>
+        <strong>산업</strong>: 축적된 비식별 건강 데이터를 통해 펫 보험, 펫 푸드
+        등 연관 산업 발전에 기여할 수 있습니다.
+      </li>
+    </ul>
+
+    <div class="footer">
+      <p>
+        <strong>LGU+ why not camp 7기 3차 프로젝트 Fetpal 프로토타입</strong>
+      </p>
+      <p>Generated on: 2025년 9월 30일</p>
+    </div>
+  </body>
+</html>

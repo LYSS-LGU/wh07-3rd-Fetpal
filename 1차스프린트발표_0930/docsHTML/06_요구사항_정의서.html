@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fetpal 요구사항 정의서</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <style>
+      @media print {
+        body {
+          margin: 0;
+          font-size: 11px;
+        }
+        .page-break {
+          page-break-before: always;
+        }
+        .no-print {
+          display: none;
+        }
+      }
+      body {
+        font-family: "Malgun Gothic", Arial, sans-serif;
+        line-height: 1.5;
+        margin: 20px;
+        color: #333;
+        font-size: 12px;
+      }
+      .header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding: 15px;
+        border-bottom: 3px solid #00b894;
+      }
+      h1 {
+        color: #2c3e50;
+        font-size: 22px;
+        margin-bottom: 10px;
+      }
+      h2 {
+        color: #2d3436;
+        border-left: 4px solid #00b894;
+        padding-left: 15px;
+        margin-top: 25px;
+        font-size: 16px;
+        background-color: #dfe6e9;
+        padding: 10px 15px;
+      }
+      h3 {
+        color: #2c3e50;
+        margin-top: 20px;
+        font-size: 14px;
+      }
+      .overview-box {
+        background-color: #e8f8f5;
+        border: 1px solid #16a085;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 15px 0;
+      }
+      .requirements-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0;
+        font-size: 11px;
+      }
+      .requirements-table th,
+      .requirements-table td {
+        border: 1px solid #dee2e6;
+        padding: 8px;
+        text-align: left;
+        vertical-align: top;
+      }
+      .requirements-table th {
+        background-color: #16a085;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+      }
+      .requirements-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      /* 일반 표 스타일 */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0;
+        font-size: 12px;
+      }
+      table th,
+      table td {
+        border: 1px solid #dee2e6;
+        padding: 8px;
+        text-align: left;
+        vertical-align: top;
+      }
+      table th {
+        background-color: #16a085;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+      }
+      table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+      .priority-high {
+        background-color: #ffebee;
+        color: #c62828;
+        font-weight: bold;
+      }
+      .priority-medium {
+        background-color: #fff3e0;
+        color: #ef6c00;
+        font-weight: bold;
+      }
+      .priority-low {
+        background-color: #e8f5e8;
+        color: #2e7d32;
+        font-weight: bold;
+      }
+      .functional-req {
+        background-color: #e3f2fd;
+        border-left: 4px solid #2196f3;
+        padding: 15px;
+        margin: 15px 0;
+      }
+      .non-functional-req {
+        background-color: #fce4ec;
+        border-left: 4px solid #e91e63;
+        padding: 15px;
+        margin: 15px 0;
+      }
+      .req-id {
+        font-weight: bold;
+        color: #1976d2;
+        font-size: 12px;
+      }
+      .req-category {
+        font-weight: bold;
+        color: #424242;
+      }
+      .req-title {
+        font-weight: bold;
+        color: #2c3e50;
+      }
+      .req-description {
+        line-height: 1.4;
+      }
+      .footer {
+        text-align: center;
+        margin-top: 30px;
+        padding-top: 15px;
+        border-top: 1px solid #dee2e6;
+        color: #7f8c8d;
+        font-size: 11px;
+      }
+      ul {
+        margin: 5px 0;
+        padding-left: 15px;
+      }
+      li {
+        margin: 2px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>🐾 Fetpal 요구사항 정의서</h1>
+      <p><strong>LGU+ why not camp 7기 3차 프로젝트</strong></p>
+    </div>
+
+    <div class="overview-box">
+      <p><strong>📋 요구사항 정의서 개요</strong></p>
+      <p>
+        시스템이 반드시 수행해야 하는 기능적 요구사항과 품질, 성능, 보안 등과
+        관련된 비기능적 요구사항을 정의합니다. 각 요구사항은 우선순위와 함께
+        명확한 기준으로 작성되었습니다.
+      </p>
+    </div>
+
+    <h2>1. 기능적 요구사항 (Functional Requirements)</h2>
+
+    <div class="functional-req">
+      <p><strong>📌 시스템이 반드시 수행해야 하는 기능에 대한 정의</strong></p>
+    </div>
+
+    <table class="requirements-table">
+      <thead>
+        <tr>
+          <th style="width: 8%">ID</th>
+          <th style="width: 12%">구분</th>
+          <th style="width: 15%">요구사항</th>
+          <th style="width: 55%">상세 설명</th>
+          <th style="width: 10%">우선순위</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="req-id">FR-01</td>
+          <td class="req-category">사용자 관리</td>
+          <td class="req-title">회원가입 및 인증</td>
+          <td class="req-description">
+            • 이메일/비밀번호 기반 회원가입이 가능해야 한다.<br />
+            • 소셜 로그인(Google, Kakao) 기능을 제공해야 한다.<br />
+            • 로그인한 사용자는 자신의 프로필 정보를 수정하고 반려동물을
+            등록/관리할 수 있어야 한다.
+          </td>
+          <td class="priority-high">High</td>
+        </tr>
+        <tr>
+          <td class="req-id">FR-02</td>
+          <td class="req-category">AI 진단</td>
+          <td class="req-title">이미지 기반 임시진단</td>
+          <td class="req-description">
+            • 사용자는 반려동물의 피부, 안구 등 특정 부위 사진을 업로드할 수
+            있어야 한다.<br />
+            • 시스템은 업로드된 이미지를 AI 서버로 전송하여 분석을 요청해야
+            한다.<br />
+            • 분석 결과(이상 부위 바운딩 박스, 신뢰도, 심각도)를 사용자에게
+            시각적으로 명확하게 표시해야 한다.
+          </td>
+          <td class="priority-high">High</td>
+        </tr>
+        <tr>
+          <td class="req-id">FR-03</td>
+          <td class="req-category">AI 진단</td>
+          <td class="req-title">RAG 기반 대처 방안 제시</td>
+          <td class="req-description">
+            • AI 진단 결과에 따라, RAG/LLM을 통해 생성된 비진단적 소견 및 상황별
+            대처 방안을 텍스트로 제공해야 한다.<br />
+            • 수의사법을 준수하며, 의료적 진단이 아님을 명확히 고지해야 한다.
+          </td>
+          <td class="priority-high">High</td>
+        </tr>
+        <tr>
+          <td class="req-id">FR-04</td>
+          <td class="req-category">지도 연동</td>
+          <td class="req-title">주변 시설 검색</td>
+          <td class="req-description">
+            • 사용자의 현재 위치를 기반으로 주변 동물병원, 24시 응급실, 약국
+            등을 지도에 표시해야 한다.<br />
+            • Kakao Map API를 활용하여 거리, 평점, 영업시간 등 상세 정보를
+            제공해야 한다.
+          </td>
+          <td class="priority-high">High</td>
+        </tr>
+        <tr>
+          <td class="req-id">FR-05</td>
+          <td class="req-category">커뮤니티</td>
+          <td class="req-title">게시글 CRUD</td>
+          <td class="req-description">
+            • 사용자는 카테고리별로 게시글을 작성, 조회, 수정, 삭제할 수 있어야
+            한다.<br />
+            • 게시글 작성 시 이미지와 #해시태그 첨부가 가능해야 한다.
+          </td>
+          <td class="priority-medium">Medium</td>
+        </tr>
+        <tr>
+          <td class="req-id">FR-06</td>
+          <td class="req-category">커뮤니티</td>
+          <td class="req-title">상호작용 기능</td>
+          <td class="req-description">
+            • 사용자는 다른 사람의 게시글에 '좋아요'를 누르거나 댓글을 작성할 수
+            있어야 한다.<br />
+            • 대댓글 기능을 지원해야 한다.
+          </td>
+          <td class="priority-medium">Medium</td>
+        </tr>
+        <tr>
+          <td class="req-id">FR-07</td>
+          <td class="req-category">커뮤니티</td>
+          <td class="req-title">#해시태그 정보 연동</td>
+          <td class="req-description">
+            • #해시태그를 클릭하면, 해당 태그를 포함하는 다른 게시글 목록과 관련
+            YouTube 영상을 함께 보여주어야 한다.
+          </td>
+          <td class="priority-medium">Medium</td>
+        </tr>
+        <tr>
+          <td class="req-id">FR-08</td>
+          <td class="req-category">커뮤니티</td>
+          <td class="req-title">실시간 모임/채팅</td>
+          <td class="req-description">
+            • 사용자는 위치 기반의 모임 이벤트를 생성하거나 참여할 수 있어야
+            한다.<br />
+            • 이벤트 참여자들을 위한 실시간 채팅 기능을 제공해야 한다.
+          </td>
+          <td class="priority-low">Low</td>
+        </tr>
+        <tr>
+          <td class="req-id">FR-09</td>
+          <td class="req-category">플래너</td>
+          <td class="req-title">일정 및 지출 관리</td>
+          <td class="req-description">
+            • 사용자는 캘린더에 반려동물 관련 일정(병원, 미용)과 지출 내역을
+            기록하고 관리할 수 있어야 한다.
+          </td>
+          <td class="priority-medium">Medium</td>
+        </tr>
+        <tr>
+          <td class="req-id">FR-10</td>
+          <td class="req-category">반려동물 관리</td>
+          <td class="req-title">예방접종 자동 스케줄링</td>
+          <td class="req-description">
+            • 반려동물 정보(생년월일, 종류) 등록 시, 필수 예방접종 일정이
+            플래너에 자동으로 생성되어야 한다.
+          </td>
+          <td class="priority-medium">Medium</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="page-break"></div>
+
+    <h2>2. 비기능적 요구사항 (Non-Functional Requirements)</h2>
+
+    <div class="non-functional-req">
+      <p><strong>📌 시스템의 품질, 성능, 보안 등과 관련된 요구사항</strong></p>
+    </div>
+
+    <table class="requirements-table">
+      <thead>
+        <tr>
+          <th style="width: 8%">ID</th>
+          <th style="width: 12%">구분</th>
+          <th style="width: 15%">요구사항</th>
+          <th style="width: 65%">상세 설명 (Metric)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="req-id">NFR-01</td>
+          <td class="req-category">성능</td>
+          <td class="req-title">AI 분석 응답 시간</td>
+          <td class="req-description">
+            사용자가 이미지를 업로드한 후, AI 분석 결과를
+            <strong>5초 이내</strong>에 받아볼 수 있어야 한다.
+          </td>
+        </tr>
+        <tr>
+          <td class="req-id">NFR-02</td>
+          <td class="req-category">성능</td>
+          <td class="req-title">페이지 로드 속도</td>
+          <td class="req-description">
+            주요 페이지(메인, 커뮤니티, 진단)의 로딩 시간은
+            <strong>2초를 넘지 않아야 한다</strong>. (LCP 기준)
+          </td>
+        </tr>
+        <tr>
+          <td class="req-id">NFR-03</td>
+          <td class="req-category">사용성</td>
+          <td class="req-title">반응형 웹 디자인</td>
+          <td class="req-description">
+            데스크톱, 태블릿, 모바일 등 다양한 디바이스 환경에서 UI가 깨지지
+            않고 최적화된 형태로 보여야 한다.
+          </td>
+        </tr>
+        <tr>
+          <td class="req-id">NFR-04</td>
+          <td class="req-category">사용성</td>
+          <td class="req-title">직관적인 UI/UX</td>
+          <td class="req-description">
+            모든 기능은 사용자가 별도의 학습 없이 직관적으로 사용할 수 있도록
+            설계되어야 한다.
+          </td>
+        </tr>
+        <tr>
+          <td class="req-id">NFR-05</td>
+          <td class="req-category">신뢰성/가용성</td>
+          <td class="req-title">서비스 가동률</td>
+          <td class="req-description">
+            시스템은 연간 <strong>99.5% 이상의 가동률</strong>을 유지해야 한다.
+            (계획된 점검 시간 제외)
+          </td>
+        </tr>
+        <tr>
+          <td class="req-id">NFR-06</td>
+          <td class="req-category">보안</td>
+          <td class="req-title">데이터 격리</td>
+          <td class="req-description">
+            Supabase의 <strong>RLS(Row Level Security) 정책</strong>을 통해
+            사용자는 자신의 데이터에만 접근할 수 있어야 한다.
+          </td>
+        </tr>
+        <tr>
+          <td class="req-id">NFR-07</td>
+          <td class="req-category">보안</td>
+          <td class="req-title">민감 정보 보호</td>
+          <td class="req-description">
+            사용자의 비밀번호 등 모든 민감 정보는 <strong>암호화</strong>되어
+            데이터베이스에 저장되어야 한다.
+          </td>
+        </tr>
+        <tr>
+          <td class="req-id">NFR-08</td>
+          <td class="req-category">확장성</td>
+          <td class="req-title">모듈식 아키텍처</td>
+          <td class="req-description">
+            AI 서버, 인증, 데이터베이스 등 각 기능은 독립적으로 확장 및
+            업데이트가 가능한 구조여야 한다. <strong>(MSA)</strong>
+          </td>
+        </tr>
+        <tr>
+          <td class="req-id">NFR-09</td>
+          <td class="req-category">법규 준수</td>
+          <td class="req-title">수의사법 준수</td>
+          <td class="req-description">
+            AI가 제공하는 모든 정보는
+            <strong
+              >'의료적 진단'이 아닌 '비진단적 관찰 소견' 또는 '참고
+              정보'</strong
+            >임을 명확히 고지해야 한다.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="overview-box">
+      <h3>📊 요구사항 우선순위 분석</h3>
+      <ul>
+        <li>
+          <strong class="priority-high">High Priority (4개)</strong>: 핵심
+          기능으로 반드시 구현되어야 하는 요구사항
+        </li>
+        <li>
+          <strong class="priority-medium">Medium Priority (5개)</strong>: 사용자
+          경험 향상을 위해 중요한 요구사항
+        </li>
+        <li>
+          <strong class="priority-low">Low Priority (1개)</strong>: 추후 확장
+          가능한 부가 기능
+        </li>
+      </ul>
+
+      <h3>🔍 요구사항 추적성</h3>
+      <p>
+        모든 기능적 요구사항은 시스템 아키텍처 및 데이터베이스 설계와 연결되어
+        있으며, 비기능적 요구사항은 성능 테스트 및 품질 보증 과정에서
+        검증됩니다.
+      </p>
+    </div>
+
+    <div class="footer">
+      <p>
+        <strong>LGU+ why not camp 7기 3차 프로젝트 Fetpal 프로토타입</strong>
+      </p>
+      <p>Generated on: 2025년 9월 30일</p>
+    </div>
+
+    <script>
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "default",
+        flowchart: {
+          useMaxWidth: true,
+          htmlLabels: true,
+        },
+      });
+    </script>
+  </body>
+</html>

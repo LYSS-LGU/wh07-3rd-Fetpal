@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fetpal WBS (Work Breakdown Structure)</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
+    <style>
+      @media print {
+        body {
+          margin: 0;
+          font-size: 12px;
+        }
+        .page-break {
+          page-break-before: always;
+        }
+        .no-print {
+          display: none;
+        }
+      }
+      body {
+        font-family: "Malgun Gothic", Arial, sans-serif;
+        line-height: 1.5;
+        margin: 20px;
+        color: #333;
+        font-size: 13px;
+      }
+      .header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding: 15px;
+        border-bottom: 3px solid #74b9ff;
+      }
+      h1 {
+        color: #2c3e50;
+        font-size: 22px;
+        margin-bottom: 10px;
+      }
+      h2 {
+        color: #2d3436;
+        border-left: 4px solid #74b9ff;
+        padding-left: 15px;
+        margin-top: 25px;
+        font-size: 16px;
+        background-color: #dfe6e9;
+        padding: 10px 15px;
+      }
+      h3 {
+        color: #2c3e50;
+        margin-top: 20px;
+        font-size: 14px;
+      }
+      h4 {
+        color: #7f8c8d;
+        margin-top: 15px;
+        font-size: 13px;
+      }
+      ul,
+      ol {
+        margin: 8px 0;
+        padding-left: 20px;
+      }
+      li {
+        margin: 3px 0;
+      }
+      .phase-box {
+        background-color: #e8f4fd;
+        border: 1px solid #74b9ff;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 15px 0;
+      }
+      .status-complete {
+        background-color: #d1f2eb;
+        border-color: #00b894;
+      }
+      .status-progress {
+        background-color: #fff9db;
+        border-color: #fdcb6e;
+      }
+
+      /* 표 스타일 */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0;
+        font-size: 12px;
+      }
+      table th,
+      table td {
+        border: 1px solid #dee2e6;
+        padding: 8px;
+        text-align: left;
+        vertical-align: top;
+      }
+      table th {
+        background-color: #74b9ff;
+        color: white;
+        font-weight: bold;
+        text-align: center;
+      }
+      table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      /* WBS 전용 표 스타일 */
+      .wbs-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0;
+        font-size: 11px;
+      }
+      .wbs-table th,
+      .wbs-table td {
+        border: 1px solid #dee2e6;
+        padding: 6px;
+        text-align: center;
+        vertical-align: middle;
+      }
+      .wbs-table th {
+        background-color: #636e72;
+        color: white;
+        font-weight: bold;
+      }
+      .wbs-table tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      /* 간트 차트 스타일 */
+      .gantt-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0;
+        font-size: 10px;
+      }
+      .gantt-table th,
+      .gantt-table td {
+        border: 1px solid #dee2e6;
+        padding: 4px;
+        text-align: center;
+      }
+      .gantt-table th {
+        background-color: #636e72;
+        color: white;
+        font-weight: bold;
+      }
+      .gantt-bar {
+        background-color: #74b9ff;
+        height: 20px;
+        border-radius: 3px;
+        margin: 2px 0;
+      }
+      .gantt-bar.completed {
+        background-color: #00b894;
+      }
+      .gantt-bar.in-progress {
+        background-color: #fdcb6e;
+      }
+      .status-pending {
+        background-color: #fff5f5;
+        border-color: #ff7675;
+      }
+      .timeline-box {
+        background-color: #a29bfe;
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 15px 0;
+      }
+      .metrics-box {
+        background-color: #f1f3f4;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        padding: 15px;
+        margin: 15px 0;
+      }
+      .footer {
+        text-align: center;
+        margin-top: 30px;
+        padding-top: 15px;
+        border-top: 1px solid #dee2e6;
+        color: #7f8c8d;
+        font-size: 11px;
+      }
+      strong {
+        color: #2c3e50;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>🐾 Fetpal WBS (Work Breakdown Structure)</h1>
+      <p><strong>LGU+ why not camp 7기 3차 프로젝트</strong></p>
+    </div>
+
+    <h2>1. Phase 1: 프로젝트 기획 및 설계</h2>
+    <div class="phase-box status-complete">
+      <h3>1.1. 요구사항 분석 및 명세화</h3>
+      <ul>
+        <li>1.1.1. 핵심 기능 정의 (AI 진단, 커뮤니티, 플래너 등)</li>
+        <li>1.1.2. 페르소나 및 사용자 시나리오 정의</li>
+        <li>1.1.3. 기술 스택 선정 및 타당성 검토</li>
+      </ul>
+
+      <h3>1.2. 프로젝트 산출물 작성</h3>
+      <ul>
+        <li>1.2.1. 프로젝트 기획서 작성</li>
+        <li>1.2.2. 시스템 아키텍처 설계</li>
+        <li>1.2.3. 시스템 흐름도 작성</li>
+        <li>1.2.4. 데이터베이스 ERD 설계</li>
+        <li>1.2.5. WBS 작성</li>
+      </ul>
+
+      <h3>1.3. UI/UX 디자인</h3>
+      <ul>
+        <li>1.3.1. 와이어프레임 및 프로토타입 제작</li>
+        <li>1.3.2. UI 디자인 시스템 및 컴포넌트 설계</li>
+      </ul>
+
+      <h3>1.4. 개발 환경 및 일정 계획</h3>
+      <ul>
+        <li>1.4.1. Git 레포지토리 및 브랜치 전략 수립</li>
+        <li>1.4.2. 개발, 스테이징, 프로덕션 환경 계획</li>
+        <li>1.4.3. 전체 프로젝트 마일스톤 및 일정 수립</li>
+      </ul>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>2. Phase 2: 백엔드 개발 (Supabase)</h2>
+    <div class="phase-box status-complete">
+      <h3>2.1. Supabase 프로젝트 설정</h3>
+      <ul>
+        <li>2.1.1. 프로젝트 생성 및 기본 설정</li>
+        <li>2.1.2. 데이터베이스 초기화</li>
+      </ul>
+
+      <h3>2.2. 데이터베이스 스키마 구현</h3>
+      <ul>
+        <li>
+          2.2.1. 사용자/인증 관련 테이블 생성 (profiles, profileCompletion)
+        </li>
+        <li>
+          2.2.2. 반려동물 관련 테이블 생성 (palProfiles, palHealthRecords,
+          vaccinations)
+        </li>
+        <li>
+          2.2.3. 커뮤니티 관련 테이블 생성 (communityPosts, postTags, postLikes,
+          events)
+        </li>
+        <li>2.2.4. 플래너 관련 테이블 생성 (plannerEvents, plannerExpenses)</li>
+        <li>2.2.5. 파일 메타데이터 테이블 생성</li>
+      </ul>
+
+      <h3>2.3. 데이터베이스 로직 구현</h3>
+      <ul>
+        <li>
+          2.3.1. PostgreSQL 함수 및 트리거 작성 (프로필 자동 생성, updatedAt 등)
+        </li>
+        <li>2.3.2. RLS (Row Level Security) 정책 수립 및 적용</li>
+      </ul>
+
+      <h3>2.4. 스토리지 설정</h3>
+      <ul>
+        <li>2.4.1. profileImage 등 버킷 생성</li>
+        <li>2.4.2. 폴더별 접근 제어 정책 수립 및 적용</li>
+      </ul>
+    </div>
+
+    <h2>3. Phase 3: AI 서버 개발</h2>
+    <div class="phase-box status-progress">
+      <h3>3.1. AI 모델 준비</h3>
+      <ul>
+        <li>3.1.1. 학습 데이터 수집 및 전처리 (AI-Hub, Roboflow)</li>
+        <li>3.1.2. YOLOv8 모델 학습 또는 Fine-tuning (피부, 안구 질환)</li>
+        <li>3.1.3. 모델 성능 평가 및 최적화</li>
+      </ul>
+
+      <h3>3.2. API 서버 구축 (Python/FastAPI)</h3>
+      <ul>
+        <li>3.2.1. FastAPI 프로젝트 초기 설정</li>
+        <li>3.2.2. 이미지 분석 API 엔드포인트 (/analyze) 개발</li>
+        <li>3.2.3. YOLO & OpenCV 모델 로드 및 추론 로직 구현</li>
+      </ul>
+
+      <h3>3.3. LLM(RAG) 연동</h3>
+      <ul>
+        <li>3.3.1. 지식 베이스 구축 (Vector DB 설정)</li>
+        <li>3.3.2. LLM Provider (OpenAI/Gemini) API 연동</li>
+        <li>3.3.3. RAG 파이프라인 구현 (검색 → 질문 생성 → 답변)</li>
+      </ul>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>4. Phase 4: 프론트엔드 개발 (Next.js)</h2>
+    <div class="phase-box status-progress">
+      <h3>4.1. 개발 환경 설정</h3>
+      <ul>
+        <li>4.1.1. Next.js 프로젝트 초기화</li>
+        <li>4.1.2. TailwindCSS, 상태 관리 라이브러리 등 설정</li>
+        <li>4.1.3. Supabase 클라이언트 라이브러리 연동</li>
+      </ul>
+
+      <h3>4.2. 공통 컴포넌트 및 레이아웃</h3>
+      <ul>
+        <li>4.2.1. 헤더, 푸터, 네비게이션 바 등 레이아웃 구현</li>
+        <li>4.2.2. 버튼, 입력 필드, 모달 등 공통 UI 컴포넌트 개발</li>
+      </ul>
+
+      <h3>4.3. 기능별 페이지 및 컴포넌트 개발</h3>
+      <h4>4.3.1. 사용자 인증</h4>
+      <ul>
+        <li>4.3.1.1. 회원가입, 로그인, 비밀번호 찾기 페이지</li>
+        <li>4.3.1.2. 소셜 로그인 연동</li>
+        <li>4.3.1.3. 마이페이지 (프로필 수정, 반려동물 관리)</li>
+      </ul>
+
+      <h4>4.3.2. AI 건강진단</h4>
+      <ul>
+        <li>4.3.2.1. 이미지 업로드 컴포넌트 개발</li>
+        <li>4.3.2.2. AI 서버 API 호출 및 로딩 상태 처리</li>
+        <li>
+          4.3.2.3. 분석 결과 시각화 컴포넌트 (이미지 위 바운딩 박스, 텍스트
+          리포트)
+        </li>
+      </ul>
+
+      <h4>4.3.3. 커뮤니티</h4>
+      <ul>
+        <li>4.3.3.1. 게시글 목록 및 상세 페이지 (피드 형태)</li>
+        <li>4.3.3.2. 게시글 작성/수정/삭제 기능</li>
+        <li>4.3.3.3. 댓글, 좋아요, #해시태그 기능 구현</li>
+        <li>4.3.3.4. YouTube API 연동 및 영상 플레이어 임베드</li>
+        <li>4.3.3.5. 실시간 이벤트 채팅방 구현 (Supabase Realtime)</li>
+      </ul>
+
+      <h4>4.3.4. 지도 서비스</h4>
+      <ul>
+        <li>4.3.4.1. Kakao Map API 연동 및 지도 표시</li>
+        <li>4.3.4.2. 현재 위치 기반 주변 병원/매장 검색 기능</li>
+        <li>4.3.4.3. 장소 상세 정보 표시</li>
+      </ul>
+
+      <h4>4.3.5. 플래너</h4>
+      <ul>
+        <li>4.3.5.1. 캘린더 UI 구현</li>
+        <li>4.3.5.2. 일정/지출 추가, 수정, 삭제 기능</li>
+        <li>4.3.5.3. 통계 및 리포트 페이지</li>
+      </ul>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>5. Phase 5: 통합 및 테스트</h2>
+    <div class="phase-box status-pending">
+      <h3>5.1. API 통합 테스트</h3>
+      <ul>
+        <li>5.1.1. 프론트엔드 - Supabase API 연동 테스트</li>
+        <li>5.1.2. 프론트엔드 - Python AI 서버 API 연동 테스트</li>
+      </ul>
+
+      <h3>5.2. 기능별 단위 및 통합 테스트</h3>
+      <ul>
+        <li>5.2.1. 핵심 기능별 테스트 케이스 작성 및 수행</li>
+        <li>5.2.2. 사용자 시나리오 기반 E2E(End-to-End) 테스트</li>
+      </ul>
+
+      <h3>5.3. QA 및 버그 수정</h3>
+      <ul>
+        <li>5.3.1. 주요 브라우저 및 디바이스 호환성 테스트</li>
+        <li>5.3.2. 발견된 버그 및 이슈 트래킹 및 수정</li>
+      </ul>
+
+      <h3>5.4. 사용자 수용 테스트 (UAT)</h3>
+      <ul>
+        <li>5.4.1. 페르소나 그룹 대상 테스트 진행</li>
+        <li>5.4.2. 피드백 수렴 및 개선사항 반영</li>
+      </ul>
+    </div>
+
+    <h2>6. Phase 6: 배포 및 런칭</h2>
+    <div class="phase-box status-pending">
+      <h3>6.1. 인프라 배포</h3>
+      <ul>
+        <li>6.1.1. 프론트엔드 Vercel 배포</li>
+        <li>6.1.2. AI 서버 배포 (클라우드 서비스 - 예: AWS, GCP)</li>
+        <li>6.1.3. 도메인 및 HTTPS 설정</li>
+      </ul>
+
+      <h3>6.2. 데이터 마이그레이션</h3>
+      <ul>
+        <li>6.2.1. 개발 DB → 프로덕션 DB 데이터 이전 (필요시)</li>
+      </ul>
+
+      <h3>6.3. 최종 런칭</h3>
+      <ul>
+        <li>6.3.1. 서비스 공식 오픈</li>
+        <li>6.3.2. 사용자 유입 및 초기 데이터 모니터링</li>
+      </ul>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>📊 현재 구현 상태 및 3차 프로젝트 진행 계획</h2>
+
+    <div class="timeline-box">
+      <h3>🎯 3차 프로젝트 목표 (2025.09.19 ~ 2025.11.20)</h3>
+      <h4>Phase 1: 프로젝트 기획 및 설계 (사전 완료)</h4>
+      <ul>
+        <li>✅ 요구사항 분석 및 명세화 완료</li>
+        <li>✅ 프로젝트 산출물 작성 완료 (ERD, 아키텍처, 시스템 흐름도)</li>
+        <li>✅ UI/UX 디자인 완료 (Next.js 14 App Router 기반)</li>
+        <li>✅ 개발 환경 완료 (Monorepo + Hook Composition 패턴)</li>
+      </ul>
+
+      <h4>Phase 2: 백엔드 개발 (사전 완료)</h4>
+      <ul>
+        <li>✅ Supabase 프로젝트 설정 완료</li>
+        <li>✅ 데이터베이스 스키마 완전 구현 (CamelCase 마이그레이션 포함)</li>
+        <li>✅ PostgreSQL 함수 및 47개 RLS 정책 완료</li>
+        <li>✅ Storage 설정 및 접근 제어 완료</li>
+      </ul>
+
+      <h4>Phase 4: 프론트엔드 개발 (기본 구조 완료)</h4>
+      <ul>
+        <li>✅ Next.js 14 App Router 완전 적용</li>
+        <li>✅ Co-location 아키텍처로 완전 리팩토링</li>
+        <li>✅ 사용자 인증 시스템 완료</li>
+        <li>✅ AI 건강진단 UI 완료 (백엔드 연동 대기)</li>
+        <li>✅ 플래너 완전 완성 (드래그앤드롭 + 가계부 통합)</li>
+        <li>🚧 커뮤니티 (기본 구조 완료, 실시간 기능 확장 필요)</li>
+        <li>🚧 지도 서비스 (UI 완료, Kakao API 연동 필요)</li>
+      </ul>
+    </div>
+
+    <div class="metrics-box">
+      <h3>🎯 3차 프로젝트 집중 Phase (2025-09 ~ 2025-11)</h3>
+
+      <h4>Phase 3: AI 서버 개발 (우선순위 1)</h4>
+      <ul>
+        <li>🚧 AI 모델 준비 (YOLO 모델 완료, 클라우드 배포 필요)</li>
+        <li>🚧 API 서버 구축 (로컬 완료, 프로덕션 배포 필요)</li>
+        <li>🚧 LLM(RAG) 연동 (구조 완료, 실제 API 연동 필요)</li>
+      </ul>
+
+      <h4>Phase 4-Extended: 실시간 기능 완성 (우선순위 2)</h4>
+      <ul>
+        <li>🚧 실시간 커뮤니티 채팅 (Supabase Realtime)</li>
+        <li>🚧 위치 기반 모임 이벤트 시스템</li>
+        <li>🚧 #해시태그 YouTube API 완전 연동</li>
+        <li>🚧 Kakao Map API 실제 연동 및 장소 검색</li>
+      </ul>
+
+      <h4>Phase 5-Extended: 통합 및 고도화 (우선순위 3)</h4>
+      <ul>
+        <li>🚧 실제 AI 서버와 프론트엔드 완전 통합</li>
+        <li>🚧 모바일 PWA 최적화</li>
+        <li>🚧 성능 최적화 및 사용자 테스트</li>
+      </ul>
+    </div>
+
+    <div class="page-break"></div>
+
+    <h2>🏗️ 3차 프로젝트 세부 일정 (2025.09.19 ~ 2025.11.20, 9주 계획)</h2>
+
+    <div class="timeline-box">
+      <h3>Week 1-2: AI 서버 개발 완성 (9월 19일 ~ 진행 중)</h3>
+      <ul>
+        <li>
+          <strong>Week 1 (9/19-진행 중)</strong>: YOLO 모델 실제 추론 API 완성
+          및 로컬 테스트
+        </li>
+        <li>
+          <strong>Week 2 (9/26-진행 중)</strong>: RAG/LLM 연동 구현
+          (OpenAI/Gemini API) 및 통합 테스트
+        </li>
+      </ul>
+
+      <h3>Week 3-4: 프론트엔드 기능 완성 (10월 3일 ~ 진행 중)</h3>
+      <ul>
+        <li>
+          <strong>Week 3 (10/3-진행 중)</strong>: Kakao Map API 완전 연동 및
+          장소 검색 기능 개발
+        </li>
+        <li>
+          <strong>Week 4 (10/10-진행 중)</strong>: #해시태그 연동 YouTube API
+          완전 구현
+        </li>
+      </ul>
+
+      <h3>Week 5-6: 실시간 기능 및 통합 개발 (10월 17일 ~ 10월 30일 예정)</h3>
+      <ul>
+        <li>
+          <strong>Week 5 (10/17-진행 중)</strong>: Supabase Realtime 기반 실시간
+          채팅 구현
+        </li>
+        <li>
+          <strong>Week 6 (10/24-진행 중)</strong>: 위치 기반 모임 이벤트 시스템
+          개발 및 프론트엔드-AI 서버 통합
+        </li>
+      </ul>
+
+      <h3>Week 7-8: 배포 및 테스트 (10월 31일 ~ 11월 13일 예정)</h3>
+      <ul>
+        <li>
+          <strong>Week 7 (10/31-11/6) 예정</strong>: Python FastAPI 서버
+          클라우드 배포 (AWS/GCP) 및 프론트엔드 Vercel 배포
+        </li>
+        <li>
+          <strong>Week 8 (11/7-11/13) 예정</strong>: 전체 시스템 통합 테스트 및
+          성능 최적화
+        </li>
+      </ul>
+
+      <h3>Week 9: 최종 완성 및 발표 준비 (11월 14일 ~ 11월 20일) 예정</h3>
+      <ul>
+        <li>
+          <strong>Week 9 (11/14-11/20) 예정</strong>: 버그 수정, 사용자 테스트,
+          문서화 완성 및 발표 자료 준비
+        </li>
+      </ul>
+    </div>
+
+    <div class="metrics-box">
+      <h3>📈 3차 프로젝트 성공 지표</h3>
+
+      <h4>기술적 목표</h4>
+      <ul>
+        <li>AI 서버 응답 시간 5초 이내 달성</li>
+        <li>실시간 채팅 지연시간 100ms 이내</li>
+        <li>모바일 PWA Lighthouse 점수 90점 이상</li>
+        <li>전체 기능 통합 테스트 통과율 95% 이상</li>
+      </ul>
+
+      <h4>기능적 목표</h4>
+      <ul>
+        <li>AI 건강 진단 실제 서비스 완전 작동</li>
+        <li>실시간 커뮤니티 채팅 안정적 운영</li>
+        <li>지도 기반 장소 추천 정확도 향상</li>
+        <li>사용자 경험 만족도 조사 4.5/5.0 이상</li>
+      </ul>
+    </div>
+
+    <div class="footer">
+      <p>
+        <strong>LGU+ why not camp 7기 3차 프로젝트 Fetpal 프로토타입</strong>
+      </p>
+      <p>Generated on: 2025년 9월 30일</p>
+    </div>
+
+    <script>
+      mermaid.initialize({
+        startOnLoad: true,
+        theme: "default",
+        flowchart: {
+          useMaxWidth: true,
+          htmlLabels: true,
+        },
+      });
+    </script>
+  </body>
+</html>

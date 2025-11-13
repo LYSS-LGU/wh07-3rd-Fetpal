@@ -1,437 +1,402 @@
-# 🐾 Fetpal: AI 기반 반려동물 통합 케어 플랫폼
+# Fetpal 요구사항 정의서
 
-> **프로젝트 기간**: 2025.09.19 ~ 2025.11.20 (9주)<br> > **작성자**: LYSS with Claude<br> > **최종 업데이트**: 2025-11-13
-
----
-
-## 📖 목차 (Table of Contents)
-
-- [🐾 프로젝트 팀원 소개 (Team)](#-프로젝트-팀원-소개)
-- [📚 프로젝트 문서 (Documentation)](#-프로젝트-문서)
-- [💡 프로젝트 소개 (Introduction)](#-프로젝트-소개)
-- [🎯 주요 기능 (Features)](#-주요-기능)
-- [🔗 프로젝트 링크 (Links)](#-프로젝트-링크)
-- [🛠️ 기술 스택 (Tech Stack)](#️-기술-스택)
-- [🏗️ 시스템 아키텍처 (Architecture)](#️-시스템-아키텍처)
-- [🔄 시스템 흐름도 (Flow)](#-시스템-흐름도)
-- [🗄️ 데이터베이스 설계 (Database)](#️-데이터베이스-설계)
-- [📊 프로젝트 성과 (Results)](#-프로젝트-성과)
-- [🚀 시작하기 (Getting Started)](#-시작하기)
-- [🙏 감사의 말 (Acknowledgments)](#-감사의-말-acknowledgments)
+> **4차 스프린트 발표** (2025.11.14)  
+> **최종 업데이트**: 2025-11-14
 
 ---
 
-## 🐾 프로젝트 팀원 소개
+## 📋 문서 개요
 
-<div align="center">
-
-|                            **프로필**                            | **정보**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| :--------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <img src="./p3_profile.png" width="150" height="150" alt="LYSS"> | **이름**: 이유석 (LYSS)<br>**역할**: 1인 초보 개발자 with Claude AI<br>**_"처음부터 하나씩 배워가며 만드는 첫 작품 입니다.<br>혼자여도 할 수 있다는 포기하지 않는 마음!"_**<br><br>**Contact:**<br>[<img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1566899596/noticon/slhw4nu8hybreryigopq.png" width="25" height="25" alt="GitHub">](https://github.com/LYSS-LGU) [<img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1606895317/noticon/cffnbxeed08p0l4u44ru.png" width="25" height="25" alt="Gmail">](mailto:leeyss1991@gmail.com) [<img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1644169460/noticon/frvhykszxhjz4asz77oi.png" width="25" height="25" alt="Naver">](mailto:lyss91@naver.com) |
-
-</div>
-
-### 👨‍💻 담당 업무
-
-> **💡 개발 파트너**: 이 프로젝트는 초보 개발자가 **Claude AI**와 함께 협업하여 완성했습니다.
-> Claude는 코드 작성, 디버깅, 아키텍처 설계, 문서화 등 전 과정에서 **페어 프로그래밍(바이브코딩)** 파트너로 참여했습니다.
-
-|   **영역**   |         **기술 스택**         | **세부 내용**                            |
-| :----------: | :---------------------------: | :--------------------------------------- |
-|   **기획**   |      프로젝트 매니지먼트      | 요구사항 분석, WBS 작성, 시스템 설계     |
-| **Frontend** |  Next.js, React, TypeScript   | 사용자 인터페이스, 반응형 웹, 상태 관리  |
-| **Backend**  | Supabase, FastAPI, PostgreSQL | 데이터베이스 설계, API 개발, 인증 시스템 |
-|  **AI/ML**   |    YOLOv8, OpenCV, PyTorch    | 이미지 분석, 객체 탐지, 모델 학습        |
-|   **기타**   |        UI/UX, 아키텍처        | 디자인 시스템, 시스템 아키텍처 설계      |
+이 문서는 Fetpal 프로젝트의 기능적 요구사항과 비기능적 요구사항을 정의합니다.
 
 ---
 
-## 📚 프로젝트 문서
+## 📌 요구사항 요약 (Requirements Summary)
 
-> **📁 [docs/](./docs/)** 폴더에서 상세한 프로젝트 문서를 확인할 수 있습니다.
+### 🎯 기능적 요구사항 요약 (Functional Requirements)
 
-### 📋 핵심 문서
+> 시스템이 반드시 수행해야 하는 기능에 대한 정의
 
-| 번호 | 문서명                                                                                          | 설명                           |
-| :--: | :---------------------------------------------------------------------------------------------- | :----------------------------- |
-|  01  | **[프로젝트 기획서](./docs/01_프로젝트_기획서.md)** • [PDF](./docs/PDF_preview/01_프로젝트_기획서.pdf)                   | 프로젝트 개요, 목표, 일정      |
-|  02  | **[WBS 최신화](./docs/02_WBS_최신화.md)** • [PDF](./docs/PDF_preview/02_WBS_최신화.pdf)                                  | 작업 분해 구조 및 진행 현황    |
-|  03  | **[시스템 흐름도](./docs/03_시스템_흐름도.md)** • [PDF](./docs/PDF_preview/03_시스템_흐름도.pdf)                         | 사용자 시나리오 및 데이터 흐름 |
-|  04  | **[시스템 아키텍처](./docs/04_시스템_아키텍처.md)** • [PDF](./docs/PDF_preview/04_시스템_아키텍처.pdf)                   | 기술 스택 및 시스템 구조       |
-|  05  | **[ERD](./docs/05_ERD.md)** • [PDF](./docs/PDF_preview/05_ERD_최종스프린트대비.pdf)                                      | 데이터베이스 설계 및 관계도    |
-|  06  | **[요구사항 정의서](./docs/06_요구사항_정의서.md)** • [PDF](./docs/PDF_preview/06_요구사항_정의서.pdf)                   | 기능적/비기능적 요구사항       |
-|  07  | **[YOLO 모델 정의서](./docs/07_YOLO_모델_정의서.md)** • [PDF](./docs/PDF_preview/07_YOLO_모델_정의서.pdf)                | YOLO 모델 상세 및 성능 지표    |
-|  08  | **[RAG-LLM 시스템 정의서](./docs/08_RAG-LLM_시스템_정의서.md)** • [PDF](./docs/PDF_preview/08_RAG-LLM_시스템_정의서.pdf) | RAG 시스템 및 LLM 통합 구조    |
-|  09  | **[성능 평가 결과서](./docs/09_성능_평가_결과서.md)** • [PDF](./docs/PDF_preview/09_성능_평가_결과서.pdf)                | AI 모델 및 시스템 성능 분석    |
-|  10  | **[Supabase BaaS 가이드](./docs/10_Supabase_BaaS_가이드.md)** • [PDF](./docs/PDF_preview/10_Supabase_BaaS_가이드.pdf)    | BaaS 아키텍처 및 MCP 설명      |
-
-### 📊 데이터
-
-- **[WBS 통합](./docs/02_WBS_통합.csv)** - CSV 형식
-- **[WBS 통합](./docs/02_WBS_통합.xlsx)** - Excel 형식
-- **[WBS 상세 자료](./docs/WBS_상세자료/)** - 주차별/모델별 상세 데이터
-
-### 🎨 다이어그램
-
-- **[ERD 이미지](./docs/05_ERD_최종스프린트대비.png)** - PNG 형식
-- **[ERD PDF](./docs/05_ERD_최종스프린트대비.pdf)** - PDF 형식
+| ID           | 구분                     | 요구사항                    | 상세 설명                                                                                                                                                                                                                                                                                                                                                                                       | 우선순위    | 상태    |
+| :----------- | :----------------------- | :-------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------- | :------ |
+| **FR-01**    | **사용자 관리**          | **회원가입 및 인증**        | - 이메일/비밀번호 기반 회원가입이 가능해야 한다.<br>- 소셜 로그인(Google, Kakao) 기능을 제공해야 한다.<br>- 로그인한 사용자는 자신의 프로필 정보를 수정하고 반려동물을 등록/관리할 수 있어야 한다.                                                                                                                                                                                              | **High**    | ✅ 구현 |
+| **FR-02**    | **AI 진단**              | **이미지 기반 임시진단**    | - 사용자는 반려동물의 피부, 안구 등 특정 부위 사진을 업로드할 수 있어야 한다.<br>- 시스템은 업로드된 이미지를 AI 서버로 전송하여 분석을 요청해야 한다.<br>- 분석 결과(이상 부위 바운딩 박스, 신뢰도, 심각도)를 사용자에게 시각적으로 명확하게 표시해야 한다.                                                                                                                                    | **High**    | ✅ 구현 |
+| **FR-03**    | **AI 진단**              | **RAG 기반 대처 방안 제시** | - AI 진단 결과에 따라, RAG/LLM을 통해 생성된 비진단적 소견 및 상황별 대처 방안을 텍스트로 제공해야 한다.<br>- 수의사법을 준수하며, 의료적 진단이 아님을 명확히 고지해야 한다.<br>- pgvector 기반 Vector Similarity Search로 관련 커뮤니티 경험담을 자동 제시해야 한다.                                                                                                                          | **High**    | ✅ 구현 |
+| **FR-04**    | **지도 연동**            | **주변 시설 검색**          | - 사용자의 현재 위치를 기반으로 주변 동물병원, 24시 응급실, 약국 등을 지도에 표시해야 한다.<br>- Kakao Map API를 활용하여 거리, 평점, 영업시간 등 상세 정보를 제공해야 한다.                                                                                                                                                                                                                    | **High**    | ✅ 구현 |
+| **FR-05**    | **커뮤니티**             | **게시글 CRUD**             | - 사용자는 카테고리별로 게시글을 작성, 조회, 수정, 삭제할 수 있어야 한다.<br>- 게시글 작성 시 이미지와 #해시태그 첨부가 가능해야 한다.<br>- 해시태그는 globalHashtags 테이블과 자동 연동되어야 한다.                                                                                                                                                                                            | **Medium**  | ✅ 구현 |
+| **FR-06**    | **커뮤니티**             | **상호작용 기능**           | - 사용자는 다른 사람의 게시글에 '좋아요'를 누르거나 댓글을 작성할 수 있어야 한다.<br>- 대댓글 기능을 지원해야 한다.                                                                                                                                                                                                                                                                             | **Medium**  | ✅ 구현 |
+| **FR-07**    | **커뮤니티**             | **#해시태그 정보 연동**     | - #해시태그를 클릭하면, 해당 태그를 포함하는 다른 게시글 목록과 관련 YouTube 영상을 함께 보여주어야 한다.<br>- 실시간 인기 해시태그 추천 기능을 제공해야 한다.                                                                                                                                                                                                                                  | **Medium**  | ✅ 구현 |
+| **FR-08**    | **라이프스타일 채팅** ⭐ | **실시간 채팅 시스템**      | - 사용자는 #해시태그 기반으로 관심사별 채팅방을 생성하거나 참여할 수 있어야 한다.<br>- Supabase Realtime을 활용한 실시간 메시지 송수신이 가능해야 한다.<br>- 채팅 메시지 작성 시 #해시태그 자동 추출 및 globalHashtags 연동이 이루어져야 한다.<br>- 참여자 목록, 온라인 상태 표시, 이미지 업로드 기능을 제공해야 한다.                                                                          | **High** ⭐ | ✅ 구현 |
+| **FR-09**    | **플래너**               | **일정 및 지출 관리**       | - 사용자는 캘린더에 반려동물 관련 일정(병원, 미용)과 지출 내역을 기록하고 관리할 수 있어야 한다.<br>- 지출 기록 시 #해시태그를 추가하여 카테고리별 분류가 가능해야 한다.                                                                                                                                                                                                                        | **Medium**  | ✅ 구현 |
+| **FR-10**    | **반려동물 관리**        | **예방접종 자동 스케줄링**  | - 반려동물 정보(생년월일, 종류) 등록 시, 필수 예방접종 일정이 플래너에 자동으로 생성되어야 한다.<br>- 백신 종류는 데이터베이스 테이블(vaccinationTypes)에서 동적으로 조회되어야 한다.                                                                                                                                                                                                           | **Medium**  | ✅ 구현 |
+| **FR-11** ⭐ | **통합 해시태그 시스템** | **4개 영역 통합 관리**      | - globalHashtags 테이블을 중심으로 커뮤니티, 플래너, 라이프스타일 채팅, 지출 영역의 해시태그를 통합 관리해야 한다.<br>- 각 영역별 연결 테이블(communityPostHashtags, plannerEventHashtags, lifestylechatmessagehashtags, spendingHashtags)을 통해 관계를 관리해야 한다.<br>- 실시간 인기 해시태그 조회 함수(get_trending_hashtags_for_lifestyle, get_popular_hashtags_in_room)를 제공해야 한다. | **High** ⭐ | ✅ 구현 |
 
 ---
 
-## 💡 프로젝트 소개
+### 🛡️ 비기능적 요구사항 요약 (Non-Functional Requirements)
 
-### 🎯 프로젝트 개요
+> 시스템의 품질, 성능, 보안 등과 관련된 요구사항
 
-**Fetpal (펫팔)**은 AI 기술을 활용하여 반려동물의 건강 이상 징후를 초기에 파악하고, 상황별 대처 방안을 제시하여 보호자의 불안감을 해소하는 것을 목표로 하는 **AI 기반 반려동물 통합 케어 플랫폼**입니다.
-
-> **💡 명칭의 의미**: **Family**(가족) + **Vet**(수의사) + **Pet**(반려동물) + **Pal**(친구)의 합성어로, 가족과 반려동물이 함께하는 건강한 일상을 수의학적 지식과 친구 같은 AI가 도와준다는 의미를 담고 있습니다.
-
----
-
-### 🚨 해결하고자 하는 문제
-
-<div align="center">
-
-#### **🏥 응급 상황 대처의 어려움**
-
-> _"새벽 2시, 강아지 눈이 갑자기 빨개졌는데 병원은 문을 닫았고, 응급실은 너무 멀어요. 지금 당장 가야 할까요?"_
->
-> _"피부에 뾰루지 같은 게 났는데, 병원 가기엔 애매하고 그냥 두기엔 불안해요."_
-
-#### **🐶 초보 반려인의 일상 케어 고민**
-
-> _"타지에서 처음 강아지를 키우는데, 하루에 몇 번 밥을 줘야 하는지, 언제 산책을 시켜야 하는지, 기본적인 훈련은 어떻게 시켜야 하는지 아무것도 모르겠어요."_
-
-**반려동물 1500만 시대, 수많은 보호자들이 위와 같은 고민을 매일 겪고 있습니다.**
-
-</div>
+| ID            | 구분              | 요구사항                | 상세 설명 (Metric)                                                                                                                                                                                                        | 상태    |
+| :------------ | :---------------- | :---------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | :------ |
+| **NFR-01**    | **성능**          | **AI 분석 응답 시간**   | - 사용자가 이미지를 업로드한 후, AI 분석 결과를 5초 이내에 받아볼 수 있어야 한다.<br>- FastAPI 서버에서 YOLO 추론은 평균 1-3초 이내 완료되어야 한다.                                                                      | ✅ 달성 |
+| **NFR-02**    | **성능**          | **페이지 로드 속도**    | - 주요 페이지(메인, 커뮤니티, 진단)의 로딩 시간은 2초를 넘지 않아야 한다. (LCP 기준)<br>- Next.js SSR/CSR 하이브리드 렌더링으로 최적화되어야 한다.                                                                        | ✅ 달성 |
+| **NFR-03**    | **사용성**        | **반응형 웹 디자인** ⭐ | - 데스크톱, 태블릿, 모바일 등 다양한 디바이스 환경에서 UI가 깨지지 않고 최적화된 형태로 보여야 한다.<br>- **4개 브레이크포인트 대응**: 1280px (데스크톱 대화면), 900px (태블릿 가로), 768px (태블릿 세로), 480px (모바일) | ✅ 달성 |
+| **NFR-04**    | **사용성**        | **직관적인 UI/UX**      | - 모든 기능은 사용자가 별도의 학습 없이 직관적으로 사용할 수 있도록 설계되어야 한다.<br>- 라이프스타일 채팅은 말풍선 스타일, 타임스탬프, 읽음 표시 등 현대적 채팅 UI/UX를 제공해야 한다.                                  | ✅ 달성 |
+| **NFR-05**    | **신뢰성/가용성** | **서비스 가동률**       | - 시스템은 연간 99.5% 이상의 가동률을 유지해야 한다. (계획된 점검 시간 제외)<br>- Supabase BaaS 인프라를 통해 높은 가용성을 확보해야 한다.                                                                                | ✅ 달성 |
+| **NFR-06**    | **보안**          | **데이터 격리**         | - Supabase의 RLS(Row Level Security) 정책을 통해 사용자는 자신의 데이터에만 접근할 수 있어야 한다.<br>- 40개+ 테이블 전체에 RLS 정책이 적용되어야 한다.                                                                   | ✅ 달성 |
+| **NFR-07**    | **보안**          | **민감 정보 보호**      | - 사용자의 비밀번호 등 모든 민감 정보는 암호화되어 데이터베이스에 저장되어야 한다.<br>- API 키는 .env.local, mcp.json에서 관리하고 .gitignore로 유출을 방지해야 한다.                                                     | ✅ 달성 |
+| **NFR-08**    | **확장성**        | **모듈식 아키텍처**     | - AI 서버, 인증, 데이터베이스 등 각 기능은 독립적으로 확장 및 업데이트가 가능한 구조여야 한다. (MSA)<br>- Hook Composition 패턴으로 기능별 독립 구조를 유지해야 한다.                                                     | ✅ 달성 |
+| **NFR-09**    | **법규 준수**     | **수의사법 준수**       | - AI가 제공하는 모든 정보는 '의료적 진단'이 아닌 '비진단적 관찰 소견' 또는 '참고 정보'임을 명확히 고지해야 한다.<br>- RAG 기반 대처 방안도 '참고용 정보'로 명시해야 한다.                                                 | ✅ 달성 |
+| **NFR-10** ⭐ | **성능**          | **RAG 검색 응답 시간**  | - pgvector 기반 Vector Similarity Search는 1초 이내에 관련 게시글 5개를 조회할 수 있어야 한다.<br>- HuggingFace 임베딩(384차원) 생성은 평균 0.5초 이내 완료되어야 한다.                                                   | ✅ 달성 |
 
 ---
 
-### 🎯 솔루션
+## 1. 기능적 요구사항 (Functional Requirements)
 
-Fetpal은 이러한 **불안감과 정보 비대칭 문제**를 해결하고자 합니다:
+### 1.1. 사용자 관리 (User Management)
 
-#### **🐾 응급 상황 지원**
+|   **ID**    | **요구사항**                                                        | **우선순위** |       **상태**       |
+| :---------: | :------------------------------------------------------------------ | :----------: | :------------------: |
+| **FR-U-01** | 사용자는 이메일과 비밀번호로 회원가입할 수 있어야 한다.             |     필수     |       ✅ 완료        |
+| **FR-U-02** | 사용자는 이메일 인증을 통해 계정을 활성화해야 한다.                 |     필수     |       ✅ 완료        |
+| **FR-U-03** | 사용자는 비밀번호를 재설정할 수 있어야 한다.                        |     필수     |       ✅ 완료        |
+| **FR-U-04** | 사용자는 프로필 정보(이름, 전화번호, 주소)를 수정할 수 있어야 한다. |     필수     |       ✅ 완료        |
+| **FR-U-05** | 사용자는 프로필 이미지를 업로드/변경할 수 있어야 한다.              |     필수     |       ✅ 완료        |
+| **FR-U-06** | 사용자는 3D 아바타를 선택할 수 있어야 한다.                         |     선택     |       ✅ 완료        |
+| **FR-U-07** | 사용자는 계정을 탈퇴할 수 있어야 한다.                              |     필수     |       ✅ 완료        |
+| **FR-U-08** | 회원 탈퇴 시 모든 개인 데이터가 삭제되어야 한다.                    |     필수     | ✅ 완료 (2025-11-12) |
 
-- **AI 기술**로 시공간 제약 없이 반려동물의 상태를 객관적으로 확인
-- **검증된 정보**를 바탕으로 침착하게 다음 행동을 결정할 수 있도록 지원
-- **응급 상황의 골든타임**을 놓치지 않도록 즉시 대처 방안 제공
+**세부 사항 (FR-U-08)**:
 
-#### **🐾 초보 반려인 가이드**
-
-- **일상 케어 가이드**: 급식 시간, 산책 방법, 기본 훈련법 등 체계적 정보 제공
-- **커뮤니티 연결**: 경험 있는 반려인들과의 소통을 통한 실질적 조언
-- **단계별 가이드**: 반려동물 성장 단계별 맞춤 케어 정보 제공
-
----
-
-<div align="center">
-
-### 💝 프로젝트 미션
-
-> **"내 선택으로 내게 온 사랑스러운 반려동물, Fetpal이 함께 지켜드립니다."**
-
-</div>
+- 라이프스타일 채팅 데이터 삭제 (메시지, 참여 기록, 해시태그)
+- RAG 지식 베이스 삭제 (커뮤니티 기여 데이터)
+- 커뮤니티 데이터 삭제 (게시글, 댓글, 좋아요)
+- 플래너 데이터 삭제 (일정, 지출)
+- 반려동물 데이터 삭제 (프로필, 백신, 건강 기록)
+- Supabase Auth 계정 삭제
 
 ---
 
-## 🎯 주요 기능
+### 1.2. 반려동물 관리 (Pet Management)
 
-| 구분                 | 기능                         | 상세 설명                                                                                                                                              |
-| :------------------- | :--------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **🩺 AI 임시진단**   | 이미지 기반 건강 분석        | 스마트폰으로 촬영한 피부/안구/건강 사진을 **YOLOv8m** 모델로 분석하여 이상 징후를 탐지하고, 신뢰도와 함께 시각적으로 보여줍니다.                       |
-| **💬 AI 어드바이저** | RAG/Multi-LLM 기반 대처 방안 | 분석 결과에 따라, **pgvector RAG + Multi-LLM**(GPT-4/Gemini/Claude)이 검증된 지식 기반의 대처법과 주변 병원 추천 등을 제공합니다.                      |
-| **🗺️ 지도 연동**     | 주변 시설 검색 (LBS)         | **Kakao Map API**와 연동하여 내 위치 기반으로 24시 동물병원, 약국, 펫샵 등의 위치, 평점, 영업시간 등을 즉시 확인할 수 있습니다.                        |
-| **🐾 커뮤니티**      | 지식 공유 및 소셜 네트워킹   | `#해시태그`(예: \#산책, \#간식추천)를 통해 관련 게시글과 **YouTube 케어 영상**을 한번에 보고, **실시간 채팅**으로 동네 펫 친구들과 교류할 수 있습니다. |
-| **🗓️ 스마트 플래너** | 일정 및 지출 통합 관리       | 예방접종 자동 스케줄링, 병원/미용 예약, 사료 구매까지. 캘린더와 가계부를 통합하여 모든 케어 활동을 체계적으로 관리합니다.                              |
-
----
-
-## 🔗 프로젝트 링크
-
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="20" height="20" alt="GitHub"> [GitHub Repository](https://github.com/LYSS-LGU) • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg" width="20" height="20" alt="Vercel"> [Vercel Deployed](https://fetpal.vercel.app) • 📚 [Docs](./docs/)
+|   **ID**    | **요구사항**                                                         | **우선순위** | **상태** |
+| :---------: | :------------------------------------------------------------------- | :----------: | :------: |
+| **FR-P-01** | 사용자는 반려동물을 등록할 수 있어야 한다 (이름, 생년월일, 품종 등). |     필수     | ✅ 완료  |
+| **FR-P-02** | 반려동물 고유 이름(palUniqueName)은 중복되지 않아야 한다.            |     필수     | ✅ 완료  |
+| **FR-P-03** | 사용자는 반려동물 프로필 이미지를 업로드할 수 있어야 한다.           |     필수     | ✅ 완료  |
+| **FR-P-04** | 사용자는 반려동물 3D 아바타를 선택할 수 있어야 한다.                 |     선택     | ✅ 완료  |
+| **FR-P-05** | 사용자는 대표 반려동물(isPrimary)을 설정할 수 있어야 한다.           |     필수     | ✅ 완료  |
+| **FR-P-06** | 사용자는 반려동물 정보를 수정/삭제할 수 있어야 한다.                 |     필수     | ✅ 완료  |
+| **FR-P-07** | 사용자는 반려동물의 건강 기록을 작성할 수 있어야 한다.               |     필수     | ✅ 완료  |
+| **FR-P-08** | 반려동물 등록 시 생년월일 기반으로 백신 일정이 자동 생성되어야 한다. |     필수     | ✅ 완료  |
 
 ---
 
-## 🛠️ 기술 스택 (Tech Stack)
+### 1.3. 백신 관리 (Vaccination Management)
 
-### 💻 Frontend
-
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" width="20" height="20" alt="Next.js"> Next.js 14 • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="20" height="20" alt="React"> React 18 • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" width="20" height="20" alt="TypeScript"> TypeScript • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" width="20" height="20" alt="CSS3"> CSS Modules
-
-### 🗄️ Backend
-
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg" width="20" height="20" alt="Supabase"> Supabase BaaS • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" width="20" height="20" alt="PostgreSQL"> PostgreSQL + pgvector • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" width="20" height="20" alt="FastAPI"> FastAPI • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" width="20" height="20" alt="Python"> Python 3.10
-
-### 🤖 AI/ML
-
-<img src="https://cdn.simpleicons.org/yolo/00FFFF" width="20" height="20" alt="YOLO"> YOLOv8m • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" width="20" height="20" alt="PyTorch"> PyTorch • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg" width="20" height="20" alt="OpenCV"> OpenCV • <img src="https://cdn.simpleicons.org/huggingface/FFD21E" width="20" height="20" alt="HuggingFace"> HuggingFace Embeddings
-
-### 🧠 LLM & RAG
-
-<img src="https://cdn.simpleicons.org/openai/412991" width="20" height="20" alt="OpenAI"> OpenAI GPT-4 • <img src="https://cdn.simpleicons.org/googlegemini/8E75B2" width="20" height="20" alt="Gemini"> Google Gemini • <img src="https://cdn.simpleicons.org/anthropic/FF6B35" width="20" height="20" alt="Claude"> Anthropic Claude • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" width="20" height="20" alt="pgvector"> pgvector RAG
-
-### 🚀 Infrastructure & Deployment
-
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg" width="20" height="20" alt="Vercel"> Vercel • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" width="20" height="20" alt="AWS"> AWS EC2 • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" width="20" height="20" alt="Git"> Git • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="20" height="20" alt="GitHub"> GitHub
-
-### 🌐 External APIs
-
-<img src="https://cdn.simpleicons.org/kakao/FFCD00" width="20" height="20" alt="Kakao"> Kakao Map API • <img src="https://cdn.simpleicons.org/youtube/FF0000" width="20" height="20" alt="YouTube"> YouTube Data API
+|   **ID**    | **요구사항**                                                        | **우선순위** | **상태** |
+| :---------: | :------------------------------------------------------------------ | :----------: | :------: |
+| **FR-V-01** | 시스템은 6종 백신(DHPPL, 켄넬코프, 광견병 등)을 지원해야 한다.      |     필수     | ✅ 완료  |
+| **FR-V-02** | 반려동물 생년월일 기반으로 백신 일정이 자동 생성되어야 한다.        |     필수     | ✅ 완료  |
+| **FR-V-03** | 사용자는 백신 접종 완료를 체크할 수 있어야 한다.                    |     필수     | ✅ 완료  |
+| **FR-V-04** | 백신 일정이 플래너와 실시간 양방향 동기화되어야 한다.               |     필수     | ✅ 완료  |
+| **FR-V-05** | 백신 긴급도(지연/긴급/곧예정/정상)가 색상으로 표시되어야 한다.      |     필수     | ✅ 완료  |
+| **FR-V-06** | 구조/입양 반려동물은 수동 백신 일정 입력을 지원해야 한다.           |     필수     | ✅ 완료  |
+| **FR-V-07** | 백신 접종 현황 요약(completionRate, nextDueDate)이 제공되어야 한다. |     필수     | ✅ 완료  |
 
 ---
 
-## 🏗️ 시스템 아키텍처
+### 1.4. AI 임시진단 (AI Health Check)
 
-> 상세한 아키텍처는 **[04*시스템*아키텍처.md](./docs/04_시스템_아키텍처.md)**에서 확인할 수 있습니다.
+|    **ID**    | **요구사항**                                                           | **우선순위** | **상태** |
+| :----------: | :--------------------------------------------------------------------- | :----------: | :------: |
+| **FR-AI-01** | 사용자는 반려동물 이미지를 업로드할 수 있어야 한다 (Drag & Drop 지원). |     필수     | ✅ 완료  |
+| **FR-AI-02** | 시스템은 3종 YOLO 모델(Health, Eyes, Skin)을 지원해야 한다.            |     필수     | ✅ 완료  |
+| **FR-AI-03** | AI 분석 결과는 바운딩 박스로 시각화되어야 한다.                        |     필수     | ✅ 완료  |
+| **FR-AI-04** | AI 분석 결과는 신뢰도(confidence)와 심각도(severity)를 포함해야 한다.  |     필수     | ✅ 완료  |
+| **FR-AI-05** | 사용자는 AI 분석 결과에 대한 LLM 조언을 받을 수 있어야 한다.           |     필수     | ✅ 완료  |
+| **FR-AI-06** | 사용자는 3개 LLM(GPT-4, Gemini, Claude) 중 선택할 수 있어야 한다.      |     필수     | ✅ 완료  |
+| **FR-AI-07** | AI 서버 장애 시 사용자에게 명확한 에러 메시지가 표시되어야 한다.       |     필수     | ✅ 완료  |
+| **FR-AI-08** | 이미지 분석 중 로딩 상태가 표시되어야 한다.                            |     필수     | ✅ 완료  |
 
-```mermaid
-graph TB
-    User[👤 사용자<br/>Desktop / Mobile] --> Frontend[🌐 Frontend Layer]
-    Frontend --> Next[Next.js 14 App Router]
-    Frontend --> Hooks[Hook Composition]
-    Frontend --> CSS[CSS Modules + BEM]
+**YOLO 모델 성능 기준**:
 
-    Next --> ClientComp[Client Components]
-    Next --> ServerComp[Server Components]
-    Next --> APIRoute[API Routes]
-
-    Frontend --> Supabase[☁️ Supabase BaaS]
-    Frontend --> FastAPI[🐍 FastAPI AI Server]
-    Frontend --> KakaoAPI[🗺️ Kakao Map API]
-    Frontend --> LLM[🤖 LLM APIs]
-
-    Supabase --> PostgreSQL[(🐘 PostgreSQL<br/>+ pgvector)]
-    Supabase --> Auth[🔐 Supabase Auth<br/>JWT Tokens]
-    Supabase --> Storage[📦 Supabase Storage<br/>S3 Compatible]
-    Supabase --> Realtime[⚡ Supabase Realtime<br/>WebSocket]
-
-    FastAPI --> YOLO[🤖 YOLO Models]
-    YOLO --> SkinModel[Skin Model<br/>피부 질환 6종]
-    YOLO --> EyesModel[Eyes Model<br/>안구 질환 30종]
-    YOLO --> HealthModel[Health Model<br/>전신 건강 3종]
-
-    PostgreSQL --> RAG[🧠 RAG System<br/>pgvector]
-    RAG --> HuggingFace[🤗 HuggingFace<br/>Embedding API]
-
-    LLM --> GPT[OpenAI GPT-4]
-    LLM --> Gemini[Google Gemini]
-    LLM --> Claude[Anthropic Claude]
-
-    style User fill:#E3F2FD
-    style Frontend fill:#F3E5F5
-    style Supabase fill:#E0F2F1
-    style FastAPI fill:#FCE4EC
-    style PostgreSQL fill:#FFF3E0
-    style RAG fill:#E8EAF6
-```
-
-### 🎯 핵심 아키텍처 특징
-
-| 영역         | 기술             | 설명                           |
-| :----------- | :--------------- | :----------------------------- |
-| **Frontend** | Hook Composition | 60% 코드 감소, 재사용성 극대화 |
-| **Frontend** | Co-location      | 컴포넌트/Hook/스타일 통합 관리 |
-| **Frontend** | 4단계 반응형     | 400px ~ 1280px+ 대응           |
-| **Backend**  | Supabase BaaS    | 80% 백엔드 개발 시간 단축      |
-| **Backend**  | 47개 RLS 정책    | Row Level Security 적용        |
-| **AI**       | 3종 YOLO 모델    | Skin/Health/Eyes 통합 진단     |
-| **AI**       | RAG + Multi-LLM  | pgvector + GPT-4/Gemini/Claude |
+- **Health 모델**: mAP50 ≥ 85% (실제: 88.2%) ✅
+- **Eyes 모델**: mAP50 ≥ 20% (실제: 25.4%) ✅
+- **Skin 모델**: mAP50 ≥ 15% (실제: 18.3%) ✅
 
 ---
 
-## 🔄 시스템 흐름도
+### 1.5. RAG 지식 검색 (RAG System) ⭐⭐⭐
 
-> 상세한 흐름도는 **[03*시스템*흐름도.md](./docs/03_시스템_흐름도.md)**에서 확인할 수 있습니다.
+|    **ID**     | **요구사항**                                                   | **우선순위** |       **상태**       |
+| :-----------: | :------------------------------------------------------------- | :----------: | :------------------: |
+| **FR-RAG-01** | 사용자는 증상 키워드로 유사한 경험담을 검색할 수 있어야 한다.  |     필수     | ✅ 완료 (2025-10-14) |
+| **FR-RAG-02** | 검색 결과는 코사인 유사도 기반으로 정렬되어야 한다.            |     필수     |       ✅ 완료        |
+| **FR-RAG-03** | 커뮤니티 게시글 작성 시 자동으로 임베딩이 생성되어야 한다.     |     필수     |       ✅ 완료        |
+| **FR-RAG-04** | 검색 결과는 품질 점수(quality_score)로 필터링되어야 한다.      |     필수     |       ✅ 완료        |
+| **FR-RAG-05** | RAG 검색 결과를 LLM에 Context로 전달하여 답변을 생성해야 한다. |     필수     |       ✅ 완료        |
+| **FR-RAG-06** | 지식 베이스는 출처(source) 추적이 가능해야 한다.               |     필수     |       ✅ 완료        |
 
-### 🩺 AI 건강진단 플로우
+**RAG 시스템 세부 사항**:
 
-```mermaid
-sequenceDiagram
-    actor User
-    participant Frontend
-    participant Supabase
-    participant AI_Server
-    participant YOLO
-    participant RAG
-    participant LLM
-
-    User->>Frontend: 사진 업로드
-    Frontend->>Supabase: 이미지 저장
-    Supabase-->>Frontend: 이미지 URL
-    Frontend->>AI_Server: 분석 요청
-    AI_Server->>YOLO: 이미지 분석
-    YOLO-->>AI_Server: 검출 결과
-    AI_Server->>RAG: 지식 베이스 검색
-    RAG->>Supabase: pgvector 유사도 검색
-    Supabase-->>RAG: 관련 문서
-    RAG-->>AI_Server: 컨텍스트
-    AI_Server->>LLM: 최종 응답 생성
-    LLM-->>AI_Server: 대처 방안
-    AI_Server-->>Frontend: JSON 응답
-    Frontend-->>User: 결과 시각화
-```
+- **임베딩 모델**: HuggingFace sentence-transformers/all-MiniLM-L6-v2
+- **벡터 차원**: 384차원
+- **검색 방식**: pgvector + 코사인 유사도
+- **자동 수집**: 커뮤니티 게시글 → 트리거 → 임베딩 생성
 
 ---
 
-## 💬 실제 사용 화면
+### 1.6. 플래너 (Planner)
 
-> **📸 [screenshots/](./screenshots/)** 폴더에서 더 많은 실제 사용 화면을 확인할 수 있습니다.
-
-### 🤖 LLM-RAG 프롬프팅 - 일반 채팅
-
-반려동물 케어에 대한 일상적인 질문에 RAG 시스템이 검증된 지식 기반으로 답변합니다.
-
-<div align="center">
-
-|                               RAG 채팅 예시 1                                |             RAG 채팅 예시 2 (해시태그 활용)              |
-| :--------------------------------------------------------------------------: | :------------------------------------------------------: |
-|            ![AI일반채팅1](./screenshots/rag_chat/AI일반채팅1.png)            |  ![AI일반채팅2](./screenshots/rag_chat/AI일반채팅2.png)  |
-|                               RAG 채팅 예시 3                                |                     RAG 채팅 예시 4                      |
-|            ![AI일반채팅3](./screenshots/rag_chat/AI일반채팅3.png)            |  ![AI일반채팅4](./screenshots/rag_chat/AI일반채팅4.png)  |
-|                         RAG 채팅 예시 5 (혼합 채팅)                          |  해시태그 클릭시 퀵가이드<br/>(예: \#산책, \#간식추천)   |
-| ![AI일반해시태그혼합채팅](./screenshots/rag_chat/AI일반해시태그혼합채팅.png) | ![해시태그클릭](./screenshots/rag_chat/해시태그클릭.png) |
-
-</div>
-
-### 🩺 YOLO + RAG 통합 진단
-
-> **📸 [screenshots/yolo_diagnosis/](./screenshots/yolo_diagnosis/)** 폴더에서 더 많은 진단 화면을 확인할 수 있습니다.
-
-이미지 분석과 RAG 시스템을 결합하여 전문적인 건강 진단과 대처 방안을 제공합니다.
-
-<div align="center">
-
-|                        AI 이미지 분석                         |                         진단 결과                         |                          병원 방문 판단                           |
-| :-----------------------------------------------------------: | :-------------------------------------------------------: | :---------------------------------------------------------------: |
-| ![이미지분석](./screenshots/yolo_diagnosis/01_이미지분석.png) | ![진단결과](./screenshots/yolo_diagnosis/02_진단결과.png) | ![병원방문판단](./screenshots/yolo_diagnosis/03_병원방문판단.png) |
-
-</div>
-
-> **💡 핵심 기능:**
->
-> - ✅ **RAG System**: pgvector 기반 유사도 검색으로 정확한 답변 제공
-> - ✅ **Multi-LLM**: GPT-4/Gemini/Claude 중 최적의 모델 선택
-> - ✅ **YOLO Integration**: 3종 모델(Skin/Health/Eyes) 통합 분석
-> - ✅ **Real-time Response**: 평균 2-3초 내 응답 생성
+|    **ID**    | **요구사항**                                                                   | **우선순위** | **상태** |
+| :----------: | :----------------------------------------------------------------------------- | :----------: | :------: |
+| **FR-PL-01** | 사용자는 달력에서 날짜를 클릭하여 일정을 생성할 수 있어야 한다.                |     필수     | ✅ 완료  |
+| **FR-PL-02** | 사용자는 드래그앤드롭으로 연속 일정을 생성할 수 있어야 한다.                   |     필수     | ✅ 완료  |
+| **FR-PL-03** | 일정은 7가지 타입(general, medical, grooming, vaccination 등)을 지원해야 한다. |     필수     | ✅ 완료  |
+| **FR-PL-04** | 사용자는 일정을 완료 체크할 수 있어야 한다.                                    |     필수     | ✅ 완료  |
+| **FR-PL-05** | 백신 일정과 플래너가 실시간 양방향 동기화되어야 한다.                          |     필수     | ✅ 완료  |
+| **FR-PL-06** | 사용자는 지출(Expense)을 카테고리별로 기록할 수 있어야 한다.                   |     필수     | ✅ 완료  |
+| **FR-PL-07** | 월별 지출 총액이 자동 계산되어야 한다.                                         |     필수     | ✅ 완료  |
+| **FR-PL-08** | 일정과 지출에 해시태그를 추가할 수 있어야 한다.                                |     필수     | ✅ 완료  |
+| **FR-PL-09** | 플래너는 반응형 디자인을 지원해야 한다.                                        |     필수     | ✅ 완료  |
 
 ---
 
-## 🗄️ 데이터베이스 설계
+### 1.7. 커뮤니티 (Community)
 
-> 상세한 ERD는 **[05_ERD.md](./docs/05_ERD.md)**에서 확인할 수 있습니다.
-
-### 📊 테이블 구조 요약
-
-| 영역             | 테이블 수 | 주요 테이블                                       |
-| :--------------- | :-------: | :------------------------------------------------ |
-| **사용자/인증**  |    3개    | profiles, profileCompletion, userSettings         |
-| **반려동물**     |    4개    | palProfiles, palHealthRecords, vaccinations       |
-| **커뮤니티**     |    9개    | communityPosts, postComments, postLikes, events   |
-| **라이프스타일** |    3개    | lifestylePosts, lifestyleRooms, lifestyleMessages |
-| **플래너**       |    6개    | plannerEvents, plannerExpenses, eventReminders    |
-| **병원/시설**    |    3개    | petHospitals, hospitalReviews, hospitalBookmarks  |
-| **해시태그**     |    4개    | hashTags, communityHashTags, lifestyleHashTags    |
-| **AI/지식**      |    3개    | pet_knowledge_base(RAG), aiAnalysisHistory        |
-| **파일/시스템**  |    3개    | fileMetadata, notifications, systemLogs           |
-
-**총 40개+ 테이블**로 체계적으로 설계되었습니다.
+|    **ID**    | **요구사항**                                                            | **우선순위** |       **상태**       |
+| :----------: | :---------------------------------------------------------------------- | :----------: | :------------------: |
+| **FR-CM-01** | 사용자는 게시글을 작성할 수 있어야 한다 (제목, 내용, 이미지, 해시태그). |     필수     |       ✅ 완료        |
+| **FR-CM-02** | 사용자는 사용자/반려동물 프로필 중 작성자를 선택할 수 있어야 한다.      |     필수     |       ✅ 완료        |
+| **FR-CM-03** | 게시글에서 #{텍스트} 형식의 해시태그가 자동 추출되어야 한다.            |     필수     |       ✅ 완료        |
+| **FR-CM-04** | 사용자는 게시글에 좋아요를 누를 수 있어야 한다.                         |     필수     |       ✅ 완료        |
+| **FR-CM-05** | 좋아요 수(likesCount)는 트리거로 자동 집계되어야 한다.                  |     필수     | ✅ 완료 (2025-10-04) |
+| **FR-CM-06** | 사용자는 게시글에 댓글을 작성할 수 있어야 한다.                         |     필수     |       ✅ 완료        |
+| **FR-CM-07** | 댓글은 실시간으로 동기화되어야 한다 (Supabase Realtime).                |     필수     | ✅ 완료 (2025-11-07) |
+| **FR-CM-08** | 댓글 작성 후 새로고침 없이 즉시 반영되어야 한다.                        |     필수     | ✅ 완료 (2025-11-07) |
+| **FR-CM-09** | 게시글 모달 내 댓글과 피드 카드 댓글이 동기화되어야 한다.               |     필수     | ✅ 완료 (2025-11-07) |
+| **FR-CM-10** | 커뮤니티는 반응형 디자인을 지원해야 한다.                               |     필수     | ✅ 완료 (2025-11-06) |
 
 ---
 
-## 📊 프로젝트 성과
+### 1.8. 라이프스타일 실시간 채팅 (Lifestyle Chat) ⭐⭐⭐
 
-### 🎯 주요 지표
+|    **ID**    | **요구사항**                                                       | **우선순위** |       **상태**       |
+| :----------: | :----------------------------------------------------------------- | :----------: | :------------------: |
+| **FR-LC-01** | 사용자는 글로벌 로비 채팅방에 참여할 수 있어야 한다.               |     필수     | ✅ 완료 (2025-10-07) |
+| **FR-LC-02** | 사용자는 해시태그 주제별 채팅방을 생성/참여할 수 있어야 한다.      |     필수     | ✅ 완료 (2025-10-07) |
+| **FR-LC-03** | 채팅 메시지는 실시간으로 전송/수신되어야 한다 (Supabase Realtime). |     필수     | ✅ 완료 (2025-10-07) |
+| **FR-LC-04** | 사용자는 채팅 메시지에 이미지를 첨부할 수 있어야 한다.             |     필수     | ✅ 완료 (2025-10-07) |
+| **FR-LC-05** | 채팅 메시지에서 #{텍스트} 형식의 해시태그가 자동 추출되어야 한다.  |     필수     | ✅ 완료 (2025-10-08) |
+| **FR-LC-06** | 실시간 인기 해시태그 Top 5가 표시되어야 한다.                      |     필수     | ✅ 완료 (2025-10-08) |
+| **FR-LC-07** | 채팅방별 인기 해시태그가 표시되어야 한다.                          |     필수     | ✅ 완료 (2025-10-08) |
+| **FR-LC-08** | 사용자는 참여 중인 채팅방을 북마크할 수 있어야 한다.               |     필수     | ✅ 완료 (2025-10-07) |
+| **FR-LC-09** | 라이프스타일 채팅은 반응형 디자인을 지원해야 한다.                 |     필수     | ✅ 완료 (2025-11-10) |
+| **FR-LC-10** | 4단계 브레이크포인트(400px, 768px, 900px, 1280px)를 지원해야 한다. |     필수     | ✅ 완료 (2025-11-10) |
 
-| 지표                  |  목표 |           달성 | 달성률  |
-| :-------------------- | ----: | -------------: | :-----: |
-| **AI 모델 정확도**    |   80% | 88.2% (Health) | ✅ 110% |
-| **데이터 수집**       |  500K |           668K | ✅ 134% |
-| **백엔드 테이블**     |  30개 |          40개+ | ✅ 133% |
-| **RLS 정책**          |  30개 |           47개 | ✅ 157% |
-| **프론트엔드 페이지** |  15개 |          20개+ | ✅ 133% |
-| **반응형 지원**       | 3단계 |          4단계 | ✅ 133% |
+**라이프스타일 채팅 세부 사항** (2025-11-10 완성):
 
-### 🏆 기술적 성과
-
-- ✅ **Hook Composition 패턴**: 60% 코드 감소
-- ✅ **Co-location 아키텍처**: 유지보수성 200% 향상
-- ✅ **RAG 시스템 구축**: pgvector + Multi-LLM 통합
-- ✅ **실시간 채팅**: Supabase Realtime 활용
-- ✅ **4단계 반응형**: 400px ~ 1280px+ 대응
-- ✅ **통합 해시태그**: 4개 영역 통합 시스템
-
----
-
-## 🚀 시작하기
-
-### 📋 사전 요구사항
-
-- Node.js 18.x 이상
-- Python 3.10 이상
-- Supabase 계정
-- OpenAI/Gemini/Claude API 키
-
-### 🔧 설치 및 실행
-
-```bash
-# 저장소 클론
-git clone https://github.com/LYSS-LGU/Fetpal.git
-cd Fetpal
-
-# 프론트엔드 설정
-npm install
-cp .env.example .env.local
-# .env.local 파일에 Supabase 키 입력
-
-# 개발 서버 실행
-npm run dev
-
-# AI 서버 설정 (별도 터미널)
-cd ai-server
-pip install -r requirements.txt
-# .env 파일에 API 키 입력
-
-# AI 서버 실행
-uvicorn main:app --reload
-```
-
-### 🌐 배포
-
-- **Frontend**: Vercel (자동 배포)
-- **AI Server**: AWS EC2 (수동 배포)
-- **Database**: Supabase (클라우드)
+- **반응형 디자인**: 8개 CSS 파일 반응형 적용
+- **Flexbox 높이 통제**: `align-items: stretch` + `min-height: 0`
+- **Sticky + Tooltip 공존**: `overflow: visible` + Z-Index 레이어링
+- **모바일 슬라이드 탭**: 800px 이하에서 자동 전환
 
 ---
 
-## 🙏 감사의 말 (Acknowledgments)
+### 1.9. 병원 찾기 (Hospital Search)
 
-이 프로젝트는 **LG U+ Why not camp 7기** 3차 프로젝트의 일환으로 진행되었습니다.
-
-프로젝트 진행 과정에서 아낌없는 조언과 지원을 해주신 다음 분들께 깊은 감사를 드립니다:
-
-- **김영리 강사님** (LG U+ Why not camp 7기)
-- **아이그로스 관계자 여러분**
-
-### 🤖 AI 개발 파트너
-
-이 프로젝트는 초보 개발자가 혼자서도 포기하지 않고 완성할 수 있었던 이유는 **Claude AI**와의 페어 프로그래밍 덕분입니다.
-
-**Claude에게 배우고 도움을 받은 것들:**
-
-- 🎯 프로젝트 아키텍처 설계 및 기술 스택 선정 조언
-- 💻 코드 작성, 디버깅, 리팩토링 지원
-- 📚 기술 문서 작성 및 코드 주석 개선
-- 🐛 버그 해결 및 성능 최적화 가이드
-- 🎓 실시간 학습 코칭 및 베스트 프랙티스 제안
+|    **ID**    | **요구사항**                                                       | **우선순위** | **상태** |
+| :----------: | :----------------------------------------------------------------- | :----------: | :------: |
+| **FR-HS-01** | 사용자는 현재 위치 기반으로 주변 동물병원을 검색할 수 있어야 한다. |     필수     | ✅ 완료  |
+| **FR-HS-02** | 검색 결과는 거리순으로 정렬되어야 한다.                            |     필수     | ✅ 완료  |
+| **FR-HS-03** | 지도에 병원 위치가 마커로 표시되어야 한다.                         |     필수     | ✅ 완료  |
+| **FR-HS-04** | 사용자는 특정 병원의 상세 정보를 확인할 수 있어야 한다.            |     필수     | ✅ 완료  |
+| **FR-HS-05** | Kakao Map API를 활용하여 구현되어야 한다.                          |     필수     | ✅ 완료  |
 
 ---
 
-<div align="center">
+### 1.10. 알림 설정 (Notification Settings)
 
-**Made with ❤️ by LYSS with Claude AI**
+|    **ID**    | **요구사항**                                           | **우선순위** |       **상태**       |
+| :----------: | :----------------------------------------------------- | :----------: | :------------------: |
+| **FR-NS-01** | 사용자는 푸시 알림을 on/off 할 수 있어야 한다.         |     필수     |       ✅ 완료        |
+| **FR-NS-02** | 사용자는 플래너 알림을 on/off 할 수 있어야 한다.       |     필수     |       ✅ 완료        |
+| **FR-NS-03** | 사용자는 커뮤니티 알림을 on/off 할 수 있어야 한다.     |     필수     |       ✅ 완료        |
+| **FR-NS-04** | 사용자는 라이프스타일 알림을 on/off 할 수 있어야 한다. |     필수     | ✅ 완료 (2025-11-02) |
 
-**© 2025 Fetpal Project. All rights reserved.**
+---
 
-</div>
+## 2. 비기능적 요구사항 (Non-Functional Requirements)
+
+### 2.1. 성능 (Performance)
+
+|    **ID**    | **요구사항**                                           | **목표** |    **상태**     |
+| :----------: | :----------------------------------------------------- | :------: | :-------------: |
+| **NFR-P-01** | 페이지 초기 로딩 시간은 3초 이내여야 한다.             |  < 3초   | ✅ 달성 (1.8초) |
+| **NFR-P-02** | AI 이미지 분석 응답 시간은 10초 이내여야 한다.         |  < 10초  | ✅ 달성 (3~5초) |
+| **NFR-P-03** | 실시간 채팅 메시지 전송 지연은 1초 이내여야 한다.      |  < 1초   | ✅ 달성 (즉시)  |
+| **NFR-P-04** | 실시간 댓글 동기화 지연은 1초 이내여야 한다.           |  < 1초   | ✅ 달성 (즉시)  |
+| **NFR-P-05** | Hook Composition으로 평균 코드 50% 이상 축소해야 한다. |  ≥ 50%   |  ✅ 달성 (60%)  |
+
+---
+
+### 2.2. 보안 (Security)
+
+|    **ID**    | **요구사항**                                                  | **우선순위** |        **상태**         |
+| :----------: | :------------------------------------------------------------ | :----------: | :---------------------: |
+| **NFR-S-01** | 모든 API는 JWT 인증을 거쳐야 한다.                            |     필수     |         ✅ 완료         |
+| **NFR-S-02** | Row Level Security(RLS) 정책이 모든 테이블에 적용되어야 한다. |     필수     |         ✅ 완료         |
+| **NFR-S-03** | Function Search Path 공격에 안전해야 한다 (서브쿼리 방식).    |     필수     |         ✅ 완료         |
+| **NFR-S-04** | 민감 정보(API Key)는 환경 변수로 관리되어야 한다.             |     필수     |         ✅ 완료         |
+| **NFR-S-05** | Storage는 폴더별 RLS 정책으로 보호되어야 한다.                |     필수     |         ✅ 완료         |
+| **NFR-S-06** | SQL 취약점은 0건이어야 한다.                                  |     필수     |      ✅ 달성 (0건)      |
+| **NFR-S-07** | 비밀번호는 암호화되어 저장되어야 한다.                        |     필수     | ✅ 완료 (Supabase Auth) |
+| **NFR-S-08** | 회원 탈퇴 시 모든 개인 데이터가 삭제되어야 한다.              |     필수     |  ✅ 완료 (2025-11-12)   |
+
+**보안 성과**:
+
+- **SQL 취약점**: 6개 → 0개 (100% 해결)
+- **Supabase Advisor 경고**: 12개 → 0개 (100% 해결)
+
+---
+
+### 2.3. 반응형 디자인 (Responsive Design) ⭐⭐⭐
+
+|    **ID**    | **요구사항**                                 | **브레이크포인트** |       **상태**       |
+| :----------: | :------------------------------------------- | :----------------: | :------------------: |
+| **NFR-R-01** | Desktop 화면(1281px 이상)을 지원해야 한다.   |      ≥ 1281px      |       ✅ 완료        |
+| **NFR-R-02** | 중형 화면(901~1280px)을 지원해야 한다.       |     901-1280px     | ✅ 완료 (2025-11-10) |
+| **NFR-R-03** | 소형 화면(769~900px)을 지원해야 한다.        |     769-900px      | ✅ 완료 (2025-11-10) |
+| **NFR-R-04** | 모바일 화면(400~768px)을 지원해야 한다.      |     400-768px      | ✅ 완료 (2025-11-10) |
+| **NFR-R-05** | 초소형 모바일(400px 이하)을 지원해야 한다.   |      ≤ 400px       | ✅ 완료 (2025-11-10) |
+| **NFR-R-06** | 모든 페이지가 반응형 디자인을 지원해야 한다. |        전체        | ✅ 완료 (2025-11-10) |
+| **NFR-R-07** | 라이프스타일 채팅은 반응형을 지원해야 한다.  |        전체        | ✅ 완료 (2025-11-10) |
+
+**반응형 디자인 세부 사항** (2025-11-10 완성):
+
+- **4단계 브레이크포인트**: 체계적 축소 전략 (10% → 20% → 30% → 50%)
+- **Flexbox 높이 통제**: `align-items: stretch` + `min-height: 0`
+- **Sticky + Tooltip 공존**: `overflow: visible` + Z-Index 레이어링 (0 → 10 → 100 → 199999 → 200000)
+- **8개 CSS 파일**: lifestyle, realtimechat, bookmarktabs, hashtagrooms, chatroom 등
+
+---
+
+### 2.4. 확장성 (Scalability)
+
+|    **ID**     | **요구사항**                                             | **우선순위** |      **상태**      |
+| :-----------: | :------------------------------------------------------- | :----------: | :----------------: |
+| **NFR-SC-01** | Hook Composition 패턴으로 코드 재사용성을 확보해야 한다. |     필수     | ✅ 완료 (60% 축소) |
+| **NFR-SC-02** | Co-location 구조로 기능별 독립성을 확보해야 한다.        |     필수     |      ✅ 완료       |
+| **NFR-SC-03** | React Native 마이그레이션이 가능한 구조여야 한다.        |     선택     |     🚧 준비 중     |
+| **NFR-SC-04** | 새로운 YOLO 모델 추가가 용이해야 한다.                   |     선택     |      ✅ 완료       |
+| **NFR-SC-05** | 새로운 LLM 추가가 용이해야 한다.                         |     선택     |      ✅ 완료       |
+
+---
+
+### 2.5. 유지보수성 (Maintainability)
+
+|    **ID**    | **요구사항**                                     | **우선순위** |      **상태**       |
+| :----------: | :----------------------------------------------- | :----------: | :-----------------: |
+| **NFR-M-01** | BEM 네이밍 패턴을 적용해야 한다.                 |     필수     |       ✅ 완료       |
+| **NFR-M-02** | CSS Modules로 스타일을 관리해야 한다.            |     필수     |       ✅ 완료       |
+| **NFR-M-03** | Path Alias로 절대 경로를 사용해야 한다.          |     필수     | ✅ 완료 (16개 파일) |
+| **NFR-M-04** | 디버깅에 용이한 명확한 클래스명을 사용해야 한다. |     필수     |       ✅ 완료       |
+| **NFR-M-05** | 주요 함수와 컴포넌트에 주석을 작성해야 한다.     |     선택     |     🚧 진행 중      |
+
+---
+
+### 2.6. 사용성 (Usability)
+
+|    **ID**    | **요구사항**                                         | **우선순위** |       **상태**       |
+| :----------: | :--------------------------------------------------- | :----------: | :------------------: |
+| **NFR-U-01** | 직관적인 UI/UX를 제공해야 한다.                      |     필수     |       ✅ 완료        |
+| **NFR-U-02** | 에러 발생 시 명확한 메시지를 표시해야 한다.          |     필수     |       ✅ 완료        |
+| **NFR-U-03** | 로딩 중에는 로딩 스피너를 표시해야 한다.             |     필수     |       ✅ 완료        |
+| **NFR-U-04** | 모바일에서도 데스크톱과 동일한 기능을 제공해야 한다. |     필수     | ✅ 완료 (2025-11-10) |
+| **NFR-U-05** | 다크 / 시스템 모드를 지원해야 한다.                  |     선택     |       ✅ 완료        |
+
+---
+
+### 2.7. 호환성 (Compatibility)
+
+|    **ID**    | **요구사항**                      | **우선순위** | **상태** |
+| :----------: | :-------------------------------- | :----------: | :------: |
+| **NFR-C-01** | Chrome 최신 버전을 지원해야 한다. |     필수     | ✅ 완료  |
+| **NFR-C-02** | Edge 최신 버전을 지원해야 한다.   |     필수     | ✅ 완료  |
+| **NFR-C-03** | 모바일 Chrome을 지원해야 한다.    |     필수     | ✅ 완료  |
+
+---
+
+## 3. 데이터 요구사항 (Data Requirements)
+
+### 3.1. 데이터 품질
+
+|   **ID**    | **요구사항**                                 | **우선순위** |        **상태**         |
+| :---------: | :------------------------------------------- | :----------: | :---------------------: |
+| **DR-Q-01** | YOLO 훈련 데이터는 96% 이상 정제되어야 한다. |     필수     |     ✅ 달성 (96.8%)     |
+| **DR-Q-02** | RAG 지식 베이스는 품질 점수를 가져야 한다.   |     필수     | ✅ 완료 (quality_score) |
+| **DR-Q-03** | 중복 데이터는 자동으로 제거되어야 한다.      |     필수     |         ✅ 완료         |
+
+### 3.2. 데이터 무결성
+
+|   **ID**    | **요구사항**                                                  | **우선순위** | **상태** |
+| :---------: | :------------------------------------------------------------ | :----------: | :------: |
+| **DR-I-01** | 외래 키(Foreign Key) 제약이 모든 관계에 적용되어야 한다.      |     필수     | ✅ 완료  |
+| **DR-I-02** | 고유 제약(Unique Constraint)이 필요한 필드에 적용되어야 한다. |     필수     | ✅ 완료  |
+| **DR-I-03** | CASCADE 삭제 정책이 적절히 적용되어야 한다.                   |     필수     | ✅ 완료  |
+
+---
+
+## 4. 제약 사항 (Constraints)
+
+### 4.1. 기술적 제약
+
+| **제약**         | **내용**                                       |
+| :--------------- | :--------------------------------------------- |
+| **프레임워크**   | Next.js 14 App Router (Pages Router 사용 불가) |
+| **데이터베이스** | Supabase PostgreSQL (다른 DB 사용 불가)        |
+| **AI 모델**      | YOLOv8 (다른 버전 사용 불가)                   |
+| **GPU**          | NVIDIA RTX 4060 8GB (CUDA 12.1 필수)           |
+
+### 4.2. 법적 제약
+
+| **제약**           | **내용**                                         |
+| :----------------- | :----------------------------------------------- |
+| **수의사법**       | AI 진단은 "임시진단"으로만 표현 (확정 진단 불가) |
+| **개인정보보호법** | 회원 탈퇴 시 모든 개인 데이터 삭제 필수          |
+| **저작권법**       | 훈련 데이터는 공공 데이터(AI-Hub) 사용 필수      |
+
+---
+
+## 5. 우선순위 정의
+
+| **우선순위** | **설명**                             | **구현 시기** |
+| :----------: | :----------------------------------- | :-----------: |
+|   **필수**   | 프로젝트 핵심 기능, 반드시 구현 필요 |   Phase 1-5   |
+|   **중요**   | 사용자 경험 향상, 가능한 구현        |   Phase 6-7   |
+|   **선택**   | 추가 기능, 여유 있을 때 구현         |   Phase 8+    |
+
+---
+
+## 6. 변경 이력 (Change History)
+
+|  **날짜**  | **버전** | **변경 내용**                       |  **작성자**   |
+| :--------: | :------: | :---------------------------------- | :-----------: |
+| 2025-10-14 |   v3.1   | RAG 시스템 요구사항 추가            |     LYSS      |
+| 2025-11-02 |   v3.2   | 라이프스타일 알림 설정 추가         |     LYSS      |
+| 2025-11-07 |   v3.3   | 실시간 댓글 시스템 요구사항 추가    |     LYSS      |
+| 2025-11-10 |   v4.0   | 반응형 디자인 요구사항 추가         |     LYSS      |
+| 2025-11-12 |   v4.1   | 회원 탈퇴 데이터 삭제 요구사항 추가 |     LYSS      |
+| 2025-11-14 |   v4.2   | 4차 스프린트 최종 정리              | LYSS + Claude |
+
+---
+
+**📝 문서 정보**
+
+- **작성일**: 2025-11-14
+- **작성자**: LYSS with Claude
+- **버전**: v4.2 (4차 스프린트)
+- **이전 문서**: [05_ERD.md](./05_ERD.md)
+- **다음 문서**: [07*성능*평가\_결과서.md](./07_성능_평가_결과서.md)

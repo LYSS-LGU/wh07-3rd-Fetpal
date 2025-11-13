@@ -696,7 +696,7 @@ const posts: Post[] = await supabase
 
 - **작성일**: 2025-10-06
 - **최신화**: 2025-11-14
-- **작성자**: 석이 with <img src="../assets/Claude_AI_logo.svg" width="50" height="50" style="vertical-align: middle;">
+- **작성자**: LYSS with <img src="../assets/Claude_AI_logo.svg" width="50" height="50" style="vertical-align: middle;">
 - **버전**: v2.0 (4차 스프린트 최종)
 - **이전 문서**: [07_성능_평가_결과서.md](./07_성능_평가_결과서.md)
 - **다음 문서**: [09_AI_모델_정의서.md](./09_AI_모델_정의서.md)

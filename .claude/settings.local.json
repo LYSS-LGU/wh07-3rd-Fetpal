@@ -5,7 +5,9 @@
       "Bash(findstr:*)",
       "Bash(python:*)",
       "Bash(pip install:*)",
-      "Bash(winget install:*)"
+      "Bash(winget install:*)",
+      "Bash(dir:*)",
+      "Bash(start \"C:\\Users\\leeys\\Desktop\\LYSS_LGU\\Fetpal_project3\\매니저님_제출용_PDF\\html_preview\\01_프로젝트_기획서.html\")"
     ],
     "deny": [],
     "ask": []

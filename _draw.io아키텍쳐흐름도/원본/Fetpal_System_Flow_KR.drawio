@@ -350,7 +350,7 @@
         <mxCell id="peyI5YnyJLQdvUVsqwEJ-89" value="&amp;nbsp;UI에 분석 결과 + 추천 병원 + 대처 방법 표시" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#66BB6A;strokeColor=#2E7D32;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" vertex="1" parent="peyI5YnyJLQdvUVsqwEJ-76">
           <mxGeometry x="40" y="800" width="720" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="peyI5YnyJLQdvUVsqwEJ-90" value="&amp;nbsp;Toast 알림: ✅ 분석이 완료되었습니다!" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#66BB6A;strokeColor=#2E7D32;fontColor=#FFFFFF;fontSize=12;fontStyle=1;shadow=1;" vertex="1" parent="peyI5YnyJLQdvUVsqwEJ-76">
+        <mxCell id="peyI5YnyJLQdvUVsqwEJ-90" value="&amp;nbsp;Toast 알림: ✅ 분LYSS 완료되었습니다!" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#66BB6A;strokeColor=#2E7D32;fontColor=#FFFFFF;fontSize=12;fontStyle=1;shadow=1;" vertex="1" parent="peyI5YnyJLQdvUVsqwEJ-76">
           <mxGeometry x="40" y="860" width="720" height="40" as="geometry" />
         </mxCell>
         <mxCell id="peyI5YnyJLQdvUVsqwEJ-91" value="⏱️ 전체 소요 시간: 약 3-4초&#xa;(이미지 업로드 1초 + AI 분석 1-2초 + DB 저장 0.5초 + UI 업데이트 0.5초)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F9A825;fontSize=12;fontStyle=1;align=center;" vertex="1" parent="peyI5YnyJLQdvUVsqwEJ-76">

@@ -57,3 +57,7 @@ _스프린트발표/
 
 # Draw.io 다이어그램 원본 파일 (보관용, Git 제외)
 _draw.io아키텍쳐흐름도/
+
+# 원본 스크린샷 폴더 (screenshots/로 정리됨, Git 제외)
+LLMRAG_일반채팅/
+LLMRAG_YOLO채팅/

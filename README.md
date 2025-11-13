@@ -285,6 +285,42 @@ sequenceDiagram
 
 ---
 
+## 💬 실제 사용 화면
+
+### 🤖 RAG 기반 일반 상담
+
+반려동물 케어에 대한 일상적인 질문에 RAG 시스템이 검증된 지식 기반으로 답변합니다.
+
+<div align="center">
+
+| 일상 케어 상담 | 건강 관리 조언 |
+|:---:|:---:|
+| ![일상케어상담](./screenshots/rag_chat/01_일상케어상담.png) | ![건강관리조언](./screenshots/rag_chat/02_건강관리조언.png) |
+| 식습관 및 운동량 상담 | 예방접종 스케줄 안내 |
+| ![식습관운동상담](./screenshots/rag_chat/03_식습관운동상담.png) | ![예방접종안내](./screenshots/rag_chat/04_예방접종안내.png) |
+
+</div>
+
+### 🩺 YOLO + RAG 통합 진단
+
+이미지 분석과 RAG 시스템을 결합하여 전문적인 건강 진단과 대처 방안을 제공합니다.
+
+<div align="center">
+
+| AI 이미지 분석 | 진단 결과 | 병원 방문 판단 |
+|:---:|:---:|:---:|
+| ![이미지분석](./screenshots/yolo_diagnosis/01_이미지분석.png) | ![진단결과](./screenshots/yolo_diagnosis/02_진단결과.png) | ![병원방문판단](./screenshots/yolo_diagnosis/03_병원방문판단.png) |
+
+</div>
+
+> **💡 핵심 기능:**
+> - ✅ **RAG System**: pgvector 기반 유사도 검색으로 정확한 답변 제공
+> - ✅ **Multi-LLM**: GPT-4/Gemini/Claude 중 최적의 모델 선택
+> - ✅ **YOLO Integration**: 3종 모델(Skin/Health/Eyes) 통합 분석
+> - ✅ **Real-time Response**: 평균 2-3초 내 응답 생성
+
+---
+
 ## 🗄️ 데이터베이스 설계
 
 > 상세한 ERD는 **[05_ERD.md](./docs/05_ERD.md)**에서 확인할 수 있습니다.

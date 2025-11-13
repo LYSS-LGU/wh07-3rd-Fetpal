@@ -7,7 +7,21 @@
       "Bash(pip install:*)",
       "Bash(winget install:*)",
       "Bash(dir:*)",
-      "Bash(start \"C:\\Users\\leeys\\Desktop\\LYSS_LGU\\Fetpal_project3\\매니저님_제출용_PDF\\html_preview\\01_프로젝트_기획서.html\")"
+      "Bash(start \"C:\\Users\\leeys\\Desktop\\LYSS_LGU\\Fetpal_project3\\매니저님_제출용_PDF\\html_preview\\01_프로젝트_기획서.html\")",
+      "Bash(start:*)",
+      "Bash(git rm:*)",
+      "Bash(playwright install:*)",
+      "Bash(cmd /c \"rmdir /s /q \"\"C:\\Users\\leeys\\Desktop\\LYSS_LGU\\Fetpal_project3\\_스프린트발표\\4차스프린트발표_251114(금)\\HTML_PDF\"\"\")",
+      "Bash(xcopy:*)",
+      "Bash(cmd /c:*)",
+      "Bash(del:*)",
+      "Bash(ren:*)",
+      "Bash(move \"07_성능_평가_결과서.md\" \"09_성능_평가_결과서.md\")",
+      "Bash(move \"08_Supabase_BaaS_가이드.md\" \"10_Supabase_BaaS_가이드.md\")",
+      "Bash(move \"09_YOLO_모델_정의서.md\" \"07_YOLO_모델_정의서.md\")",
+      "Bash(move \"10_RAG-LLM_시스템_정의서.md\" \"08_RAG-LLM_시스템_정의서.md\")",
+      "Bash(ls:*)",
+      "Bash(git add:*)"
     ],
     "deny": [],
     "ask": []

@@ -1,24 +1,25 @@
 # 🐾 Fetpal: AI 기반 반려동물 통합 케어 플랫폼
 
-> **프로젝트 기간**: 2025.09.19 ~ 2025.11.20 (9주)  
-> **작성자**: LYSS with <img src="./assets/Claude_AI_logo.svg" width="30" height="30" style="vertical-align: middle;">  
+> **프로젝트 기간**: 2025.09.19 ~ 2025.11.20 (9주)
+> **작성자**: LYSS with Claude
 > **최종 업데이트**: 2025-11-13
 
 ---
 
-## 📖 목차
+## 📖 목차 (Table of Contents)
 
-- [🐾 프로젝트 팀원 소개](#-프로젝트-팀원-소개)
-- [📚 프로젝트 문서](#-프로젝트-문서)
-- [💡 프로젝트 소개](#-프로젝트-소개)
-- [🎯 주요 기능](#-주요-기능)
-- [🛠️ 기술 스택](#️-기술-스택)
-- [🏗️ 시스템 아키텍처](#️-시스템-아키텍처)
-- [🔄 시스템 흐름도](#-시스템-흐름도)
-- [🗄️ 데이터베이스 설계](#️-데이터베이스-설계)
-- [📊 프로젝트 성과](#-프로젝트-성과)
-- [🚀 시작하기](#-시작하기)
-- [📝 라이선스](#-라이선스)
+- [🐾 프로젝트 팀원 소개 (Team)](#-프로젝트-팀원-소개)
+- [📚 프로젝트 문서 (Documentation)](#-프로젝트-문서)
+- [💡 프로젝트 소개 (Introduction)](#-프로젝트-소개)
+- [🎯 주요 기능 (Features)](#-주요-기능)
+- [🔗 프로젝트 링크 (Links)](#-프로젝트-링크)
+- [🛠️ 기술 스택 (Tech Stack)](#️-기술-스택)
+- [🏗️ 시스템 아키텍처 (Architecture)](#️-시스템-아키텍처)
+- [🔄 시스템 흐름도 (Flow)](#-시스템-흐름도)
+- [🗄️ 데이터베이스 설계 (Database)](#️-데이터베이스-설계)
+- [📊 프로젝트 성과 (Results)](#-프로젝트-성과)
+- [🚀 시작하기 (Getting Started)](#-시작하기)
+- [🙏 감사의 말 (Acknowledgments)](#-감사의-말-acknowledgments)
 
 ---
 
@@ -26,13 +27,16 @@
 
 <div align="center">
 
-|                               **프로필**                                | **정보**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| :---------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <img src="./assets/p3_profile.png" width="120" height="120" alt="LYSS"> | **이름**: 이유석 (LYSS)<br>**역할**: 1인 풀스택 개발자<br>**_"하나씩 배워가며 만드는 첫 작품, 혼자여도 포기하지 않는 마음!"_**<br><br>**Contact:**<br>[<img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1566899596/noticon/slhw4nu8hybreryigopq.png" width="25" height="25" alt="GitHub">](https://github.com/LYSS-LGU) [<img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1606895317/noticon/cffnbxeed08p0l4u44ru.png" width="25" height="25" alt="Gmail">](mailto:leeyss1991@gmail.com) [<img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1644169460/noticon/frvhykszxhjz4asz77oi.png" width="25" height="25" alt="Naver">](mailto:lyss91@naver.com) |
+|                            **프로필**                            | **정보**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| :--------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <img src="./p3_profile.png" width="150" height="150" alt="LYSS"> | **이름**: 이유석 (LYSS)<br>**역할**: 1인 초보 개발자 with Claude AI<br>**_"처음부터 하나씩 배워가며 만드는 첫 작품 입니다.<br>혼자여도 할 수 있다는 포기하지 않는 마음!"_**<br><br>**Contact:**<br>[<img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1566899596/noticon/slhw4nu8hybreryigopq.png" width="25" height="25" alt="GitHub">](https://github.com/LYSS-LGU) [<img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1606895317/noticon/cffnbxeed08p0l4u44ru.png" width="25" height="25" alt="Gmail">](mailto:leeyss1991@gmail.com) [<img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1644169460/noticon/frvhykszxhjz4asz77oi.png" width="25" height="25" alt="Naver">](mailto:lyss91@naver.com) |
 
 </div>
 
 ### 👨‍💻 담당 업무
+
+> **💡 개발 파트너**: 이 프로젝트는 초보 개발자가 **Claude AI**와 함께 협업하여 완성했습니다.
+> Claude는 코드 작성, 디버깅, 아키텍처 설계, 문서화 등 전 과정에서 **페어 프로그래밍(바이브코딩)** 파트너로 참여했습니다.
 
 |   **영역**   |         **기술 스택**         | **세부 내용**                            |
 | :----------: | :---------------------------: | :--------------------------------------- |
@@ -50,17 +54,18 @@
 
 ### 📋 핵심 문서
 
-| 번호 | 문서명 | 설명 |
-|:---:|:---|:---|
-| 01 | **[프로젝트 기획서](./docs/01_프로젝트_기획서.md)** | 프로젝트 개요, 목표, 일정 |
-| 02 | **[WBS 최신화](./docs/02_WBS_최신화.md)** | 작업 분해 구조 및 진행 현황 |
-| 03 | **[시스템 흐름도](./docs/03_시스템_흐름도.md)** | 사용자 시나리오 및 데이터 흐름 |
-| 04 | **[시스템 아키텍처](./docs/04_시스템_아키텍처.md)** | 기술 스택 및 시스템 구조 |
-| 05 | **[ERD](./docs/05_ERD.md)** | 데이터베이스 설계 및 관계도 |
-| 06 | **[요구사항 정의서](./docs/06_요구사항_정의서.md)** | 기능적/비기능적 요구사항 |
-| 07 | **[성능 평가 결과서](./docs/07_성능_평가_결과서.md)** | AI 모델 및 시스템 성능 분석 |
-| 08 | **[Supabase BaaS 가이드](./docs/08_Supabase_BaaS_가이드.md)** | BaaS 아키텍처 및 MCP 설명 |
-| 09 | **[AI 모델 정의서](./docs/09_AI_모델_정의서.md)** | YOLO 모델 상세 및 성능 지표 |
+| 번호 | 문서명                                                                                                       | 설명                           |
+| :--: | :----------------------------------------------------------------------------------------------------------- | :----------------------------- |
+|  01  | **[프로젝트 기획서](./docs/01_프로젝트_기획서.md)** • [PDF](./docs/01_프로젝트_기획서.pdf)                   | 프로젝트 개요, 목표, 일정      |
+|  02  | **[WBS 최신화](./docs/02_WBS_최신화.md)** • [PDF](./docs/02_WBS_최신화.pdf)                                  | 작업 분해 구조 및 진행 현황    |
+|  03  | **[시스템 흐름도](./docs/03_시스템_흐름도.md)** • [PDF](./docs/03_시스템_흐름도.pdf)                         | 사용자 시나리오 및 데이터 흐름 |
+|  04  | **[시스템 아키텍처](./docs/04_시스템_아키텍처.md)** • [PDF](./docs/04_시스템_아키텍처.pdf)                   | 기술 스택 및 시스템 구조       |
+|  05  | **[ERD](./docs/05_ERD.md)** • [PDF](./docs/05_ERD_최종스프린트대비.pdf)                                      | 데이터베이스 설계 및 관계도    |
+|  06  | **[요구사항 정의서](./docs/06_요구사항_정의서.md)** • [PDF](./docs/06_요구사항_정의서.pdf)                   | 기능적/비기능적 요구사항       |
+|  07  | **[YOLO 모델 정의서](./docs/07_YOLO_모델_정의서.md)** • [PDF](./docs/07_YOLO_모델_정의서.pdf)                | YOLO 모델 상세 및 성능 지표    |
+|  08  | **[RAG-LLM 시스템 정의서](./docs/08_RAG-LLM_시스템_정의서.md)** • [PDF](./docs/08_RAG-LLM_시스템_정의서.pdf) | RAG 시스템 및 LLM 통합 구조    |
+|  09  | **[성능 평가 결과서](./docs/09_성능_평가_결과서.md)** • [PDF](./docs/09_성능_평가_결과서.pdf)                | AI 모델 및 시스템 성능 분석    |
+|  10  | **[Supabase BaaS 가이드](./docs/10_Supabase_BaaS_가이드.md)** • [PDF](./docs/10_Supabase_BaaS_가이드.pdf)    | BaaS 아키텍처 및 MCP 설명      |
 
 ### 📊 데이터
 
@@ -135,67 +140,53 @@ Fetpal은 이러한 **불안감과 정보 비대칭 문제**를 해결하고자 
 
 ## 🎯 주요 기능
 
-| 구분                 | 기능                        | 상세 설명                                                                                                                                       |
-| :------------------- | :-------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------- |
-| **🩺 AI 임시진단**   | 이미지 기반 건강 분석       | 스마트폰으로 촬영한 피부/안구/건강 사진을 **YOLOv8m** 모델로 분석하여 이상 징후를 탐지하고, 신뢰도와 함께 시각적으로 보여줍니다.      |
-| **💬 AI 어드바이저** | RAG/Multi-LLM 기반 대처 방안 | 분석 결과에 따라, **pgvector RAG + Multi-LLM**(GPT-4/Gemini/Claude)이 검증된 지식 기반의 대처법과 주변 병원 추천 등을 제공합니다.      |
-| **🗺️ 지도 연동**     | 주변 시설 검색 (LBS)        | **Kakao Map API**와 연동하여 내 위치 기반으로 24시 동물병원, 약국, 펫샵 등의 위치, 평점, 영업시간 등을 즉시 확인할 수 있습니다.       |
-| **🐾 커뮤니티**      | 지식 공유 및 소셜 네트워킹  | `#해시태그`를 통해 관련 게시글과 **YouTube 케어 영상**을 한번에 보고, **실시간 채팅**으로 동네 펫 친구들과 교류할 수 있습니다. |
-| **🗓️ 스마트 플래너** | 일정 및 지출 통합 관리      | 예방접종 자동 스케줄링, 병원/미용 예약, 사료 구매까지. 캘린더와 가계부를 통합하여 모든 케어 활동을 체계적으로 관리합니다.              |
+| 구분                 | 기능                         | 상세 설명                                                                                                                         |
+| :------------------- | :--------------------------- | :-------------------------------------------------------------------------------------------------------------------------------- |
+| **🩺 AI 임시진단**   | 이미지 기반 건강 분석        | 스마트폰으로 촬영한 피부/안구/건강 사진을 **YOLOv8m** 모델로 분석하여 이상 징후를 탐지하고, 신뢰도와 함께 시각적으로 보여줍니다.  |
+| **💬 AI 어드바이저** | RAG/Multi-LLM 기반 대처 방안 | 분석 결과에 따라, **pgvector RAG + Multi-LLM**(GPT-4/Gemini/Claude)이 검증된 지식 기반의 대처법과 주변 병원 추천 등을 제공합니다. |
+| **🗺️ 지도 연동**     | 주변 시설 검색 (LBS)         | **Kakao Map API**와 연동하여 내 위치 기반으로 24시 동물병원, 약국, 펫샵 등의 위치, 평점, 영업시간 등을 즉시 확인할 수 있습니다.   |
+| **🐾 커뮤니티**      | 지식 공유 및 소셜 네트워킹   | `#해시태그`(예: \#산책, \#간식추천)를 통해 관련 게시글과 **YouTube 케어 영상**을 한번에 보고, **실시간 채팅**으로 동네 펫 친구들과 교류할 수 있습니다. |
+| **🗓️ 스마트 플래너** | 일정 및 지출 통합 관리       | 예방접종 자동 스케줄링, 병원/미용 예약, 사료 구매까지. 캘린더와 가계부를 통합하여 모든 케어 활동을 체계적으로 관리합니다.         |
 
 ---
 
-## 🛠️ 기술 스택
+## 🔗 프로젝트 링크
 
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github)](https://github.com/LYSS-LGU)
-[![Vercel](https://img.shields.io/badge/Vercel-Deployed-000000?style=for-the-badge&logo=vercel)](https://fetpal.vercel.app)
-[![Docs](https://img.shields.io/badge/Docs-Available-blue?style=for-the-badge&logo=bookstack)](./docs/)
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="20" height="20" alt="GitHub"> [GitHub Repository](https://github.com/LYSS-LGU) • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg" width="20" height="20" alt="Vercel"> [Vercel Deployed](https://fetpal.vercel.app) • 📚 [Docs](./docs/)
+
+---
+
+## 🛠️ 기술 스택 (Tech Stack)
 
 ### 💻 Frontend
 
-<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" alt="Next.js" />
-<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" />
-<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="TypeScript" />
-<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3" />
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" width="20" height="20" alt="Next.js"> Next.js 14 • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="20" height="20" alt="React"> React 18 • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" width="20" height="20" alt="TypeScript"> TypeScript • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" width="20" height="20" alt="CSS3"> CSS Modules
 
 ### 🗄️ Backend
 
-<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg" alt="Supabase" />
-<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL" />
-<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" alt="FastAPI" />
-<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" />
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg" width="20" height="20" alt="Supabase"> Supabase BaaS • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" width="20" height="20" alt="PostgreSQL"> PostgreSQL + pgvector • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" width="20" height="20" alt="FastAPI"> FastAPI • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" width="20" height="20" alt="Python"> Python 3.10
 
 ### 🤖 AI/ML
 
-<img height="50" src="https://cdn.simpleicons.org/yolo/00FFFF" alt="YOLO" />
-<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch" />
-<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg" alt="OpenCV" />
-<img height="50" src="https://cdn.simpleicons.org/huggingface/FFD21E" alt="HuggingFace" />
+<img src="https://cdn.simpleicons.org/yolo/00FFFF" width="20" height="20" alt="YOLO"> YOLOv8m • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" width="20" height="20" alt="PyTorch"> PyTorch • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg" width="20" height="20" alt="OpenCV"> OpenCV • <img src="https://cdn.simpleicons.org/huggingface/FFD21E" width="20" height="20" alt="HuggingFace"> HuggingFace Embeddings
 
 ### 🧠 LLM & RAG
 
-<img height="50" src="https://cdn.simpleicons.org/openai/412991" alt="OpenAI" />
-<img height="50" src="https://cdn.simpleicons.org/googlegemini/8E75B2" alt="Gemini" />
-<img height="50" src="https://cdn.simpleicons.org/anthropic/FF6B35" alt="Claude" />
-<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="pgvector" />
+<img src="https://cdn.simpleicons.org/openai/412991" width="20" height="20" alt="OpenAI"> OpenAI GPT-4 • <img src="https://cdn.simpleicons.org/googlegemini/8E75B2" width="20" height="20" alt="Gemini"> Google Gemini • <img src="https://cdn.simpleicons.org/anthropic/FF6B35" width="20" height="20" alt="Claude"> Anthropic Claude • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" width="20" height="20" alt="pgvector"> pgvector RAG
 
 ### 🚀 Infrastructure & Deployment
 
-<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg" alt="Vercel" />
-<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS" />
-<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" />
-<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" />
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg" width="20" height="20" alt="Vercel"> Vercel • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" width="20" height="20" alt="AWS"> AWS EC2 • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" width="20" height="20" alt="Git"> Git • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="20" height="20" alt="GitHub"> GitHub
 
-### 📦 External APIs
+### 🌐 External APIs
 
-<img height="50" src="https://cdn.simpleicons.org/kakao/FFCD00" alt="Kakao" />
-<img height="50" src="https://cdn.simpleicons.org/youtube/FF0000" alt="YouTube" />
+<img src="https://cdn.simpleicons.org/kakao/FFCD00" width="20" height="20" alt="Kakao"> Kakao Map API • <img src="https://cdn.simpleicons.org/youtube/FF0000" width="20" height="20" alt="YouTube"> YouTube Data API
 
 ---
 
 ## 🏗️ 시스템 아키텍처
 
-> 상세한 아키텍처는 **[04_시스템_아키텍처.md](./docs/04_시스템_아키텍처.md)**에서 확인할 수 있습니다.
+> 상세한 아키텍처는 **[04*시스템*아키텍처.md](./docs/04_시스템_아키텍처.md)**에서 확인할 수 있습니다.
 
 ```mermaid
 graph TB
@@ -203,33 +194,33 @@ graph TB
     Frontend --> Next[Next.js 14 App Router]
     Frontend --> Hooks[Hook Composition]
     Frontend --> CSS[CSS Modules + BEM]
-    
+
     Next --> ClientComp[Client Components]
     Next --> ServerComp[Server Components]
     Next --> APIRoute[API Routes]
-    
+
     Frontend --> Supabase[☁️ Supabase BaaS]
     Frontend --> FastAPI[🐍 FastAPI AI Server]
     Frontend --> KakaoAPI[🗺️ Kakao Map API]
     Frontend --> LLM[🤖 LLM APIs]
-    
+
     Supabase --> PostgreSQL[(🐘 PostgreSQL<br/>+ pgvector)]
     Supabase --> Auth[🔐 Supabase Auth<br/>JWT Tokens]
     Supabase --> Storage[📦 Supabase Storage<br/>S3 Compatible]
     Supabase --> Realtime[⚡ Supabase Realtime<br/>WebSocket]
-    
+
     FastAPI --> YOLO[🤖 YOLO Models]
     YOLO --> SkinModel[Skin Model<br/>피부 질환 6종]
     YOLO --> EyesModel[Eyes Model<br/>안구 질환 30종]
     YOLO --> HealthModel[Health Model<br/>전신 건강 3종]
-    
+
     PostgreSQL --> RAG[🧠 RAG System<br/>pgvector]
     RAG --> HuggingFace[🤗 HuggingFace<br/>Embedding API]
-    
+
     LLM --> GPT[OpenAI GPT-4]
     LLM --> Gemini[Google Gemini]
     LLM --> Claude[Anthropic Claude]
-    
+
     style User fill:#E3F2FD
     style Frontend fill:#F3E5F5
     style Supabase fill:#E0F2F1
@@ -240,21 +231,21 @@ graph TB
 
 ### 🎯 핵심 아키텍처 특징
 
-| 영역 | 기술 | 설명 |
-|:---|:---|:---|
+| 영역         | 기술             | 설명                           |
+| :----------- | :--------------- | :----------------------------- |
 | **Frontend** | Hook Composition | 60% 코드 감소, 재사용성 극대화 |
-| **Frontend** | Co-location | 컴포넌트/Hook/스타일 통합 관리 |
-| **Frontend** | 4단계 반응형 | 400px ~ 1280px+ 완벽 대응 |
-| **Backend** | Supabase BaaS | 80% 백엔드 개발 시간 단축 |
-| **Backend** | 47개 RLS 정책 | Row Level Security 적용 |
-| **AI** | 3종 YOLO 모델 | Skin/Health/Eyes 통합 진단 |
-| **AI** | RAG + Multi-LLM | pgvector + GPT-4/Gemini/Claude |
+| **Frontend** | Co-location      | 컴포넌트/Hook/스타일 통합 관리 |
+| **Frontend** | 4단계 반응형     | 400px ~ 1280px+ 대응           |
+| **Backend**  | Supabase BaaS    | 80% 백엔드 개발 시간 단축      |
+| **Backend**  | 47개 RLS 정책    | Row Level Security 적용        |
+| **AI**       | 3종 YOLO 모델    | Skin/Health/Eyes 통합 진단     |
+| **AI**       | RAG + Multi-LLM  | pgvector + GPT-4/Gemini/Claude |
 
 ---
 
 ## 🔄 시스템 흐름도
 
-> 상세한 흐름도는 **[03_시스템_흐름도.md](./docs/03_시스템_흐름도.md)**에서 확인할 수 있습니다.
+> 상세한 흐름도는 **[03*시스템*흐름도.md](./docs/03_시스템_흐름도.md)**에서 확인할 수 있습니다.
 
 ### 🩺 AI 건강진단 플로우
 
@@ -267,7 +258,7 @@ sequenceDiagram
     participant YOLO
     participant RAG
     participant LLM
-    
+
     User->>Frontend: 사진 업로드
     Frontend->>Supabase: 이미지 저장
     Supabase-->>Frontend: 이미지 URL
@@ -288,33 +279,40 @@ sequenceDiagram
 
 ## 💬 실제 사용 화면
 
-### 🤖 프롬프팅 - 일반 채팅
+> **📸 [screenshots/](./screenshots/)** 폴더에서 더 많은 실제 사용 화면을 확인할 수 있습니다.
+
+### 🤖 LLM-RAG 프롬프팅 - 일반 채팅
 
 반려동물 케어에 대한 일상적인 질문에 RAG 시스템이 검증된 지식 기반으로 답변합니다.
 
 <div align="center">
 
-| 프롬프팅 - 일반 채팅 1 | 프롬프팅 - 일반 채팅 2 |
-|:---:|:---:|
-| ![일상케어상담](./screenshots/rag_chat/01_일상케어상담.png) | ![건강관리조언](./screenshots/rag_chat/02_건강관리조언.png) |
-| 프롬프팅 - 일반 채팅 5 | 프롬프팅 - 일반 채팅 6 |
-| ![식습관운동상담](./screenshots/rag_chat/03_식습관운동상담.png) | ![예방접종안내](./screenshots/rag_chat/04_예방접종안내.png) |
+|                        RAG 채팅 예시 1                        |              RAG 채팅 예시 2 (해시태그 활용)              |
+| :--------------------------------------------------------------------------: | :------------------------------------------------------: |
+| ![AI일반채팅1](./screenshots/rag_chat/AI일반채팅1.png) | ![AI일반채팅2](./screenshots/rag_chat/AI일반채팅2.png) |
+|                        RAG 채팅 예시 3                        |                     RAG 채팅 예시 4                      |
+| ![AI일반채팅3](./screenshots/rag_chat/AI일반채팅3.png) | ![AI일반채팅4](./screenshots/rag_chat/AI일반채팅4.png) |
+|                   RAG 채팅 예시 5 (혼합 채팅)                   |    해시태그 클릭시 퀵가이드<br/>(예: \#산책, \#간식추천)    |
+| ![AI일반해시태그혼합채팅](./screenshots/rag_chat/AI일반해시태그혼합채팅.png) | ![해시태그클릭](./screenshots/rag_chat/해시태그클릭.png) |
 
 </div>
 
 ### 🩺 YOLO + RAG 통합 진단
 
+> **📸 [screenshots/yolo_diagnosis/](./screenshots/yolo_diagnosis/)** 폴더에서 더 많은 진단 화면을 확인할 수 있습니다.
+
 이미지 분석과 RAG 시스템을 결합하여 전문적인 건강 진단과 대처 방안을 제공합니다.
 
 <div align="center">
 
-| AI 이미지 분석 | 진단 결과 | 병원 방문 판단 |
-|:---:|:---:|:---:|
+|                        AI 이미지 분석                         |                         진단 결과                         |                          병원 방문 판단                           |
+| :-----------------------------------------------------------: | :-------------------------------------------------------: | :---------------------------------------------------------------: |
 | ![이미지분석](./screenshots/yolo_diagnosis/01_이미지분석.png) | ![진단결과](./screenshots/yolo_diagnosis/02_진단결과.png) | ![병원방문판단](./screenshots/yolo_diagnosis/03_병원방문판단.png) |
 
 </div>
 
 > **💡 핵심 기능:**
+>
 > - ✅ **RAG System**: pgvector 기반 유사도 검색으로 정확한 답변 제공
 > - ✅ **Multi-LLM**: GPT-4/Gemini/Claude 중 최적의 모델 선택
 > - ✅ **YOLO Integration**: 3종 모델(Skin/Health/Eyes) 통합 분석
@@ -328,17 +326,17 @@ sequenceDiagram
 
 ### 📊 테이블 구조 요약
 
-| 영역 | 테이블 수 | 주요 테이블 |
-|:---|:---:|:---|
-| **사용자/인증** | 3개 | profiles, profileCompletion, userSettings |
-| **반려동물** | 4개 | palProfiles, palHealthRecords, vaccinations |
-| **커뮤니티** | 9개 | communityPosts, postComments, postLikes, events |
-| **라이프스타일** | 3개 | lifestylePosts, lifestyleRooms, lifestyleMessages |
-| **플래너** | 6개 | plannerEvents, plannerExpenses, eventReminders |
-| **병원/시설** | 3개 | petHospitals, hospitalReviews, hospitalBookmarks |
-| **해시태그** | 4개 | hashTags, communityHashTags, lifestyleHashTags |
-| **AI/지식** | 3개 | pet_knowledge_base(RAG), aiAnalysisHistory |
-| **파일/시스템** | 3개 | fileMetadata, notifications, systemLogs |
+| 영역             | 테이블 수 | 주요 테이블                                       |
+| :--------------- | :-------: | :------------------------------------------------ |
+| **사용자/인증**  |    3개    | profiles, profileCompletion, userSettings         |
+| **반려동물**     |    4개    | palProfiles, palHealthRecords, vaccinations       |
+| **커뮤니티**     |    9개    | communityPosts, postComments, postLikes, events   |
+| **라이프스타일** |    3개    | lifestylePosts, lifestyleRooms, lifestyleMessages |
+| **플래너**       |    6개    | plannerEvents, plannerExpenses, eventReminders    |
+| **병원/시설**    |    3개    | petHospitals, hospitalReviews, hospitalBookmarks  |
+| **해시태그**     |    4개    | hashTags, communityHashTags, lifestyleHashTags    |
+| **AI/지식**      |    3개    | pet_knowledge_base(RAG), aiAnalysisHistory        |
+| **파일/시스템**  |    3개    | fileMetadata, notifications, systemLogs           |
 
 **총 40개+ 테이블**로 체계적으로 설계되었습니다.
 
@@ -348,14 +346,14 @@ sequenceDiagram
 
 ### 🎯 주요 지표
 
-| 지표 | 목표 | 달성 | 달성률 |
-|:---|---:|---:|:---:|
-| **AI 모델 정확도** | 80% | 88.2% (Health) | ✅ 110% |
-| **데이터 수집** | 500K | 668K | ✅ 134% |
-| **백엔드 테이블** | 30개 | 40개+ | ✅ 133% |
-| **RLS 정책** | 30개 | 47개 | ✅ 157% |
-| **프론트엔드 페이지** | 15개 | 20개+ | ✅ 133% |
-| **반응형 지원** | 3단계 | 4단계 | ✅ 133% |
+| 지표                  |  목표 |           달성 | 달성률  |
+| :-------------------- | ----: | -------------: | :-----: |
+| **AI 모델 정확도**    |   80% | 88.2% (Health) | ✅ 110% |
+| **데이터 수집**       |  500K |           668K | ✅ 134% |
+| **백엔드 테이블**     |  30개 |          40개+ | ✅ 133% |
+| **RLS 정책**          |  30개 |           47개 | ✅ 157% |
+| **프론트엔드 페이지** |  15개 |          20개+ | ✅ 133% |
+| **반응형 지원**       | 3단계 |          4단계 | ✅ 133% |
 
 ### 🏆 기술적 성과
 
@@ -363,7 +361,7 @@ sequenceDiagram
 - ✅ **Co-location 아키텍처**: 유지보수성 200% 향상
 - ✅ **RAG 시스템 구축**: pgvector + Multi-LLM 통합
 - ✅ **실시간 채팅**: Supabase Realtime 활용
-- ✅ **4단계 반응형**: 400px ~ 1280px+ 완벽 대응
+- ✅ **4단계 반응형**: 400px ~ 1280px+ 대응
 - ✅ **통합 해시태그**: 4개 영역 통합 시스템
 
 ---
@@ -409,23 +407,32 @@ uvicorn main:app --reload
 
 ---
 
-## 📝 라이선스
-
-이 프로젝트는 [MIT License](LICENSE)를 따릅니다.
-
----
-
-## 🙏 감사의 말
+## 🙏 감사의 말 (Acknowledgments)
 
 이 프로젝트는 **LG U+ Why not camp 7기** 3차 프로젝트의 일환으로 진행되었습니다.
 
-개발 과정에서 도움을 주신 모든 분들께 감사드립니다.
+프로젝트 진행 과정에서 아낌없는 조언과 지원을 해주신 다음 분들께 깊은 감사를 드립니다:
+
+- **김영리 강사님** (LG U+ Why not camp 7기)
+- **아이그로스 관계자 여러분**
+
+### 🤖 AI 개발 파트너
+
+이 프로젝트는 초보 개발자가 혼자서도 포기하지 않고 완성할 수 있었던 이유는 **Claude AI**와의 페어 프로그래밍 덕분입니다.
+
+**Claude에게 배우고 도움을 받은 것들:**
+
+- 🎯 프로젝트 아키텍처 설계 및 기술 스택 선정 조언
+- 💻 코드 작성, 디버깅, 리팩토링 지원
+- 📚 기술 문서 작성 및 코드 주석 개선
+- 🐛 버그 해결 및 성능 최적화 가이드
+- 🎓 실시간 학습 코칭 및 베스트 프랙티스 제안
 
 ---
 
 <div align="center">
 
-**Made with ❤️ by LYSS with <img src="./assets/Claude_AI_logo.svg" width="30" height="30" style="vertical-align: middle;">**
+**Made with ❤️ by LYSS with Claude AI**
 
 **© 2025 Fetpal Project. All rights reserved.**
 

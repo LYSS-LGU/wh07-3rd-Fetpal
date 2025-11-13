@@ -198,54 +198,43 @@ Fetpal은 이러한 **불안감과 정보 비대칭 문제**를 해결하고자 
 
 ```mermaid
 graph TB
-    subgraph "사용자 영역"
-        A[웹 브라우저]
-    end
+    User[👤 사용자<br/>Desktop / Mobile] --> Frontend[🌐 Frontend Layer]
+    Frontend --> Next[Next.js 14 App Router]
+    Frontend --> Hooks[Hook Composition]
+    Frontend --> CSS[CSS Modules + BEM]
     
-    subgraph "Frontend - Vercel"
-        B[Next.js 14 App Router]
-        B1[Hook Composition]
-        B2[Co-location Architecture]
-        B3[CSS Modules + BEM]
-    end
+    Next --> ClientComp[Client Components]
+    Next --> ServerComp[Server Components]
+    Next --> APIRoute[API Routes]
     
-    subgraph "Backend Services"
-        C[Supabase BaaS]
-        C1[PostgreSQL + pgvector]
-        C2[Auth + Storage]
-        C3[Realtime + RLS]
-        
-        D[FastAPI AI Server]
-        D1[YOLOv8m Models x3]
-        D2[RAG System]
-        D3[Multi-LLM Router]
-    end
+    Frontend --> Supabase[☁️ Supabase BaaS]
+    Frontend --> FastAPI[🐍 FastAPI AI Server]
+    Frontend --> KakaoAPI[🗺️ Kakao Map API]
+    Frontend --> LLM[🤖 LLM APIs]
     
-    subgraph "External APIs"
-        E[Kakao Map API]
-        F[YouTube Data API]
-        G[LLM Providers]
-    end
+    Supabase --> PostgreSQL[(🐘 PostgreSQL<br/>+ pgvector)]
+    Supabase --> Auth[🔐 Supabase Auth<br/>JWT Tokens]
+    Supabase --> Storage[📦 Supabase Storage<br/>S3 Compatible]
+    Supabase --> Realtime[⚡ Supabase Realtime<br/>WebSocket]
     
-    A <-->|HTTPS| B
-    B --> B1
-    B --> B2
-    B --> B3
+    FastAPI --> YOLO[🤖 YOLO Models]
+    YOLO --> SkinModel[Skin Model<br/>피부 질환 6종]
+    YOLO --> EyesModel[Eyes Model<br/>안구 질환 30종]
+    YOLO --> HealthModel[Health Model<br/>전신 건강 3종]
     
-    B <-->|REST/Realtime| C
-    C --> C1
-    C --> C2
-    C --> C3
+    PostgreSQL --> RAG[🧠 RAG System<br/>pgvector]
+    RAG --> HuggingFace[🤗 HuggingFace<br/>Embedding API]
     
-    B <-->|REST| D
-    D --> D1
-    D --> D2
-    D --> D3
+    LLM --> GPT[OpenAI GPT-4]
+    LLM --> Gemini[Google Gemini]
+    LLM --> Claude[Anthropic Claude]
     
-    B <-->|REST| E
-    B <-->|REST| F
-    D3 <-->|API| G
-    D2 <--> C1
+    style User fill:#E3F2FD
+    style Frontend fill:#F3E5F5
+    style Supabase fill:#E0F2F1
+    style FastAPI fill:#FCE4EC
+    style PostgreSQL fill:#FFF3E0
+    style RAG fill:#E8EAF6
 ```
 
 ### 🎯 핵심 아키텍처 특징
@@ -391,7 +380,7 @@ uvicorn main:app --reload
 
 ## 🙏 감사의 말
 
-이 프로젝트는 **LG U+ 부트캠프 3차 프로젝트**의 일환으로 진행되었습니다.
+이 프로젝트는 **LG U+ Why not camp 7기** 3차 프로젝트의 일환으로 진행되었습니다.
 
 개발 과정에서 도움을 주신 모든 분들께 감사드립니다.
 

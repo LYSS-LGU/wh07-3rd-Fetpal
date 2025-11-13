@@ -41,7 +41,6 @@ node_modules/
 
 # SQL 파일들 (민감 정보 포함 가능)
 *.sql
-!docs/05_ERD_dbdiagramio.sql
 
 # 루트 폴더 이미지들 (정리되지 않은 파일)
 /*.png

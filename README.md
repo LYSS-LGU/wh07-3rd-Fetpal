@@ -1,437 +1,720 @@
-# 🐾 Fetpal: AI 기반 반려동물 통합 케어 플랫폼
+# Fetpal - YOLO 모델 정의서
 
-> **프로젝트 기간**: 2025.09.19 ~ 2025.11.20 (9주)<br> > **작성자**: LYSS with Claude<br> > **최종 업데이트**: 2025-11-13
-
----
-
-## 📖 목차 (Table of Contents)
-
-- [🐾 프로젝트 팀원 소개 (Team)](#-프로젝트-팀원-소개)
-- [📚 프로젝트 문서 (Documentation)](#-프로젝트-문서)
-- [💡 프로젝트 소개 (Introduction)](#-프로젝트-소개)
-- [🎯 주요 기능 (Features)](#-주요-기능)
-- [🔗 프로젝트 링크 (Links)](#-프로젝트-링크)
-- [🛠️ 기술 스택 (Tech Stack)](#️-기술-스택)
-- [🏗️ 시스템 아키텍처 (Architecture)](#️-시스템-아키텍처)
-- [🔄 시스템 흐름도 (Flow)](#-시스템-흐름도)
-- [🗄️ 데이터베이스 설계 (Database)](#️-데이터베이스-설계)
-- [📊 프로젝트 성과 (Results)](#-프로젝트-성과)
-- [🚀 시작하기 (Getting Started)](#-시작하기)
-- [🙏 감사의 말 (Acknowledgments)](#-감사의-말-acknowledgments)
+> **4차 스프린트 발표** (2025.11.14)  
+> **최종 발표**: 2025-11-21
 
 ---
 
-## 🐾 프로젝트 팀원 소개
+## 📋 문서 개요
 
-<div align="center">
-
-|                            **프로필**                            | **정보**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| :--------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <img src="./p3_profile.png" width="150" height="150" alt="LYSS"> | **이름**: 이유석 (LYSS)<br>**역할**: 1인 초보 개발자 with Claude AI<br>**_"처음부터 하나씩 배워가며 만드는 첫 작품 입니다.<br>혼자여도 할 수 있다는 포기하지 않는 마음!"_**<br><br>**Contact:**<br>[<img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1566899596/noticon/slhw4nu8hybreryigopq.png" width="25" height="25" alt="GitHub">](https://github.com/LYSS-LGU) [<img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1606895317/noticon/cffnbxeed08p0l4u44ru.png" width="25" height="25" alt="Gmail">](mailto:leeyss1991@gmail.com) [<img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1644169460/noticon/frvhykszxhjz4asz77oi.png" width="25" height="25" alt="Naver">](mailto:lyss91@naver.com) |
-
-</div>
-
-### 👨‍💻 담당 업무
-
-> **💡 개발 파트너**: 이 프로젝트는 초보 개발자가 **Claude AI**와 함께 협업하여 완성했습니다.
-> Claude는 코드 작성, 디버깅, 아키텍처 설계, 문서화 등 전 과정에서 **페어 프로그래밍(바이브코딩)** 파트너로 참여했습니다.
-
-|   **영역**   |         **기술 스택**         | **세부 내용**                            |
-| :----------: | :---------------------------: | :--------------------------------------- |
-|   **기획**   |      프로젝트 매니지먼트      | 요구사항 분석, WBS 작성, 시스템 설계     |
-| **Frontend** |  Next.js, React, TypeScript   | 사용자 인터페이스, 반응형 웹, 상태 관리  |
-| **Backend**  | Supabase, FastAPI, PostgreSQL | 데이터베이스 설계, API 개발, 인증 시스템 |
-|  **AI/ML**   |    YOLOv8, OpenCV, PyTorch    | 이미지 분석, 객체 탐지, 모델 학습        |
-|   **기타**   |        UI/UX, 아키텍처        | 디자인 시스템, 시스템 아키텍처 설계      |
+이 문서는 Fetpal 프로젝트의 **YOLO 기반 객체 탐지** 시스템을 설명합니다.  
+반려동물의 피부질환, 안구질환, 건강상태를 이미지로 분석하는 AI 모델에 대한 기술 명세입니다.
 
 ---
 
-## 📚 프로젝트 문서
+## 🎯 프로젝트 개요
 
-> **📁 [docs/](./docs/)** 폴더에서 상세한 프로젝트 문서를 확인할 수 있습니다.
+### 핵심 기능
 
-### 📋 핵심 문서
+**🔍 YOLO 기반 객체 탐지**
 
-| 번호 | 문서명                                                                                          | 설명                           |
-| :--: | :---------------------------------------------------------------------------------------------- | :----------------------------- |
-|  01  | **[프로젝트 기획서](./docs/01_프로젝트_기획서.md)** • [PDF](./docs/PDF_preview/01_프로젝트_기획서.pdf)                   | 프로젝트 개요, 목표, 일정      |
-|  02  | **[WBS 최신화](./docs/02_WBS_최신화.md)** • [PDF](./docs/PDF_preview/02_WBS_최신화.pdf)                                  | 작업 분해 구조 및 진행 현황    |
-|  03  | **[시스템 흐름도](./docs/03_시스템_흐름도.md)** • [PDF](./docs/PDF_preview/03_시스템_흐름도.pdf)                         | 사용자 시나리오 및 데이터 흐름 |
-|  04  | **[시스템 아키텍처](./docs/04_시스템_아키텍처.md)** • [PDF](./docs/PDF_preview/04_시스템_아키텍처.pdf)                   | 기술 스택 및 시스템 구조       |
-|  05  | **[ERD](./docs/05_ERD.md)** • [PDF](./docs/PDF_preview/05_ERD_최종스프린트대비.pdf)                                      | 데이터베이스 설계 및 관계도    |
-|  06  | **[요구사항 정의서](./docs/06_요구사항_정의서.md)** • [PDF](./docs/PDF_preview/06_요구사항_정의서.pdf)                   | 기능적/비기능적 요구사항       |
-|  07  | **[YOLO 모델 정의서](./docs/07_YOLO_모델_정의서.md)** • [PDF](./docs/PDF_preview/07_YOLO_모델_정의서.pdf)                | YOLO 모델 상세 및 성능 지표    |
-|  08  | **[RAG-LLM 시스템 정의서](./docs/08_RAG-LLM_시스템_정의서.md)** • [PDF](./docs/PDF_preview/08_RAG-LLM_시스템_정의서.pdf) | RAG 시스템 및 LLM 통합 구조    |
-|  09  | **[성능 평가 결과서](./docs/09_성능_평가_결과서.md)** • [PDF](./docs/PDF_preview/09_성능_평가_결과서.pdf)                | AI 모델 및 시스템 성능 분석    |
-|  10  | **[Supabase BaaS 가이드](./docs/10_Supabase_BaaS_가이드.md)** • [PDF](./docs/PDF_preview/10_Supabase_BaaS_가이드.pdf)    | BaaS 아키텍처 및 MCP 설명      |
+- 3개 독립 모델로 다양한 질환 감지
+- FastAPI 서버를 통한 추론 서비스
+- 이미지에서 바운딩 박스 + 신뢰도 반환
 
-### 📊 데이터
-
-- **[WBS 통합](./docs/02_WBS_통합.csv)** - CSV 형식
-- **[WBS 통합](./docs/02_WBS_통합.xlsx)** - Excel 형식
-- **[WBS 상세 자료](./docs/WBS_상세자료/)** - 주차별/모델별 상세 데이터
-
-### 🎨 다이어그램
-
-- **[ERD 이미지](./docs/05_ERD_최종스프린트대비.png)** - PNG 형식
-- **[ERD PDF](./docs/05_ERD_최종스프린트대비.pdf)** - PDF 형식
-
----
-
-## 💡 프로젝트 소개
-
-### 🎯 프로젝트 개요
-
-**Fetpal (펫팔)**은 AI 기술을 활용하여 반려동물의 건강 이상 징후를 초기에 파악하고, 상황별 대처 방안을 제시하여 보호자의 불안감을 해소하는 것을 목표로 하는 **AI 기반 반려동물 통합 케어 플랫폼**입니다.
-
-> **💡 명칭의 의미**: **Family**(가족) + **Vet**(수의사) + **Pet**(반려동물) + **Pal**(친구)의 합성어로, 가족과 반려동물이 함께하는 건강한 일상을 수의학적 지식과 친구 같은 AI가 도와준다는 의미를 담고 있습니다.
-
----
-
-### 🚨 해결하고자 하는 문제
-
-<div align="center">
-
-#### **🏥 응급 상황 대처의 어려움**
-
-> _"새벽 2시, 강아지 눈이 갑자기 빨개졌는데 병원은 문을 닫았고, 응급실은 너무 멀어요. 지금 당장 가야 할까요?"_
->
-> _"피부에 뾰루지 같은 게 났는데, 병원 가기엔 애매하고 그냥 두기엔 불안해요."_
-
-#### **🐶 초보 반려인의 일상 케어 고민**
-
-> _"타지에서 처음 강아지를 키우는데, 하루에 몇 번 밥을 줘야 하는지, 언제 산책을 시켜야 하는지, 기본적인 훈련은 어떻게 시켜야 하는지 아무것도 모르겠어요."_
-
-**반려동물 1500만 시대, 수많은 보호자들이 위와 같은 고민을 매일 겪고 있습니다.**
-
-</div>
-
----
-
-### 🎯 솔루션
-
-Fetpal은 이러한 **불안감과 정보 비대칭 문제**를 해결하고자 합니다:
-
-#### **🐾 응급 상황 지원**
-
-- **AI 기술**로 시공간 제약 없이 반려동물의 상태를 객관적으로 확인
-- **검증된 정보**를 바탕으로 침착하게 다음 행동을 결정할 수 있도록 지원
-- **응급 상황의 골든타임**을 놓치지 않도록 즉시 대처 방안 제공
-
-#### **🐾 초보 반려인 가이드**
-
-- **일상 케어 가이드**: 급식 시간, 산책 방법, 기본 훈련법 등 체계적 정보 제공
-- **커뮤니티 연결**: 경험 있는 반려인들과의 소통을 통한 실질적 조언
-- **단계별 가이드**: 반려동물 성장 단계별 맞춤 케어 정보 제공
-
----
-
-<div align="center">
-
-### 💝 프로젝트 미션
-
-> **"내 선택으로 내게 온 사랑스러운 반려동물, Fetpal이 함께 지켜드립니다."**
-
-</div>
-
----
-
-## 🎯 주요 기능
-
-| 구분                 | 기능                         | 상세 설명                                                                                                                                              |
-| :------------------- | :--------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **🩺 AI 임시진단**   | 이미지 기반 건강 분석        | 스마트폰으로 촬영한 피부/안구/건강 사진을 **YOLOv8m** 모델로 분석하여 이상 징후를 탐지하고, 신뢰도와 함께 시각적으로 보여줍니다.                       |
-| **💬 AI 어드바이저** | RAG/Multi-LLM 기반 대처 방안 | 분석 결과에 따라, **pgvector RAG + Multi-LLM**(GPT-4/Gemini/Claude)이 검증된 지식 기반의 대처법과 주변 병원 추천 등을 제공합니다.                      |
-| **🗺️ 지도 연동**     | 주변 시설 검색 (LBS)         | **Kakao Map API**와 연동하여 내 위치 기반으로 24시 동물병원, 약국, 펫샵 등의 위치, 평점, 영업시간 등을 즉시 확인할 수 있습니다.                        |
-| **🐾 커뮤니티**      | 지식 공유 및 소셜 네트워킹   | `#해시태그`(예: \#산책, \#간식추천)를 통해 관련 게시글과 **YouTube 케어 영상**을 한번에 보고, **실시간 채팅**으로 동네 펫 친구들과 교류할 수 있습니다. |
-| **🗓️ 스마트 플래너** | 일정 및 지출 통합 관리       | 예방접종 자동 스케줄링, 병원/미용 예약, 사료 구매까지. 캘린더와 가계부를 통합하여 모든 케어 활동을 체계적으로 관리합니다.                              |
-
----
-
-## 🔗 프로젝트 링크
-
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="20" height="20" alt="GitHub"> [GitHub Repository](https://github.com/LYSS-LGU) • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg" width="20" height="20" alt="Vercel"> [Vercel Deployed](https://fetpal.vercel.app) • 📚 [Docs](./docs/)
-
----
-
-## 🛠️ 기술 스택 (Tech Stack)
-
-### 💻 Frontend
-
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" width="20" height="20" alt="Next.js"> Next.js 14 • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="20" height="20" alt="React"> React 18 • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" width="20" height="20" alt="TypeScript"> TypeScript • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" width="20" height="20" alt="CSS3"> CSS Modules
-
-### 🗄️ Backend
-
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg" width="20" height="20" alt="Supabase"> Supabase BaaS • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" width="20" height="20" alt="PostgreSQL"> PostgreSQL + pgvector • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" width="20" height="20" alt="FastAPI"> FastAPI • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" width="20" height="20" alt="Python"> Python 3.10
-
-### 🤖 AI/ML
-
-<img src="https://cdn.simpleicons.org/yolo/00FFFF" width="20" height="20" alt="YOLO"> YOLOv8m • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" width="20" height="20" alt="PyTorch"> PyTorch • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg" width="20" height="20" alt="OpenCV"> OpenCV • <img src="https://cdn.simpleicons.org/huggingface/FFD21E" width="20" height="20" alt="HuggingFace"> HuggingFace Embeddings
-
-### 🧠 LLM & RAG
-
-<img src="https://cdn.simpleicons.org/openai/412991" width="20" height="20" alt="OpenAI"> OpenAI GPT-4 • <img src="https://cdn.simpleicons.org/googlegemini/8E75B2" width="20" height="20" alt="Gemini"> Google Gemini • <img src="https://cdn.simpleicons.org/anthropic/FF6B35" width="20" height="20" alt="Claude"> Anthropic Claude • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" width="20" height="20" alt="pgvector"> pgvector RAG
-
-### 🚀 Infrastructure & Deployment
-
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg" width="20" height="20" alt="Vercel"> Vercel • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" width="20" height="20" alt="AWS"> AWS EC2 • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" width="20" height="20" alt="Git"> Git • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="20" height="20" alt="GitHub"> GitHub
-
-### 🌐 External APIs
-
-<img src="https://cdn.simpleicons.org/kakao/FFCD00" width="20" height="20" alt="Kakao"> Kakao Map API • <img src="https://cdn.simpleicons.org/youtube/FF0000" width="20" height="20" alt="YouTube"> YouTube Data API
-
----
-
-## 🏗️ 시스템 아키텍처
-
-> 상세한 아키텍처는 **[04*시스템*아키텍처.md](./docs/04_시스템_아키텍처.md)**에서 확인할 수 있습니다.
+### 시스템 구성
 
 ```mermaid
 graph TB
-    User[👤 사용자<br/>Desktop / Mobile] --> Frontend[🌐 Frontend Layer]
-    Frontend --> Next[Next.js 14 App Router]
-    Frontend --> Hooks[Hook Composition]
-    Frontend --> CSS[CSS Modules + BEM]
-
-    Next --> ClientComp[Client Components]
-    Next --> ServerComp[Server Components]
-    Next --> APIRoute[API Routes]
-
-    Frontend --> Supabase[☁️ Supabase BaaS]
-    Frontend --> FastAPI[🐍 FastAPI AI Server]
-    Frontend --> KakaoAPI[🗺️ Kakao Map API]
-    Frontend --> LLM[🤖 LLM APIs]
-
-    Supabase --> PostgreSQL[(🐘 PostgreSQL<br/>+ pgvector)]
-    Supabase --> Auth[🔐 Supabase Auth<br/>JWT Tokens]
-    Supabase --> Storage[📦 Supabase Storage<br/>S3 Compatible]
-    Supabase --> Realtime[⚡ Supabase Realtime<br/>WebSocket]
-
+    User[👤 사용자] --> Frontend[🌐 Next.js Frontend]
+    Frontend --> FastAPI[🐍 FastAPI Server]
     FastAPI --> YOLO[🤖 YOLO Models]
-    YOLO --> SkinModel[Skin Model<br/>피부 질환 6종]
-    YOLO --> EyesModel[Eyes Model<br/>안구 질환 30종]
-    YOLO --> HealthModel[Health Model<br/>전신 건강 3종]
 
-    PostgreSQL --> RAG[🧠 RAG System<br/>pgvector]
-    RAG --> HuggingFace[🤗 HuggingFace<br/>Embedding API]
-
-    LLM --> GPT[OpenAI GPT-4]
-    LLM --> Gemini[Google Gemini]
-    LLM --> Claude[Anthropic Claude]
+    YOLO --> Skin[Skin Model<br/>피부질환 6종]
+    YOLO --> Eyes[Eyes Model<br/>안구질환 30종]
+    YOLO --> Health[Health Model<br/>건강상태 3종]
 
     style User fill:#E3F2FD
     style Frontend fill:#F3E5F5
-    style Supabase fill:#E0F2F1
     style FastAPI fill:#FCE4EC
-    style PostgreSQL fill:#FFF3E0
-    style RAG fill:#E8EAF6
+    style YOLO fill:#FFF3E0
+    style Skin fill:#FFCDD2
+    style Eyes fill:#B2DFDB
+    style Health fill:#C8E6C9
 ```
 
-### 🎯 핵심 아키텍처 특징
+### 모델 성능 요약
 
-| 영역         | 기술             | 설명                           |
-| :----------- | :--------------- | :----------------------------- |
-| **Frontend** | Hook Composition | 60% 코드 감소, 재사용성 극대화 |
-| **Frontend** | Co-location      | 컴포넌트/Hook/스타일 통합 관리 |
-| **Frontend** | 4단계 반응형     | 400px ~ 1280px+ 대응           |
-| **Backend**  | Supabase BaaS    | 80% 백엔드 개발 시간 단축      |
-| **Backend**  | 47개 RLS 정책    | Row Level Security 적용        |
-| **AI**       | 3종 YOLO 모델    | Skin/Health/Eyes 통합 진단     |
-| **AI**       | RAG + Multi-LLM  | pgvector + GPT-4/Gemini/Claude |
+| 모델명           | 탐지 대상 | 클래스 수 | 데이터셋 규모 | 성능 (mAP50) |
+| ---------------- | --------- | --------- | ------------- | ------------ |
+| **Skin Model**   | 피부질환  | 6개       | 232,253개     | 18.3%        |
+| **Eyes Model**   | 안구질환  | 30개      | 217,547개     | 25.4%        |
+| **Health Model** | 건강상태  | 3개       | 108,000개+    | 88.2% ⭐     |
+
+> **💡 용어 설명**
+>
+> - **mAP50**: IoU(Intersection over Union) 임계값이 50%일 때의 평균 정밀도(Mean Average Precision)
+>   - 쉽게 말하면: AI가 그린 박스와 정답 박스가 50% 이상 겹칠 때를 맞다고 판단하는 정확도
+>   - 0~100% 범위이며, 높을수록 좋음
+> - **클래스**: 모델이 구분할 수 있는 질환의 종류 개수
 
 ---
 
-## 🔄 시스템 흐름도
+## 📌 목차
 
-> 상세한 흐름도는 **[03*시스템*흐름도.md](./docs/03_시스템_흐름도.md)**에서 확인할 수 있습니다.
+1. [모델 공통 사양](#1-모델-공통-사양)
+2. [Skin Model - 피부질환](#2-skin-model---피부질환)
+3. [Eyes Model - 안구질환](#3-eyes-model---안구질환)
+4. [Health Model - 건강상태](#4-health-model---건강상태)
+5. [데이터셋 구조](#5-데이터셋-구조)
+6. [YOLO 모델 시스템 아키텍처](#6-yolo-모델-시스템-아키텍처)
+7. [성능 분석](#7-성능-분석)
 
-### 🩺 AI 건강진단 플로우
+---
+
+## 1. 모델 공통 사양
+
+### 1.1. YOLOv8m 아키텍처
+
+| 항목              | 내용                                                                  |
+| ----------------- | --------------------------------------------------------------------- |
+| **모델 아키텍처** | YOLOv8m (You Only Look Once v8 Medium)                                |
+| **모델 유형**     | 객체 탐지 (Object Detection) - 이미지에서 물체를 찾아내고 위치를 표시 |
+| **프레임워크**    | Ultralytics YOLO - YOLO 모델을 쉽게 사용할 수 있게 만든 라이브러리    |
+| **입력 크기**     | 640 × 640 pixels - 모델에 넣기 전 이미지 크기 조정                    |
+| **출력 형식**     | Bounding Box(박스 좌표) + 클래스 확률 + 신뢰도                        |
+| **파라미터 수**   | 약 25.9M - 모델이 학습하는 변수 개수 (많을수록 성능 높지만 무거움)    |
+| **학습 환경**     | NVIDIA RTX 4060 (8GB VRAM) - GPU 그래픽카드                           |
+
+### 1.2. 모델 구조
+
+> **💡 YOLOv8m의 3단계 구조**
+>
+> - **Backbone**: 이미지에서 특징을 추출 (눈, 코, 귀 같은 특징 찾기)
+> - **Neck**: 다양한 크기의 특징을 결합 (작은 것~큰 것 모두 감지)
+> - **Head**: 최종 예측 (여기가 질환이다! 박스 그리기)
+
+```mermaid
+graph LR
+    Input["📷 입력 이미지<br/>640×640×3"]
+
+    B["🔍 Backbone<br/>CSPDarknet53<br/><br/>• Conv Layer<br/>• C2f Modules<br/>• SPPF"]
+
+    N["🔗 Neck<br/>PAN<br/><br/>• FPN<br/>• Bottom-up"]
+
+    H["🎯 Head<br/>Detection<br/><br/>• 3-Scale<br/>• BBox Regression<br/>• Class Probability"]
+
+    Output["📤 출력<br/>[x, y, w, h,<br/>confidence,<br/>class_id]"]
+
+    Input --> B --> N --> H --> Output
+
+    style Input fill:#E3F2FD,stroke:#1976D2,stroke-width:2px
+    style B fill:#FFF3E0,stroke:#F57C00,stroke-width:2px
+    style N fill:#F3E5F5,stroke:#7B1FA2,stroke-width:2px
+    style H fill:#E8F5E9,stroke:#388E3C,stroke-width:2px
+    style Output fill:#FFCDD2,stroke:#D32F2F,stroke-width:2px
+```
+
+**주요 레이어 구성:**
+
+- **Backbone**: CSPDarknet53 (특징 추출)
+- **Neck**: PANet (다중 스케일 특징 융합)
+- **Head**: Decoupled Head (분류 + 위치 예측 분리)
+
+### 1.3. 손실 함수 (Loss Function)
+
+> **💡 손실 함수란?** AI 모델이 얼마나 틀렸는지 측정하는 지표입니다. 값이 작을수록 모델이 잘 학습되고 있다는 뜻입니다.
+
+```python
+# YOLO는 3가지 손실 함수를 결합하여 사용
+Total_Loss = λ1·Box_Loss + λ2·Class_Loss + λ3·DFL_Loss
+```
+
+**1. Box Loss (Bounding Box Loss)** - 박스 위치 오차
+
+- CIoU Loss (Complete Intersection over Union)
+- 바운딩 박스 위치와 크기의 정확도 측정
+- 쉽게 말하면: AI가 그린 박스가 정답 박스와 얼마나 잘 맞는지 계산
+
+**2. Class Loss (Classification Loss)** - 분류 오차
+
+- Binary Cross Entropy Loss
+- 클래스 분류 정확도 측정
+- 쉽게 말하면: "이게 구진인지 농포인지" 제대로 맞췄는지 계산
+
+**3. DFL Loss (Distribution Focal Loss)** - 객체 탐지 오차
+
+- 객체 존재 확률 측정
+- 배경과 객체를 구분
+- 쉽게 말하면: 여기에 진짜 질환이 있는지 없는지 판단하는 정확도
+
+---
+
+## 2. Skin Model - 피부질환
+
+### 2.1. 모델 개요
+
+| 항목           | 내용                          |
+| -------------- | ----------------------------- |
+| **모델 파일**  | `skin_yolov8m_best.pt` (52MB) |
+| **학습 기간**  | 28 Epochs, 약 38시간          |
+| **클래스 수**  | 6개                           |
+| **데이터셋**   | 232,253개 이미지              |
+| **최종 mAP50** | 18.3%                         |
+
+### 2.2. 학습 클래스 정의 (6개)
+
+```python
+# 클래스 ID와 질환명 매핑
+class_mapping = {
+    0: 'A1_구진_플라크',              # Papule & Plaque
+    1: 'A2_비듬_각질_상피성잔고리',    # Dandruff & Scale
+    2: 'A3_태선화_과다색소침착',       # Lichenification & Hyperpigmentation
+    3: 'A4_농포_여드름',              # Pustule & Acne
+    4: 'A5_미란_궤양',                # Erosion & Ulcer
+    5: 'A6_결절_종괴'                 # Nodule & Mass
+}
+```
+
+### 2.3. 클래스별 특징
+
+| 클래스 ID | 질환명                     | 주요 특징                          | 데이터 개수 |
+| --------- | -------------------------- | ---------------------------------- | ----------- |
+| **0**     | A1*구진*플라크             | 피부 위 돌출된 구진, 편평한 플라크 | 36,635개    |
+| **1**     | A2*비듬*각질\_상피성잔고리 | 각질, 비듬, 하얀 상피성 잔고리     | 88,365개    |
+| **2**     | A3*태선화*과다색소침착     | 피부 두꺼워짐, 색소 침착           | 60,911개    |
+| **3**     | A4*농포*여드름             | 화농성 병변, 고름 형성             | 38,089개    |
+| **4**     | A5*미란*궤양               | 표면 손상, 궤양, 상처              | 13,884개    |
+| **5**     | A6*결절*종괴               | 깊은 결절, 종괴, 덩어리            | 21,573개    |
+
+### 2.4. 데이터 분포
+
+```
+A2_비듬각질 ████████████████████████████ 88,365 (38.1%)
+A3_태선화   ████████████████████ 60,911 (26.2%)
+A4_농포     ████████████ 38,089 (16.4%)
+A1_구진     ████████████ 36,635 (15.8%)
+A6_결절     ██████ 21,573 (9.3%)
+A5_미란     ████ 13,884 (6.0%)
+```
+
+### 2.5. 하이퍼파라미터 설정
+
+> **💡 하이퍼파라미터란?** 모델 학습 전에 사람이 직접 설정해주는 값들입니다. 요리할 때 불 세기, 시간 조절하는 것과 비슷합니다.
+
+```yaml
+# Skin Model 학습 설정
+epochs: 28 # 전체 데이터를 28번 반복 학습
+batch_size: 8 # 한 번에 8장씩 이미지를 학습 (GPU 메모리에 따라 조정)
+image_size: 640 # 이미지를 640×640 크기로 조정
+optimizer: SGD # 최적화 알고리즘 (경사하강법)
+lr0: 0.01 # 초기 학습률 (학습 속도, 너무 크면 불안정, 너무 작으면 느림)
+momentum: 0.937 # 관성 (이전 학습 방향을 얼마나 유지할지)
+weight_decay: 0.0005 # 가중치 감소 (과적합 방지)
+```
+
+### 2.6. 성능 지표
+
+| 지표          | 수치  | 설명                                                            |
+| ------------- | ----- | --------------------------------------------------------------- |
+| **mAP50**     | 18.3% | IoU 50% 기준 평균 정밀도 (박스가 50% 이상 겹치면 맞다고 판단)   |
+| **mAP50-95**  | 8.3%  | IoU 50%~95% 범위의 평균 정밀도 (더 엄격한 기준, 더 정확해야 함) |
+| **Precision** | 31.8% | 정밀도: AI가 "질환이다"라고 한 것 중 실제로 맞은 비율           |
+| **Recall**    | 23.1% | 재현율: 실제 질환 중 AI가 찾아낸 비율                           |
+
+> **💡 성능 지표 이해하기**
+>
+> - **mAP50**: 관대한 기준 (박스가 50% 이상만 겹치면 OK)
+> - **mAP50-95**: 엄격한 기준 (박스가 정확하게 겹쳐야 OK) → 보통 mAP50보다 낮음
+> - **Precision vs Recall**:
+>   - Precision 높음 = 거짓 경보가 적음 (AI가 말한 건 대부분 맞음)
+>   - Recall 높음 = 놓친 게 적음 (실제 질환을 대부분 찾아냄)
+
+### 2.7. 학습 손실 변화
+
+| Epoch | Box Loss | Class Loss | DFL Loss | Total Loss |
+| ----- | -------- | ---------- | -------- | ---------- |
+| 1     | 2.500    | 3.772      | 1.942    | 8.214      |
+| 14    | 2.297    | 3.135      | 1.774    | 7.206      |
+| 28    | 2.073    | 2.531      | 1.650    | 6.254      |
+
+**손실 감소율:**
+
+- Box Loss: 17.1% 감소
+- Class Loss: 32.9% 감소
+- DFL Loss: 15.0% 감소
+
+---
+
+## 3. Eyes Model - 안구질환
+
+### 3.1. 모델 개요
+
+| 항목           | 내용                          |
+| -------------- | ----------------------------- |
+| **모델 파일**  | `eyes_yolov8m_best.pt` (50MB) |
+| **학습 기간**  | 28 Epochs, 약 72시간 (3일)    |
+| **클래스 수**  | 30개                          |
+| **데이터셋**   | 217,547개 이미지              |
+| **최종 mAP50** | 25.35%                        |
+
+### 3.2. 학습 클래스 정의 (30개)
+
+```python
+# 안구질환 클래스 (개 24개 + 고양이 6개)
+eyes_classes = {
+    # 개 안구질환 (0-23)
+    0: '결막염_무', 1: '결막염_유',
+    2: '궤양성각막질환_무', 3: '궤양성각막질환_상', 4: '궤양성각막질환_하',
+    5: '백내장_무', 6: '백내장_초기', 7: '백내장_비성숙', 8: '백내장_성숙',
+    9: '비궤양성각막질환_무', 10: '비궤양성각막질환_상', 11: '비궤양성각막질환_하',
+    12: '색소침착성각막염_무', 13: '색소침착성각막염_유',
+    14: '안검내반증_무', 15: '안검내반증_유',
+    16: '안검염_무', 17: '안검염_유',
+    18: '안검종양_무', 19: '안검종양_유',
+    20: '유루증_무', 21: '유루증_유',
+    22: '핵경화_무', 23: '핵경화_유',
+
+    # 고양이 안구질환 (24-29)
+    24: '각막궤양_무', 25: '각막궤양_유',
+    26: '각막부골편_무', 27: '각막부골편_유',
+    28: '비궤양성각막염_무', 29: '비궤양성각막염_유'
+}
+```
+
+### 3.3. 클래스 명명 규칙
+
+- **무(無)**: 질병 없음 (정상)
+- **유(有)**: 질병 있음
+- **상(上)**: 심각도 높음
+- **하(下)**: 심각도 낮음
+- **초기/비성숙/성숙**: 백내장 진행 단계
+
+### 3.4. 데이터 구성
+
+- 개(Dog) 안구질환: 24개 클래스 (193,134개 이미지)
+- 고양이(Cat) 안구질환: 6개 클래스 (24,413개 이미지)
+
+### 3.5. 하이퍼파라미터 설정
+
+```yaml
+# Eyes Model 학습 설정
+epochs: 28
+batch_size: 16
+image_size: 640
+optimizer: SGD
+lr0: 0.01
+momentum: 0.937
+weight_decay: 0.0005
+workers: 4
+```
+
+### 3.6. 성능 지표
+
+| 지표         | 수치   | 설명                                            |
+| ------------ | ------ | ----------------------------------------------- |
+| **mAP50**    | 25.35% | IoU 50% 기준 평균 정밀도                        |
+| **mAP50-95** | 21.48% | IoU 50%~95% 범위의 평균 정밀도 (더 엄격한 평가) |
+
+### 3.7. 우수 클래스 성능
+
+| 클래스             | mAP50 | mAP50-95 | 특징                  |
+| ------------------ | ----- | -------- | --------------------- |
+| 백내장\_무         | 49.3% | 48.8%    | 가장 높은 정확도      |
+| 궤양성각막질환\_상 | 53.4% | 53.3%    | 심각도 높은 질환 검출 |
+| 백내장\_초기       | 37.4% | 36.0%    | 초기 단계 검출 가능   |
+| 결막염\_유         | 27.9% | 25.1%    | 일반적 질환 검출      |
+
+---
+
+## 4. Health Model - 건강상태
+
+### 4.1. 모델 개요
+
+| 항목           | 내용                            |
+| -------------- | ------------------------------- |
+| **모델 파일**  | `health_yolov8m_best.pt` (52MB) |
+| **학습 기간**  | 28 Epochs, 약 21.5시간          |
+| **클래스 수**  | 3개                             |
+| **데이터셋**   | 108,000개+ 이미지               |
+| **최종 mAP50** | 88.2% ⭐ (가장 높은 성능!)      |
+
+### 4.2. 학습 클래스 정의 (3개)
+
+```python
+# 건강상태 클래스
+health_classes = {
+    0: 'full_body',  # 전신 (Body-Part 01-13)
+    1: 'head',       # 두상 (Body-Part 14-19)
+    2: 'nose'        # 코/비문 (Body-Part 20)
+}
+```
+
+### 4.3. 클래스별 특징
+
+| 클래스 ID | 부위명    | 설명          | AI Hub 매핑     |
+| --------- | --------- | ------------- | --------------- |
+| **0**     | full_body | 반려동물 전신 | Body-Part 01-13 |
+| **1**     | head      | 머리/두상     | Body-Part 14-19 |
+| **2**     | nose      | 코/비문       | Body-Part 20    |
+
+### 4.4. 데이터 출처
+
+- **AI Hub** 반려견, 반려묘 건강정보 데이터
+- 반려견: 개체식별, 건강관리용
+- 반려묘: 개체식별, 건강관리용
+
+### 4.5. 데이터 구성
+
+- 훈련 데이터: 약 96,000개
+- 검증 데이터: 약 12,000개
+- 반려견(Dog): 94%, 반려묘(Cat): 6%
+
+### 4.6. 하이퍼파라미터 설정
+
+```yaml
+# Health Model 학습 설정
+epochs: 28
+batch_size: 16
+image_size: 640
+optimizer: SGD
+lr0: 0.01
+momentum: 0.937
+weight_decay: 0.0005
+workers: 4
+```
+
+### 4.7. 성능 지표 (우수!)
+
+| 지표         | 수치     | 평가                                        |
+| ------------ | -------- | ------------------------------------------- |
+| **mAP50**    | 88.2% ⭐ | 매우 우수! (일반적으로 70% 이상이면 실용적) |
+| **mAP50-95** | 77.1%    | 엄격한 기준에서도 높은 성능 유지            |
+
+> **💡 Health Model이 왜 이렇게 높을까?**
+>
+> - 클래스가 3개로 단순 (전신, 머리, 코만 구분)
+> - 데이터 품질이 우수 (AI Hub 공공 데이터)
+> - 객체가 명확 (피부 질환처럼 애매한 것이 아님)
+
+### 4.8. 클래스별 성능
+
+| 클래스    | mAP50    | mAP50-95 | Precision | Recall |
+| --------- | -------- | -------- | --------- | ------ |
+| full_body | 98.8% ⭐ | 95.9%    | 높음      | 높음   |
+| head      | 86.8%    | 71.9%    | 중간      | 중간   |
+| nose      | 78.9%    | 63.5%    | 보통      | 보통   |
+
+---
+
+## 5. 데이터셋 구조
+
+### 5.1. 통합 데이터셋 통계
+
+| 모델       | 전체 이미지    | 훈련 데이터     | 검증 데이터     | 클래스 수 |
+| ---------- | -------------- | --------------- | --------------- | --------- |
+| **Skin**   | 232,253개      | 185,802개 (80%) | 46,451개 (20%)  | 6개       |
+| **Eyes**   | 217,547개      | 193,134개 (89%) | 24,413개 (11%)  | 30개      |
+| **Health** | 108,000+개     | ~96,000개 (89%) | ~12,000개 (11%) | 3개       |
+| **총합**   | **557,800+개** | ~474,936개      | ~82,864개       | **39개**  |
+
+### 5.2. YOLO 라벨 형식
+
+> **💡 라벨이란?** AI에게 "여기에 이런 질환이 있어요"라고 알려주는 정답 파일입니다.
+
+각 이미지마다 `.txt` 파일로 라벨링되어 있습니다:
+
+```txt
+# 파일명: img_0001.txt
+# 형식: <class_id> <x_center> <y_center> <width> <height>
+# 좌표는 정규화됨 (0.0 ~ 1.0)
+
+0 0.512 0.345 0.123 0.089
+2 0.678 0.567 0.145 0.234
+```
+
+**각 필드 설명:**
+
+- `class_id`: 클래스 ID (Skin: 0~5, Eyes: 0~29, Health: 0~2)
+  - 예: 0 = A1*구진*플라크, 2 = A3*태선화*과다색소침착
+- `x_center`: 바운딩 박스 중심 X 좌표 (정규화, 0.0~1.0)
+  - 정규화: 이미지 너비를 1로 봤을 때의 비율
+- `y_center`: 바운딩 박스 중심 Y 좌표 (정규화, 0.0~1.0)
+- `width`: 바운딩 박스 너비 (정규화, 0.0~1.0)
+- `height`: 바운딩 박스 높이 (정규화, 0.0~1.0)
+
+**예시 해석:**
+
+```
+0 0.512 0.345 0.123 0.089
+→ "A1_구진_플라크가 이미지 중앙(0.512, 0.345) 부근에 작은 크기(0.123×0.089)로 있음"
+```
+
+### 5.3. 데이터셋 폴더 구조
+
+```
+📁 YOLO_DATASETS/
+├── 📁 SKIN_YOLO_DATASET/
+│   ├── images/
+│   │   ├── train/              # 훈련 이미지 (185,802개)
+│   │   └── val/                # 검증 이미지 (46,451개)
+│   └── labels/
+│       ├── train/              # 훈련 라벨 (YOLO 형식)
+│       └── val/                # 검증 라벨
+│
+├── 📁 EYES_YOLO_DATASET/
+│   ├── images/
+│   │   ├── train/              # 훈련 이미지 (193,134개 - 개)
+│   │   └── val/                # 검증 이미지 (24,413개 - 고양이)
+│   └── labels/
+│       ├── train/              # 훈련 라벨
+│       └── val/                # 검증 라벨
+│
+└── 📁 HEALTH_YOLO_DATASET/
+    ├── images/
+    │   ├── train/              # 훈련 이미지 (~96,000개)
+    │   └── valid/              # 검증 이미지 (~12,000개)
+    └── labels/
+        ├── train/              # 훈련 라벨
+        └── valid/              # 검증 라벨
+```
+
+---
+
+## 6. YOLO 모델 시스템 아키텍처
+
+### 6.1. YOLO 이미지 분석 시스템 구조
+
+```mermaid
+graph TB
+    User[👤 사용자] --> Frontend[🌐 Next.js Frontend]
+    Frontend --> FastAPI[🐍 FastAPI Server]
+
+    FastAPI --> YOLO[🤖 YOLO Models]
+    YOLO --> Skin[Skin Model<br/>피부질환 6종]
+    YOLO --> Eyes[Eyes Model<br/>안구질환 30종]
+    YOLO --> Health[Health Model<br/>건강상태 3종]
+
+    FastAPI --> GPU[🎮 NVIDIA RTX 4060<br/>8GB VRAM]
+
+    style User fill:#E3F2FD
+    style Frontend fill:#F3E5F5
+    style FastAPI fill:#FCE4EC
+    style YOLO fill:#FFF3E0
+    style GPU fill:#E8EAF6
+```
+
+### 6.2. 처리 흐름 (AI 진단 Pipeline)
 
 ```mermaid
 sequenceDiagram
-    actor User
-    participant Frontend
-    participant Supabase
-    participant AI_Server
-    participant YOLO
-    participant RAG
-    participant LLM
+    participant User as 👤 사용자
+    participant Frontend as 🌐 Frontend
+    participant FastAPI as 🐍 FastAPI
+    participant YOLO as 🤖 YOLO
 
-    User->>Frontend: 사진 업로드
-    Frontend->>Supabase: 이미지 저장
-    Supabase-->>Frontend: 이미지 URL
-    Frontend->>AI_Server: 분석 요청
-    AI_Server->>YOLO: 이미지 분석
-    YOLO-->>AI_Server: 검출 결과
-    AI_Server->>RAG: 지식 베이스 검색
-    RAG->>Supabase: pgvector 유사도 검색
-    Supabase-->>RAG: 관련 문서
-    RAG-->>AI_Server: 컨텍스트
-    AI_Server->>LLM: 최종 응답 생성
-    LLM-->>AI_Server: 대처 방안
-    AI_Server-->>Frontend: JSON 응답
-    Frontend-->>User: 결과 시각화
+    User->>Frontend: 1. 이미지 업로드 (Drag & Drop)
+    Frontend->>Frontend: 2. 이미지 미리보기 표시
+    User->>Frontend: 3. "분석 시작" 버튼 클릭
+    Frontend->>FastAPI: 4. POST /api/detect (이미지 + 모델 선택)
+    FastAPI->>FastAPI: 5. 이미지 전처리 (640x640)
+    FastAPI->>YOLO: 6. 모델 추론
+    YOLO->>YOLO: 7. 바운딩 박스 + 신뢰도 계산
+    YOLO->>FastAPI: 8. 탐지 결과 반환
+    FastAPI->>FastAPI: 9. 결과 이미지 생성 (바운딩 박스 표시)
+    FastAPI->>Frontend: 10. JSON 응답 (탐지 결과 + 이미지 URL)
+    Frontend->>User: 11. 탐지 결과 시각화
+```
+
+### 6.3. API 엔드포인트
+
+```python
+# FastAPI 엔드포인트 정의
+@app.post("/api/detect-health")   # Health Model 추론
+@app.post("/api/detect-eyes")     # Eyes Model 추론
+@app.post("/api/detect-skin")     # Skin Model 추론
+```
+
+### 6.4. 응답 형식
+
+```json
+{
+  "detections": [
+    {
+      "class": "A1_구진_플라크",
+      "confidence": 0.82,
+      "bbox": [x, y, w, h]
+    },
+    {
+      "class": "full_body",
+      "confidence": 0.95,
+      "bbox": [x, y, w, h]
+    }
+  ],
+  "annotated_image": "data:image/jpeg;base64,..."
+}
 ```
 
 ---
 
-## 💬 실제 사용 화면
+## 7. 성능 분석
 
-> **📸 [screenshots/](./screenshots/)** 폴더에서 더 많은 실제 사용 화면을 확인할 수 있습니다.
+### 7.1. 통합 모델 성능 비교
 
-### 🤖 LLM-RAG 프롬프팅 - 일반 채팅
+| 모델       | mAP50        | mAP50-95     | Precision | Recall | 학습시간  | 클래스 수 | 평가      |
+| ---------- | ------------ | ------------ | --------- | ------ | --------- | --------- | --------- |
+| **Skin**   | 18.3%        | 8.3%         | 31.8%     | 23.1%  | 38시간    | 6개       | 개선 필요 |
+| **Eyes**   | 25.4%        | 21.5%        | -         | -      | 72시간    | 30개      | 개선 필요 |
+| **Health** | **88.2%** ⭐ | **77.1%** ⭐ | -         | -      | 21.5시간  | 3개       | **우수**  |
+| **평균**   | 44.0%        | 35.6%        | -         | -      | 131.5시간 | 39개      | -         |
 
-반려동물 케어에 대한 일상적인 질문에 RAG 시스템이 검증된 지식 기반으로 답변합니다.
-
-<div align="center">
-
-|                               RAG 채팅 예시 1                                |             RAG 채팅 예시 2 (해시태그 활용)              |
-| :--------------------------------------------------------------------------: | :------------------------------------------------------: |
-|            ![AI일반채팅1](./screenshots/rag_chat/AI일반채팅1.png)            |  ![AI일반채팅2](./screenshots/rag_chat/AI일반채팅2.png)  |
-|                               RAG 채팅 예시 3                                |                     RAG 채팅 예시 4                      |
-|            ![AI일반채팅3](./screenshots/rag_chat/AI일반채팅3.png)            |  ![AI일반채팅4](./screenshots/rag_chat/AI일반채팅4.png)  |
-|                         RAG 채팅 예시 5 (혼합 채팅)                          |  해시태그 클릭시 퀵가이드<br/>(예: \#산책, \#간식추천)   |
-| ![AI일반해시태그혼합채팅](./screenshots/rag_chat/AI일반해시태그혼합채팅.png) | ![해시태그클릭](./screenshots/rag_chat/해시태그클릭.png) |
-
-</div>
-
-### 🩺 YOLO + RAG 통합 진단
-
-> **📸 [screenshots/yolo_diagnosis/](./screenshots/yolo_diagnosis/)** 폴더에서 더 많은 진단 화면을 확인할 수 있습니다.
-
-이미지 분석과 RAG 시스템을 결합하여 전문적인 건강 진단과 대처 방안을 제공합니다.
-
-<div align="center">
-
-|                        AI 이미지 분석                         |                         진단 결과                         |                          병원 방문 판단                           |
-| :-----------------------------------------------------------: | :-------------------------------------------------------: | :---------------------------------------------------------------: |
-| ![이미지분석](./screenshots/yolo_diagnosis/01_이미지분석.png) | ![진단결과](./screenshots/yolo_diagnosis/02_진단결과.png) | ![병원방문판단](./screenshots/yolo_diagnosis/03_병원방문판단.png) |
-
-</div>
-
-> **💡 핵심 기능:**
+> **💡 성능 차이가 큰 이유**
 >
-> - ✅ **RAG System**: pgvector 기반 유사도 검색으로 정확한 답변 제공
-> - ✅ **Multi-LLM**: GPT-4/Gemini/Claude 중 최적의 모델 선택
-> - ✅ **YOLO Integration**: 3종 모델(Skin/Health/Eyes) 통합 분석
-> - ✅ **Real-time Response**: 평균 2-3초 내 응답 생성
+> - **Health 모델이 높은 이유**: 클래스가 3개로 단순, 객체가 명확 (전신, 머리, 코)
+> - **Skin 모델이 낮은 이유**: 피부 질환은 경계가 애매함, 데이터 불균형
+> - **Eyes 모델이 중간인 이유**: 클래스가 30개로 많아서 학습이 어려움
+
+### 7.2. 학습 시간 및 리소스
+
+| 모델       | 총 학습시간 | 1 Epoch 시간 | GPU 사용률 | GPU 메모리 | 학습 이미지 수 |
+| ---------- | ----------- | ------------ | ---------- | ---------- | -------------- |
+| **Skin**   | 38시간      | ~82분        | 95%        | 7.2GB/8GB  | 185,802개      |
+| **Eyes**   | 72시간      | ~154분       | 90%        | 6.8GB/8GB  | 193,134개      |
+| **Health** | 21.5시간    | ~46분        | 85%        | 5.5GB/8GB  | ~96,000개      |
+| **총합**   | 131.5시간   | -            | -          | -          | 474,936개      |
+
+### 7.3. 장점 분석
+
+**1. Health Model의 높은 성능 (88.2% mAP50)**
+
+- 클래스가 3개로 단순하여 학습이 효율적
+- 데이터 품질이 우수 (AI Hub 공공 데이터)
+- full_body 검출 98.8%로 매우 높은 정확도
+
+**2. Eyes Model의 광범위한 질환 커버 (30개 클래스)**
+
+- 개 24개 + 고양이 6개 안구질환 통합
+- 주요 질환(백내장, 궤양성각막질환) 검출 정확도 50% 이상
+- 심각도 단계별 분류 가능
+
+**3. Skin Model의 대규모 데이터셋 (232,253개)**
+
+- 가장 많은 이미지 데이터 활용
+- 6개 피부질환 클래스 분포
+
+### 7.4. 개선이 필요한 부분
+
+**1. Skin Model의 낮은 mAP (18.3%)**
+
+- 원인: 하이퍼파라미터 자동 최적화 설정 문제
+- 학습 중반에 성능 급락 발생
+- 데이터 불균형 (A5: 13,884개 vs A2: 88,365개)
+
+**2. Eyes Model의 클래스 복잡도**
+
+- 30개 클래스로 인한 학습 난이도 증가
+- 일부 클래스(핵경화, 각막부골편) 낮은 정확도
+- 개와 고양이 데이터 불균형 (9:1 비율)
+
+**3. 전체적인 학습 시간**
+
+- 총 131.5시간 (약 5.5일) 소요
+- GPU 연속 가동에 따른 부담
+
+### 7.5. 개선 방안
+
+#### Skin Model 개선
+
+**1. 하이퍼파라미터 재조정**
+
+- `optimizer: auto` → `optimizer: SGD` (수동 설정)
+- Learning Rate 감소: 0.01 → 0.001
+- Batch Size 증가: 8 → 16
+
+**2. 데이터 증강 강화**
+
+- Mixup, CutMix 추가
+- Class-balanced Sampling 적용
+- 데이터 재샘플링으로 A5 클래스 증강
+
+**3. 학습 전략 변경**
+
+- Epoch 수 증가: 28 → 100
+- Early Stopping 적극 활용
+- Warmup Epoch 증가: 3 → 5
+
+#### Eyes Model 개선
+
+**1. 클래스 통합**
+
+- 유사 클래스 통합 (무/유만 남기고 상/하 제거)
+- 30개 → 15개 클래스로 단순화
+
+**2. 데이터 밸런싱**
+
+- 고양이 데이터 증강 (24,413개 → 50,000개)
+- 저빈도 클래스 오버샘플링
+- Focal Loss 적용
 
 ---
 
-## 🗄️ 데이터베이스 설계
+## 🔗 참고 자료
 
-> 상세한 ERD는 **[05_ERD.md](./docs/05_ERD.md)**에서 확인할 수 있습니다.
+### 기술 문서
 
-### 📊 테이블 구조 요약
+1. **YOLOv8 공식 문서**: https://docs.ultralytics.com/
+2. **논문**: Jocher, G. et al. (2023). Ultralytics YOLOv8
+3. **PyTorch 공식 문서**: https://pytorch.org/docs/
+4. **Ultralytics GitHub**: https://github.com/ultralytics/ultralytics
 
-| 영역             | 테이블 수 | 주요 테이블                                       |
-| :--------------- | :-------: | :------------------------------------------------ |
-| **사용자/인증**  |    3개    | profiles, profileCompletion, userSettings         |
-| **반려동물**     |    4개    | palProfiles, palHealthRecords, vaccinations       |
-| **커뮤니티**     |    9개    | communityPosts, postComments, postLikes, events   |
-| **라이프스타일** |    3개    | lifestylePosts, lifestyleRooms, lifestyleMessages |
-| **플래너**       |    6개    | plannerEvents, plannerExpenses, eventReminders    |
-| **병원/시설**    |    3개    | petHospitals, hospitalReviews, hospitalBookmarks  |
-| **해시태그**     |    4개    | hashTags, communityHashTags, lifestyleHashTags    |
-| **AI/지식**      |    3개    | pet_knowledge_base(RAG), aiAnalysisHistory        |
-| **파일/시스템**  |    3개    | fileMetadata, notifications, systemLogs           |
+### 데이터셋 출처 - 출처: https://aihub.or.kr/
 
-**총 40개+ 테이블**로 체계적으로 설계되었습니다.
+1. **Skin Model**: AI Hub 반려동물 피부질환
+2. **Eyes Model**: AI Hub 반려동물 안구질환
+3. **Health Model**: AI Hub 반려견/반려묘 건강정보 데이터
 
 ---
 
-## 📊 프로젝트 성과
+## ⚖️ 법적 고지사항
 
-### 🎯 주요 지표
+⚠️ **중요 안내**
 
-| 지표                  |  목표 |           달성 | 달성률  |
-| :-------------------- | ----: | -------------: | :-----: |
-| **AI 모델 정확도**    |   80% | 88.2% (Health) | ✅ 110% |
-| **데이터 수집**       |  500K |           668K | ✅ 134% |
-| **백엔드 테이블**     |  30개 |          40개+ | ✅ 133% |
-| **RLS 정책**          |  30개 |           47개 | ✅ 157% |
-| **프론트엔드 페이지** |  15개 |          20개+ | ✅ 133% |
-| **반응형 지원**       | 3단계 |          4단계 | ✅ 133% |
+1. **진단 목적 제한**
 
-### 🏆 기술적 성과
+   - 본 AI 시스템은 **참고용**이며, 실제 진단은 반드시 자격을 갖춘 수의사가 수행해야 합니다.
+   - 수의사법 준수: 본 시스템은 진단이 아닌 "정보 제공" 목적입니다.
 
-- ✅ **Hook Composition 패턴**: 60% 코드 감소
-- ✅ **Co-location 아키텍처**: 유지보수성 200% 향상
-- ✅ **RAG 시스템 구축**: pgvector + Multi-LLM 통합
-- ✅ **실시간 채팅**: Supabase Realtime 활용
-- ✅ **4단계 반응형**: 400px ~ 1280px+ 대응
-- ✅ **통합 해시태그**: 4개 영역 통합 시스템
+2. **책임의 한계**
+   - AI 예측 결과의 정확성을 100% 보장하지 않습니다.
+   - 치료 결정은 반드시 전문 수의사와 상담 후 진행하세요.
 
 ---
 
-## 🚀 시작하기
+## 🏆 YOLO 트레이닝 요약
 
-### 📋 사전 요구사항
+**3개 YOLOv8m 모델 학습 완료**
 
-- Node.js 18.x 이상
-- Python 3.10 이상
-- Supabase 계정
-- OpenAI/Gemini/Claude API 키
+✅ **총 557,800+개 이미지 학습**
 
-### 🔧 설치 및 실행
+- 131.5시간 GPU 학습 완주
+- 39개 클래스 통합 진단 가능
 
-```bash
-# 저장소 클론
-git clone https://github.com/LYSS-LGU/Fetpal.git
-cd Fetpal
+✅ **3개 독립 모델 구축**
 
-# 프론트엔드 설정
-npm install
-cp .env.example .env.local
-# .env.local 파일에 Supabase 키 입력
+- Skin: 232,253개 데이터, 6개 클래스
+- Eyes: 217,547개 데이터, 30개 클래스
+- Health: 108,000+개 데이터, 3개 클래스 (가장 높은 성능)
 
-# 개발 서버 실행
-npm run dev
+✅ **FastAPI 서버 통합**
 
-# AI 서버 설정 (별도 터미널)
-cd ai-server
-pip install -r requirements.txt
-# .env 파일에 API 키 입력
-
-# AI 서버 실행
-uvicorn main:app --reload
-```
-
-### 🌐 배포
-
-- **Frontend**: Vercel (자동 배포)
-- **AI Server**: AWS EC2 (수동 배포)
-- **Database**: Supabase (클라우드)
+- Next.js 14 프론트엔드 연동
+- GPU 가속 추론 지원
 
 ---
 
-## 🙏 감사의 말 (Acknowledgments)
+**📝 문서 정보**
 
-이 프로젝트는 **LG U+ Why not camp 7기** 3차 프로젝트의 일환으로 진행되었습니다.
-
-프로젝트 진행 과정에서 아낌없는 조언과 지원을 해주신 다음 분들께 깊은 감사를 드립니다:
-
-- **김영리 강사님** (LG U+ Why not camp 7기)
-- **아이그로스 관계자 여러분**
-
-### 🤖 AI 개발 파트너
-
-이 프로젝트는 초보 개발자가 혼자서도 포기하지 않고 완성할 수 있었던 이유는 **Claude AI**와의 페어 프로그래밍 덕분입니다.
-
-**Claude에게 배우고 도움을 받은 것들:**
-
-- 🎯 프로젝트 아키텍처 설계 및 기술 스택 선정 조언
-- 💻 코드 작성, 디버깅, 리팩토링 지원
-- 📚 기술 문서 작성 및 코드 주석 개선
-- 🐛 버그 해결 및 성능 최적화 가이드
-- 🎓 실시간 학습 코칭 및 베스트 프랙티스 제안
-
----
-
-<div align="center">
-
-**Made with ❤️ by LYSS with Claude AI**
-
-**© 2025 Fetpal Project. All rights reserved.**
-
-</div>
+- **작성일**: 2025-11-14
+- **작성자**: LYSS with Claude
+- **버전**: v2.0 (4차 스프린트 최종)
+- **관련 문서**: [10*RAG-LLM*시스템\_정의서.md](./10_RAG-LLM_시스템_정의서.md)

@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>02_WBS_최신화</title>
+
+    <!-- Mermaid.js CDN -->
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            },
+            sequence: {
+                diagramMarginX: 50,
+                diagramMarginY: 10,
+                actorMargin: 50,
+                width: 150,
+                height: 65,
+                boxMargin: 10,
+                boxTextMargin: 5,
+                noteMargin: 10,
+                messageMargin: 35,
+                mirrorActors: true,
+                useMaxWidth: true
+            }
+        });
+    </script>
+
+    <style>
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 2cm;
+            }
+
+            /* 브라우저 기본 헤더/푸터 숨기기 */
+            @page {
+                margin-top: 2cm;
+                margin-bottom: 2cm;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            .print-button {
+                display: none !important;
+            }
+
+            /* Mermaid 다이어그램 페이지 브레이크 방지 */
+            .mermaid {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            pre {
+                page-break-inside: avoid;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕",
+                         "Segoe UI", "Noto Sans KR", Arial, sans-serif;
+            line-height: 1.7;
+            color: #24292e;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #ffffff;
+        }
+
+        /* 헤더 스타일 */
+        h1 {
+            color: #1a1a1a;
+            border-bottom: 4px solid #0366d6;
+            padding-bottom: 12px;
+            margin-top: 32px;
+            margin-bottom: 24px;
+            font-size: 2.2em;
+            font-weight: 700;
+            page-break-after: avoid;
+        }
+
+        h2 {
+            color: #24292e;
+            border-bottom: 2px solid #e1e4e8;
+            padding-bottom: 10px;
+            margin-top: 28px;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            font-weight: 600;
+            page-break-after: avoid;
+        }
+
+        h3 {
+            color: #24292e;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            font-size: 1.4em;
+            font-weight: 600;
+            page-break-after: avoid;
+        }
+
+        h4 {
+            color: #24292e;
+            margin-top: 20px;
+            margin-bottom: 12px;
+            font-size: 1.15em;
+            font-weight: 600;
+            page-break-after: avoid;
+        }
+
+        /* Mermaid 다이어그램 스타일 */
+        .mermaid {
+            background-color: #f6f8fa;
+            border: 1px solid #e1e4e8;
+            border-radius: 8px;
+            padding: 24px;
+            margin: 24px 0;
+            overflow-x: auto;
+            text-align: center;
+            page-break-inside: avoid;
+        }
+
+        .mermaid svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* 테이블 스타일 */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 20px 0;
+            display: table;
+            overflow-x: auto;
+            page-break-inside: avoid;
+        }
+
+        th, td {
+            border: 1px solid #d0d7de;
+            padding: 10px 16px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #0366d6;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f6f8fa;
+        }
+
+        /* 코드 블록 스타일 */
+        code {
+            background-color: #f6f8fa;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-family: "Consolas", "Monaco", "Courier New", monospace;
+            font-size: 0.9em;
+            color: #e83e8c;
+        }
+
+        pre {
+            background-color: #f6f8fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #0366d6;
+            overflow-x: auto;
+            margin: 20px 0;
+            page-break-inside: avoid;
+        }
+
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            color: #24292e;
+            font-size: 0.9em;
+        }
+
+        /* 인용구 스타일 */
+        blockquote {
+            border-left: 4px solid #0366d6;
+            padding: 12px 20px;
+            margin: 20px 0;
+            background-color: #f6f8fa;
+            color: #57606a;
+            border-radius: 4px;
+        }
+
+        blockquote p {
+            margin: 0;
+        }
+
+        /* 리스트 스타일 */
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 32px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        /* 이미지 스타일 */
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 24px auto;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* 링크 스타일 */
+        a {
+            color: #0366d6;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* 구분선 스타일 */
+        hr {
+            border: none;
+            border-top: 2px solid #e1e4e8;
+            margin: 32px 0;
+        }
+
+        /* 프린트 버튼 */
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #0366d6 0%, #0256c7 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(3,102,214,0.3);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .print-button:hover {
+            background: linear-gradient(135deg, #0256c7 0%, #024aa8 100%);
+            box-shadow: 0 6px 16px rgba(3,102,214,0.4);
+            transform: translateY(-2px);
+        }
+
+        .print-button:active {
+            transform: translateY(0);
+        }
+
+        /* 이모지 스타일 */
+        .emoji {
+            font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+        }
+
+        /* 주석 스타일 (Note) */
+        p strong {
+            color: #0366d6;
+        }
+    </style>
+</head>
+<body>
+    <button class="print-button" onclick="window.print()">
+        <span class="emoji">🖨️</span> PDF로 저장
+    </button>
+
+    <h1>Fetpal 프로젝트 WBS (Work Breakdown Structure)</h1>
+<blockquote>
+<p><strong>프로젝트 기간</strong>: 2025.09.19 ~ 2025.11.20 (약 9주)<br />
+<strong>핵심 목표</strong>: AI 기반 반려동물 케어 플랫폼 구축 + RAG 시스템 + 라이프스타일 채팅 완성</p>
+</blockquote>
+<hr />
+<h2>📋 프로젝트 개요</h2>
+<h3>프로젝트 범위</h3>
+<ul>
+<li><strong>Phase 1</strong>: 프로젝트 기획 및 설계 ✅</li>
+<li><strong>Phase 2</strong>: 백엔드 개발 (Supabase) ✅</li>
+<li><strong>Phase 3</strong>: AI 서버 개발 (YOLO 모델 훈련 및 API 구축) ✅</li>
+<li><strong>Phase 4</strong>: 프론트엔드 연동 및 테스트 ✅</li>
+<li><strong>Phase 5</strong>: RAG 시스템 구축 ✅</li>
+<li><strong>Phase 6</strong>: 라이프스타일 채팅 리팩토링 ✅</li>
+<li><strong>Phase 7</strong>: 배포 및 최종 점검 🚧</li>
+</ul>
+<h3>주요 목표</h3>
+<ol>
+<li>✅ <strong>3종 YOLO 모델 개발</strong> (Skin, Health, Eyes)</li>
+<li>✅ <strong>FastAPI 기반 AI 서버 구축</strong></li>
+<li>✅ <strong>프론트엔드 연동</strong></li>
+<li>✅ <strong>RAG 지식 베이스 시스템 구축</strong></li>
+<li>✅ <strong>라이프스타일 실시간 채팅 구현</strong></li>
+<li>✅ <strong>통합 해시태그 시스템 확장</strong> (4개 영역)</li>
+<li>✅ <strong>반응형 디자인 적용</strong> (400px~1280px+)</li>
+<li>🚧 <strong>발표 자료 및 시연 준비</strong></li>
+</ol>
+<hr />
+<h2>📅 Phase별 작업 계획 및 완료 현황</h2>
+<h2>Phase 1: 프로젝트 기획 및 설계 (2025.09.19 ~ 2025.09.25)</h2>
+<h3>1.1. 요구사항 분석 및 명세화 ✅</h3>
+<ul>
+<li><strong>기간</strong>: 2025.09.19 ~ 2025.09.20 (2일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>세부 작업</strong>:</li>
+<li>주제 선정: 반려동물 AI 건강 케어 플랫폼 기획</li>
+<li>주제 확정: Fetpal - 반려동물 통합 케어 플랫폼 컨셉 수립</li>
+<li>문제정의 및 솔루션 도출: 사용자 페인포인트 분석 및 솔루션 정의</li>
+<li>핵심 기능 정의 (AI 진단, 커뮤니티, 플래너 등)</li>
+<li>페르소나 및 사용자 시나리오 정의</li>
+<li>기술 스택 선정 및 타당성 검토</li>
+</ul>
+<h3>1.2. 프로젝트 산출물 작성 ✅</h3>
+<ul>
+<li><strong>기간</strong>: 2025.09.21 ~ 2025.09.25 (5일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>세부 작업</strong>:</li>
+<li>기능 요구사항 작성: AI 건강진단 / 플래너 / 커뮤니티 등 핵심 기능 정의</li>
+<li>비기능 요구사항 작성: 성능 / 보안 / 확장성 요구사항 정의</li>
+<li>프로젝트 기획서 작성</li>
+<li>시스템 아키텍처 설계 (MSA 구조 / 기술 스택 선정)</li>
+<li>시스템 흐름도 작성 (주요 기능별 프로세스 플로우 설계)</li>
+<li>데이터베이스 ERD 설계 (37개 테이블 설계)</li>
+<li>WBS 작성</li>
+</ul>
+<h3>1.3. UI/UX 디자인 ✅</h3>
+<ul>
+<li><strong>기간</strong>: 2025.09.22 ~ 2025.09.25 (4일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>세부 작업</strong>:</li>
+<li>와이어프레임 및 프로토타입 제작</li>
+<li>UI 디자인 시스템 및 컴포넌트 설계</li>
+<li>Next.js 14 App Router 기반 설계</li>
+</ul>
+<h3>1.4. 개발 환경 및 일정 계획 ✅</h3>
+<ul>
+<li><strong>기간</strong>: 2025.09.19 ~ 2025.09.25 (7일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>세부 작업</strong>:</li>
+<li>Git 레포지토리 및 브랜치 전략 수립</li>
+<li>개발, 스테이징, 프로덕션 환경 계획</li>
+<li>전체 프로젝트 마일스톤 및 일정 수립</li>
+<li>Monorepo + Hook Composition 패턴 도입</li>
+</ul>
+<hr />
+<h2>Phase 2: 백엔드 개발 (Supabase) (2025.09.19 ~ 2025.09.25)</h2>
+<h3>2.1. Supabase 프로젝트 설정 ✅</h3>
+<ul>
+<li><strong>기간</strong>: 2025.09.19 ~ 2025.09.20 (2일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>세부 작업</strong>:</li>
+<li>프로젝트 생성 및 기본 설정</li>
+<li>데이터베이스 초기화</li>
+</ul>
+<h3>2.2. 데이터베이스 스키마 구현 ✅</h3>
+<ul>
+<li><strong>기간</strong>: 2025.09.21 ~ 2025.09.25 (5일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>세부 작업</strong>:</li>
+<li>사용자/인증 관련 테이블 생성 (profiles, profileCompletion)</li>
+<li>반려동물 관련 테이블 생성 (palProfiles, palHealthRecords, vaccinations)</li>
+<li>커뮤니티 관련 테이블 생성 (communityPosts, postTags, postLikes, events)</li>
+<li>플래너 관련 테이블 생성 (plannerEvents, plannerExpenses)</li>
+<li>파일 메타데이터 테이블 생성</li>
+<li>CamelCase 마이그레이션 적용</li>
+</ul>
+<h3>2.3. 데이터베이스 로직 구현 ✅</h3>
+<ul>
+<li><strong>기간</strong>: 2025.09.22 ~ 2025.09.25 (4일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>세부 작업</strong>:</li>
+<li>PostgreSQL 함수 및 트리거 작성 (프로필 자동 생성, updatedAt 등)</li>
+<li>RLS (Row Level Security) 정책 수립 및 적용 (60개+ 정책)</li>
+</ul>
+<h3>2.4. 스토리지 설정 ✅</h3>
+<ul>
+<li><strong>기간</strong>: 2025.09.24 ~ 2025.09.25 (2일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>세부 작업</strong>:</li>
+<li>profileImage 등 버킷 생성</li>
+<li>폴더별 접근 제어 정책 수립 및 적용</li>
+</ul>
+<hr />
+<h2>Phase 3: AI 서버 개발 (2025.09.19 ~ 2025.10.23)</h2>
+<h3>Week 1: 데이터 파이프라인 구축 (2025.09.19 ~ 2025.09.25) ✅</h3>
+<h4>3.1. 데이터셋 다운로드</h4>
+<ul>
+<li><strong>기간</strong>: 2025.09.19 ~ 2025.09.25 (7일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>담당</strong>: LYSS</li>
+<li><strong>세부 작업</strong>:</li>
+<li>Skin 데이터 수집: 반려동물 피부질환 데이터 <strong>232,253개 이미지</strong> 수집</li>
+<li>Eyes 데이터 수집: 반려동물 안구질환 데이터 <strong>217,547개 이미지</strong> 수집</li>
+<li>Health 데이터 수집: 반려동물 건강정보 데이터 <strong>218,747개 이미지</strong> 수집</li>
+<li><strong>총 668,547개 이미지</strong> (AI-Hub 공공 데이터셋)</li>
+</ul>
+<h3>Week 2: 데이터 전처리 및 EDA (2025.09.26 ~ 2025.10.02) ✅</h3>
+<h4>3.2. 데이터 파이프라인 구축</h4>
+<ul>
+<li><strong>기간</strong>: 2025.09.26 ~ 2025.09.30 (5일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>세부 작업</strong>:</li>
+<li>JSON → YOLO 포맷 변환 자동화</li>
+<li>변환 스크립트 개발: JSON 라벨 → YOLO txt 포맷 변환</li>
+<li>중복/오류 제거 자동화: 데이터 품질 관리 시스템 구축</li>
+<li>데이터 정제율: <strong>96.8%</strong> (중복/오류 제거)</li>
+</ul>
+<h4>3.3. 데이터 전처리 및 EDA</h4>
+<ul>
+<li><strong>기간</strong>: 2025.09.26 ~ 2025.10.02 (7일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>세부 작업</strong>:</li>
+<li><strong>Skin</strong>: 232,253개 이미지 정제 (A7 무증상 3,480개 제거)</li>
+<li><strong>Health</strong>: 218,747개 이미지 클래스 매핑</li>
+<li><strong>Eyes</strong>: 217,547개 이미지 전처리</li>
+<li>클래스 불균형 분석: 데이터 분포 시각화 및 증강 전략 수립</li>
+<li><strong>훈련 데이터</strong>: 401,870개 (약 60%)</li>
+<li><strong>검증 데이터</strong>: 70,881개 (약 11%)</li>
+</ul>
+<h3>Week 3-4: YOLO 모델 개발 (2025.10.03 ~ 2025.10.16) ✅</h3>
+<h4>3.4. Health 모델 훈련</h4>
+<ul>
+<li><strong>기간</strong>: 2025.10.03 ~ 2025.10.09 (7일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>담당</strong>: LYSS</li>
+<li><strong>세부 작업</strong>:</li>
+<li>모델 훈련: YOLOv8m / <strong>28 epochs</strong> / <strong>21.5시간 GPU 학습</strong></li>
+<li>성능 평가: <strong>mAP50 88.2%</strong>, mAP50-95 77.1%</li>
+<li>클래스별 성능:<ul>
+<li>full_body: 98.8%</li>
+<li>head: 86.8%</li>
+<li>nose: 78.9%</li>
+</ul>
+</li>
+<li>모델 최적화 및 저장: best.pt 모델 저장 (52MB)</li>
+</ul>
+<h4>3.5. Eyes 모델 훈련</h4>
+<ul>
+<li><strong>기간</strong>: 2025.10.03 ~ 2025.10.09 (7일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>담당</strong>: LYSS</li>
+<li><strong>세부 작업</strong>:</li>
+<li>모델 훈련: YOLOv8m / <strong>28 epochs</strong> / <strong>72시간 GPU 학습</strong></li>
+<li>성능 평가: <strong>mAP50 25.35%</strong>, mAP50-95 21.48%</li>
+<li>30개 클래스 성능 분석: 질환별 mAP 측정 및 위험도 분류</li>
+<li>모델 최적화 및 저장: best.pt 모델 저장 (50MB)</li>
+</ul>
+<h4>3.6. Skin 모델 훈련</h4>
+<ul>
+<li><strong>기간</strong>: 2025.10.10 ~ 2025.10.16 (7일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>담당</strong>: LYSS</li>
+<li><strong>세부 작업</strong>:</li>
+<li>1차 훈련 실패 분석: 하이퍼파라미터 자동 최적화 문제 파악</li>
+<li>하이퍼파라미터 수동 튜닝: 배치 크기/학습률 등 수동 조정</li>
+<li>2차 훈련 성공: YOLOv8m / <strong>28 epochs</strong> / <strong>38시간 GPU 학습</strong></li>
+<li>성능 평가: <strong>mAP50 18.3%</strong>, mAP50-95 8.3% (1차 대비 2배 향상)</li>
+<li>모델 최적화 및 저장: best.pt 모델 저장 (52MB)</li>
+</ul>
+<h3>Week 5: AI 서버 구축 및 API 개발 (2025.10.17 ~ 2025.10.23) ✅</h3>
+<h4>3.7. FastAPI 서버 구축</h4>
+<ul>
+<li><strong>기간</strong>: 2025.10.17 ~ 2025.10.20 (4일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>담당</strong>: LYSS</li>
+<li><strong>세부 작업</strong>:</li>
+<li>서버 환경 구축: FastAPI / Uvicorn / Python 3.10 설정</li>
+<li>API 엔드포인트 개발:<ul>
+<li><code>/detect-skin</code> (피부질환)</li>
+<li><code>/detect-health</code> (건강 체크)</li>
+<li><code>/detect-eyes</code> (안구질환)</li>
+<li><code>/detect</code> (자동 모델 선택)</li>
+<li><code>/health</code> (서버 상태 확인)</li>
+</ul>
+</li>
+</ul>
+<h4>3.8. 멀티모델 관리 시스템</h4>
+<ul>
+<li><strong>기간</strong>: 2025.10.20 ~ 2025.10.23 (4일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>담당</strong>: LYSS</li>
+<li><strong>세부 작업</strong>:</li>
+<li>모델 로딩 최적화: GPU 메모리 효율적 활용 (3.2GB/8GB)</li>
+<li>Lazy Loading 패턴 적용 (요청 시 모델 동적 로드)</li>
+<li>모델 캐싱 시스템으로 재로딩 시간 단축</li>
+<li>에러 핸들링 구현: 모델 로드 실패 / 타임아웃 등 예외 처리</li>
+</ul>
+<h4>3.9. LLM(RAG) 연동 준비</h4>
+<ul>
+<li><strong>기간</strong>: 2025.10.17 ~ 2025.10.23 (7일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>세부 작업</strong>:</li>
+<li>LLM Provider (OpenAI/Gemini) API 연동 준비</li>
+<li>RAG 파이프라인 설계 (검색 → 질문 생성 → 답변)</li>
+</ul>
+<hr />
+<h2>Phase 4: 프론트엔드 연동 및 테스트 (2025.10.24 ~ 2025.10.31)</h2>
+<h3>Week 6: 프론트엔드 연동 (2025.10.24 ~ 2025.10.31) ✅</h3>
+<h4>4.1. AI 어시스턴트 페이지 개발</h4>
+<ul>
+<li><strong>기간</strong>: 2025.10.24 ~ 2025.10.28 (5일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>담당</strong>: LYSS</li>
+<li><strong>세부 작업</strong>:</li>
+<li>이미지 업로드 컴포넌트: 파일 선택 / 카메라 촬영 / 드래그앤드롭</li>
+<li>진단 유형 선택 UI: 피부 / 눈 / 전체 건강 진단 선택</li>
+<li>결과 시각화: 바운딩 박스 렌더링 + 신뢰도 + 심각도 표시</li>
+</ul>
+<h4>4.2. YOLO 모델 통합 및 개선</h4>
+<ul>
+<li><strong>기간</strong>: 2025.10.25 ~ 2025.10.28 (4일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>담당</strong>: LYSS</li>
+<li><strong>세부 작업</strong>:</li>
+<li><strong>2025-10-25</strong>: Eyes/Health 모델 감지 이슈 분석 및 해결<ul>
+<li>Health 모델 confidence threshold 0.1 → 0.4 (오감지 방지)</li>
+<li>우선순위 기반 모델 선택 로직 구현 (Eyes &gt; Skin &gt; Health)</li>
+<li>3개 모델 신뢰도 UI 표시 개선</li>
+</ul>
+</li>
+<li><strong>2025-10-26</strong>: PetHospital 시스템 완전 구축 (신규!)<ul>
+<li>카카오 API 통합 (3km 반경 내 동물병원 검색)</li>
+<li>24시 응급실 자동 감지 시스템</li>
+<li>병원 카드 UI + 연락처 복사 Toast</li>
+</ul>
+</li>
+<li><strong>2025-10-28</strong>: AI 챗봇 프롬프트 강화 + 해시태그 시스템 개선<ul>
+<li>감지된 모든 질병명 해시태그 자동 생성</li>
+<li>해시태그 분리 포맷팅 (#비듬 #각질 #상피성잔고리)</li>
+<li>Markdown 렌더러 해시태그 자동 링크 기능</li>
+<li>콘솔 로그 90% 축소 (디버깅 최적화)</li>
+</ul>
+</li>
+</ul>
+<h4>4.3. API 연동 및 테스트</h4>
+<ul>
+<li><strong>기간</strong>: 2025.10.28 ~ 2025.10.31 (4일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>담당</strong>: LYSS</li>
+<li><strong>세부 작업</strong>:</li>
+<li>CORS 문제 해결: allow_origins 설정 / 크로스 도메인 요청 허용</li>
+<li>에러 핸들링: 로딩 상태 / 실패 메시지 / 재시도 로직</li>
+<li>페이지 로딩 속도 85% 개선 (3-5초 → 0.1-0.5초)</li>
+<li>평균 응답 시간: 3~5초 (이미지 분석 포함)</li>
+</ul>
+<h4>4.4. 라이프스타일 채팅 시스템 구축 시작</h4>
+<ul>
+<li><strong>기간</strong>: 2025.10.24 ~ 2025.10.31 (8일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>세부 작업</strong>:</li>
+<li>lifestylechatrooms, lifestylechatmessages 테이블 생성</li>
+<li>글로벌 로비 + 해시태그 채팅방 UI 구현</li>
+<li>실시간 Supabase Realtime 구독 구현</li>
+</ul>
+<hr />
+<h2>Phase 5: RAG 시스템 구축 및 시스템 개선 (2025.10.31 ~ 2025.11.07)</h2>
+<h3>Week 7: RAG 시스템 구축 및 전체 시스템 개선 (2025.10.31 ~ 2025.11.07) ✅</h3>
+<h4>5.1. RAG 시스템 최적화 및 시연 준비</h4>
+<ul>
+<li><strong>기간</strong>: 2025.10.31 (1일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>담당</strong>: LYSS</li>
+<li><strong>세부 작업</strong>:</li>
+<li><strong>Health 모델 UI 완전 제거</strong> (시연 영상용)</li>
+<li><strong>무의미한 해시태그 완전 제거</strong> (#무, #nose 등 필터링)</li>
+<li><strong>"더 자세히 알아보기" 답변 길이 증가</strong> (maxOutputTokens 4096 → 8192)</li>
+<li>커뮤니티 게시글 → 지식 베이스 자동 수집 (트리거 기반)</li>
+<li>Vector Similarity Search 구현 (코사인 유사도)</li>
+<li>quality_score + is_verified 품질 관리 체계 구축</li>
+<li>출처 추적 시스템 (source: community, faq, youtube, manual)</li>
+</ul>
+<h4>5.2. Vector DB 구축 (이전 작업 기반)</h4>
+<ul>
+<li><strong>기간</strong>: 2025.10.14 ~ 2025.10.31 (통합 작업)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>담당</strong>: LYSS</li>
+<li><strong>세부 작업</strong>:</li>
+<li><strong>pgvector 확장</strong> PostgreSQL 설치</li>
+<li><strong>pet_knowledge_base 테이블</strong> 구축</li>
+<li><strong>HuggingFace Embedding</strong> API 연동</li>
+<li>Embedding 모델: sentence-transformers/all-MiniLM-L6-v2 (384차원)</li>
+</ul>
+<h4>5.3. LLM 답변 생성 파이프라인</h4>
+<ul>
+<li><strong>기간</strong>: 2025.10.14 ~ 2025.10.31 (통합 작업)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>담당</strong>: LYSS</li>
+<li><strong>세부 작업</strong>:</li>
+<li>LLM 답변 생성 파이프라인 구축</li>
+<li>OpenAI GPT-4 / Google Gemini 연동</li>
+<li>RAG 검색 함수 개발 (<code>search_pet_knowledge</code>)</li>
+<li>시연 영상 촬영 및 강사님/매니저님께 전송 완료</li>
+</ul>
+<h4>5.4. 설정 페이지 알림 시스템 대개편</h4>
+<ul>
+<li><strong>기간</strong>: 2025.11.02 (1일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>담당</strong>: LYSS</li>
+<li><strong>세부 작업</strong>:</li>
+<li><strong>알림 설정 구조 재정리</strong> (4개 → 명확한 구분)<ul>
+<li>푸시 알림 (총괄 마스터 토글)</li>
+<li>플래너 알림 (일정 + 건강 통합)</li>
+<li>커뮤니티 알림 (댓글, 좋아요)</li>
+<li><strong>라이프스타일 알림 (채팅방 활동)</strong> - 신규 추가!</li>
+</ul>
+</li>
+<li><strong>DB 스키마 업데이트</strong>: lifestylenotifications 컬럼 추가</li>
+<li>분석 데이터 수집 투명성 강화 (펼쳐보기 기능 추가)</li>
+<li>프로필 공개 토글 삭제 (불필요한 기능 제거)</li>
+</ul>
+<h4>5.5. 반응형 디자인 추가</h4>
+<ul>
+<li><strong>기간</strong>: 2025.11.06 (1일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>담당</strong>: LYSS</li>
+<li><strong>세부 작업</strong>:</li>
+<li><strong>커뮤니티 페이지 모바일 반응형 추가</strong> (768px, 480px)</li>
+<li><strong>AI Assistant 좌측 패널 모바일 반응형 개선</strong></li>
+<li><strong>Dashboard 우측 패널 기능 카드 모바일 반응형 강화</strong></li>
+<li>CSS 우선순위 강화 (!important 패턴)</li>
+</ul>
+<h4>5.6. 커뮤니티 실시간 댓글 시스템</h4>
+<ul>
+<li><strong>기간</strong>: 2025.11.07 (1일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>담당</strong>: LYSS</li>
+<li><strong>세부 작업</strong>:</li>
+<li>실시간 댓글 시스템 구축</li>
+<li>모달 내 즉시 반영</li>
+<li>커뮤니티 페이지 동기화</li>
+<li>양방향 동기화 구현</li>
+</ul>
+<hr />
+<h2>Phase 6: 라이프스타일 채팅 리팩토링 (2025.11.08 ~ 2025.11.10)</h2>
+<h3>Week 8: 라이프스타일 채팅 완성 (2025.11.08 ~ 2025.11.10) ✅</h3>
+<h4>6.1. 반응형 디자인 완전 구현</h4>
+<ul>
+<li><strong>기간</strong>: 2025.11.09 (1일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>담당</strong>: LYSS</li>
+<li><strong>세부 작업</strong>:</li>
+<li><strong>Lifestyle CSS 전체 반응형 적용</strong> (400px 모바일 대응)</li>
+<li><strong>8개 CSS 파일 반응형 완성</strong>:<ul>
+<li>realtimechat.module.css (메인 채팅 레이아웃)</li>
+<li>bookmarktabs.module.css (책갈피 탭)</li>
+<li>hashtagrooms.module.css (해시태그 방 목록)</li>
+<li>chatroom.module.css (채팅룸 - 기존 반응형 강화)</li>
+<li>participantsdropdown.module.css (참여자 드롭다운)</li>
+<li>moremenu.module.css (더보기 메뉴)</li>
+<li>lifestyle.module.css (페이지 레이아웃)</li>
+<li>_components/lifestyle.module.css (공통 컴포넌트)</li>
+</ul>
+</li>
+<li><strong>4단계 브레이크포인트</strong> 적용:<ul>
+<li>1280px: 10-15% 축소</li>
+<li>900px: 20-25% 축소</li>
+<li>768px: 30-40% 축소</li>
+<li>400px: 최대 축소 (왼쪽/오른쪽 잘림 완전 해결)</li>
+</ul>
+</li>
+</ul>
+<h4>6.2. UI/UX 개선 및 CSS 리팩토링</h4>
+<ul>
+<li><strong>기간</strong>: 2025.11.10 (1일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>담당</strong>: LYSS</li>
+<li><strong>세부 작업</strong>:</li>
+<li><strong>좌우 패널 높이 완벽 매칭</strong>: <code>align-items: stretch</code> + <code>min-height: 0</code></li>
+<li><strong>Sticky 기능 복원</strong>: <code>position: sticky, top: 0</code></li>
+<li><strong>툴팁 가시성 완전 해결</strong>: <code>z-index: 10000</code> + <code>overflow: visible</code></li>
+<li><strong>Z-Index 레이어링 시스템 확립</strong>: 0 → 10 → 100 → 199999 → 200000</li>
+<li><strong>Flexbox 높이 통제 마법 공식</strong>: flex container + <code>align-items: stretch</code></li>
+<li><strong>Flex 스크롤 작동</strong>: <code>min-height: 0</code> 패턴 적용</li>
+<li><strong>MessagesContainer 스크롤</strong> 완벽 구현</li>
+</ul>
+<h4>6.3. 해시태그 시스템 확장 (이전 작업 완료)</h4>
+<ul>
+<li><strong>기간</strong>: 2025.10.08 (완료됨)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>담당</strong>: LYSS</li>
+<li><strong>세부 작업</strong>:</li>
+<li><strong>lifestylechatmessagehashtags 테이블</strong> 추가</li>
+<li>DB 트리거 기반 자동 추출 (<code>#태그</code> 정규식 파싱)</li>
+<li>통합 해시태그 시스템 구현 (4개 영역):<ul>
+<li>communityPostHashtags</li>
+<li>plannerEventHashtags</li>
+<li>plannerExpenseHashtags</li>
+<li><strong>lifestylechatmessagehashtags</strong> ⭐ (신규)</li>
+</ul>
+</li>
+<li>인기 해시태그 조회 함수 (<code>get_popular_hashtags_in_room</code>)</li>
+<li>실시간 usageCount 카운팅</li>
+</ul>
+<h4>6.4. 회원탈퇴 로직 개선 (이전 작업 완료)</h4>
+<ul>
+<li><strong>기간</strong>: 2025.11.02 ~ 2025.11.03 (완료됨)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>담당</strong>: LYSS</li>
+<li><strong>세부 작업</strong>:</li>
+<li>라이프스타일 채팅 데이터 삭제 로직 추가</li>
+<li>RAG 지식 베이스 삭제 로직 추가</li>
+<li><strong>관리자용 삭제 함수</strong> 생성 (<code>admin_delete_user_completely</code>)</li>
+<li>테이블명 대소문자 정확히 구분 (CamelCase vs 소문자)</li>
+</ul>
+<hr />
+<h2>Phase 7: 배포 및 최종 점검 (2025.11.03 ~ 2025.11.20)</h2>
+<h3>Week 8-9: 배포 및 발표 준비 (2025.11.03 ~ 2025.11.20) 🚧</h3>
+<h4>7.1. Vercel 배포 및 모바일 반응형 개선</h4>
+<ul>
+<li><strong>기간</strong>: 2025.11.03 ~ 2025.11.20 (18일)</li>
+<li><strong>실제 작업</strong>: 2025.11.06 (1일 완료)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>담당</strong>: LYSS</li>
+<li><strong>세부 작업</strong>:</li>
+<li><strong>프론트엔드 Vercel 배포 성공</strong> (https://fetpal.vercel.app)</li>
+<li><strong>모바일 반응형 대규모 개선</strong> (9개 버그 수정):<ul>
+<li>커뮤니티 페이지 모바일 반응형 추가</li>
+<li>AI Assistant 좌측 패널 이미지 영역 개선</li>
+<li>Dashboard 우측 패널 카드 모바일 강화</li>
+<li>Login/Signup 백그라운드 영상 표시 수정</li>
+<li>usePathname SSR 에러 해결 (가장 까다로웠음)</li>
+<li>Vercel 빌드 설정 추가 (모노레포 구조)</li>
+<li>Vercel 무료 플랜 크론 제한 해결</li>
+<li>백그라운드 비디오 CSS 우선순위 강화</li>
+</ul>
+</li>
+<li><strong>QR 코드 생성</strong> 및 발표 준비</li>
+<li>도메인 및 HTTPS 설정 완료</li>
+<li><strong>발표 후 모든 배포 언디플로이</strong> (학원 요청)</li>
+</ul>
+<h4>7.2. 모델 성능 평가 (이전 작업 완료)</h4>
+<ul>
+<li><strong>기간</strong>: 2025.10.16 ~ 2025.10.23 (완료됨)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>담당</strong>: LYSS</li>
+<li><strong>세부 작업</strong>:</li>
+<li>모델정의서 작성: 3개 모델 스펙 / 클래스 정의 / 기술 스택</li>
+<li>성능평가 결과서 작성: mAP 분석 / 실전 테스트 / 개선 방안</li>
+<li>검증 데이터 기반 성능 측정</li>
+</ul>
+<h4>7.3. 프로젝트 문서 최신화</h4>
+<ul>
+<li><strong>기간</strong>: 2025.11.04 ~ 2025.11.14 (11일)</li>
+<li><strong>상태</strong>: 완료 (100%)</li>
+<li><strong>담당</strong>: LYSS</li>
+<li><strong>세부 작업</strong>:</li>
+<li><strong>WBS 최신화</strong>: 주차별 작업 현황 표 작성 / 데일리 리포트 기반 날짜 조정</li>
+<li>ERD / 시스템 흐름도 최신화: RAG / YOLO 시스템 반영</li>
+<li>시스템 아키텍처 최신화: MSA 구조 / 기술 스택 업데이트</li>
+<li>요구사항 정의서 최신화</li>
+<li>성과 및 개선사항 문서 작성</li>
+<li><strong>데일리 리포트</strong>: 2025-10-25 ~ 2025-11-20 (총 8개 작성, 마지막: 11-10)<ul>
+<li>2025-10-25: Eyes/Health 모델 이슈 해결</li>
+<li>2025-10-26: PetHospital 구축 완료</li>
+<li>2025-10-28: AI 챗봇 프롬프트 강화</li>
+<li>2025-10-31: RAG 시스템 최적화 (시연 영상용)</li>
+<li>2025-11-02: 설정 페이지 알림 시스템 개편</li>
+<li>2025-11-06: Vercel 배포 및 반응형 개선</li>
+<li>2025-11-09: Lifestyle 전체 반응형 완성</li>
+<li>2025-11-10: Lifestyle CSS 완전 리팩토링</li>
+</ul>
+</li>
+</ul>
+<h4>7.4. 발표 자료 제작</h4>
+<ul>
+<li><strong>기간</strong>: 2025.11.08 ~ 2025.11.20 (13일)</li>
+<li><strong>상태</strong>: 진행중 (60%)</li>
+<li><strong>담당</strong>: LYSS</li>
+<li><strong>세부 작업</strong>:</li>
+<li>Canva PPT 제작: 15-20분 발표 슬라이드 (15장 내외) [진행중 60%]</li>
+<li><strong>시연 영상 촬영 완료</strong>: 실제 사용 시나리오 기반 데모 영상 [완료 100%]<ul>
+<li>2025-10-31: 강사님/매니저님께 시연 영상 전송 완료</li>
+</ul>
+</li>
+<li>발표 리허설: Q&amp;A 시나리오 준비 / 타이밍 조율 [예정 0%]</li>
+</ul>
+<hr />
+<h2>📈 4차 프로젝트 핵심 성과</h2>
+<h3>실제 작업 기간 요약 (데일리 리포트 기준) ⭐</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Phase</strong></th>
+<th style="text-align: center;"><strong>WBS 기간</strong></th>
+<th style="text-align: center;"><strong>실제 작업일</strong></th>
+<th style="text-align: left;"><strong>주요 작업</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Phase 4 (프론트 연동)</td>
+<td style="text-align: center;">10.24-10.30 (7일)</td>
+<td style="text-align: center;"><strong>10.25-10.31 (7일)</strong></td>
+<td style="text-align: left;">YOLO 통합, PetHospital 구축, 해시태그 시스템</td>
+</tr>
+<tr>
+<td style="text-align: left;">Phase 5 (RAG 구축)</td>
+<td style="text-align: center;">10.31-11.06 (7일)</td>
+<td style="text-align: center;"><strong>10.31-11.07 (8일)</strong></td>
+<td style="text-align: left;">RAG 최적화, 설정 페이지, 반응형 디자인</td>
+</tr>
+<tr>
+<td style="text-align: left;">Phase 6 (Lifestyle)</td>
+<td style="text-align: center;">11.07-11.14 (8일)</td>
+<td style="text-align: center;"><strong>11.09-11.10 (2일)</strong></td>
+<td style="text-align: left;">전체 반응형 적용, CSS 리팩토링</td>
+</tr>
+<tr>
+<td style="text-align: left;">Phase 7 (배포)</td>
+<td style="text-align: center;">11.03-11.20 (18일)</td>
+<td style="text-align: center;"><strong>11.06 (1일 배포)</strong></td>
+<td style="text-align: left;">Vercel 배포 및 모바일 최적화</td>
+</tr>
+</tbody>
+</table>
+<p><strong>주요 발견사항</strong>:<br />
+- ✅ <strong>Phase 6가 실제로는 2일만에 완성</strong> (11.09-11.10)<br />
+- ✅ <strong>Phase 7 배포는 11.06 하루만에 완료</strong> (반응형 개선 포함)<br />
+- ✅ <strong>Phase 4-5에 숨겨진 핵심 작업들 많음</strong> (PetHospital, 설정 페이지 등)</p>
+<h3>데이터 수집 및 전처리</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>항목</strong></th>
+<th style="text-align: right;"><strong>수치</strong></th>
+<th style="text-align: left;"><strong>비고</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>총 수집 이미지</strong></td>
+<td style="text-align: right;">668,547개</td>
+<td style="text-align: left;">AI-Hub 공공 데이터셋</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>훈련 데이터</strong></td>
+<td style="text-align: right;">401,870개</td>
+<td style="text-align: left;">약 60% 비율</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>검증 데이터</strong></td>
+<td style="text-align: right;">70,881개</td>
+<td style="text-align: left;">약 11% 비율</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>총 클래스 수</strong></td>
+<td style="text-align: right;">39개</td>
+<td style="text-align: left;">Skin(6) + Health(3) + Eyes(30)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>데이터 정제율</strong></td>
+<td style="text-align: right;">96.8%</td>
+<td style="text-align: left;">중복/오류 제거</td>
+</tr>
+</tbody>
+</table>
+<h3>YOLO 모델 성능</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>모델명</strong></th>
+<th style="text-align: left;"><strong>용도</strong></th>
+<th style="text-align: center;"><strong>클래스 수</strong></th>
+<th style="text-align: right;"><strong>훈련 시간</strong></th>
+<th style="text-align: right;"><strong>mAP50</strong></th>
+<th style="text-align: right;"><strong>mAP50-95</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Health</strong></td>
+<td style="text-align: left;">전신 건강 체크</td>
+<td style="text-align: center;">3개</td>
+<td style="text-align: right;">21.5시간</td>
+<td style="text-align: right;"><strong>88.2%</strong> ⭐</td>
+<td style="text-align: right;"><strong>77.1%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Eyes</strong></td>
+<td style="text-align: left;">안구질환 감지</td>
+<td style="text-align: center;">30개</td>
+<td style="text-align: right;">72.0시간</td>
+<td style="text-align: right;"><strong>25.35%</strong></td>
+<td style="text-align: right;"><strong>21.48%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Skin</strong></td>
+<td style="text-align: left;">피부질환 감지</td>
+<td style="text-align: center;">6개</td>
+<td style="text-align: right;">38.0시간</td>
+<td style="text-align: right;"><strong>18.3%</strong></td>
+<td style="text-align: right;"><strong>8.3%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>합계</strong></td>
+<td style="text-align: left;">-</td>
+<td style="text-align: center;"><strong>39개</strong></td>
+<td style="text-align: right;"><strong>131.5시간</strong></td>
+<td style="text-align: right;">-</td>
+<td style="text-align: right;">-</td>
+</tr>
+</tbody>
+</table>
+<h3>AI 서버 API</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>항목</strong></th>
+<th style="text-align: left;"><strong>내용</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>프레임워크</strong></td>
+<td style="text-align: left;">FastAPI (Python 3.10)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>엔드포인트 수</strong></td>
+<td style="text-align: left;">5개 (detect, detect-skin, detect-health, detect-eyes, health)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>평균 응답 시간</strong></td>
+<td style="text-align: left;">3~5초 (이미지 분석 포함)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>GPU 사용</strong></td>
+<td style="text-align: left;">NVIDIA GeForce RTX 4060 (8GB)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>동시 처리</strong></td>
+<td style="text-align: left;">멀티모델 자동 전환 지원</td>
+</tr>
+</tbody>
+</table>
+<h3>RAG 시스템 ⭐⭐⭐</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>항목</strong></th>
+<th style="text-align: left;"><strong>내용</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Vector DB</strong></td>
+<td style="text-align: left;">PostgreSQL + pgvector 확장</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Embedding 모델</strong></td>
+<td style="text-align: left;">sentence-transformers/all-MiniLM-L6-v2 (384차원)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Embedding API</strong></td>
+<td style="text-align: left;">HuggingFace Inference API</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>검색 방식</strong></td>
+<td style="text-align: left;">코사인 유사도 기반 Vector Similarity Search</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>지식 수집</strong></td>
+<td style="text-align: left;">커뮤니티 게시글 자동 수집 (DB 트리거)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>LLM</strong></td>
+<td style="text-align: left;">OpenAI GPT-4 / Google Gemini</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>품질 관리</strong></td>
+<td style="text-align: left;">quality_score (0.00-1.00) + is_verified</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>출처 추적</strong></td>
+<td style="text-align: left;">source (community, faq, youtube, manual)</td>
+</tr>
+</tbody>
+</table>
+<h3>라이프스타일 채팅 시스템 ⭐⭐⭐</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>항목</strong></th>
+<th style="text-align: left;"><strong>내용</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>채팅방 유형</strong></td>
+<td style="text-align: left;">2가지 (global: 글로벌 로비, hashtag: 주제별 채팅)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>실시간 기능</strong></td>
+<td style="text-align: left;">Supabase Realtime (WebSocket)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>참여자 추적</strong></td>
+<td style="text-align: left;">접속 상태, 마지막 활동 시간</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>이미지 공유</strong></td>
+<td style="text-align: left;">Supabase Storage 연동 (lifestyle-chat-images 버킷)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>해시태그 추출</strong></td>
+<td style="text-align: left;">DB 트리거 자동 추출 (<code>#태그</code> 정규식)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>인기 태그</strong></td>
+<td style="text-align: left;">실시간 Top 5 업데이트 (사용 횟수 + 최신순)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>반응형 디자인</strong></td>
+<td style="text-align: left;">4개 breakpoint (1280px, 900px, 768px, 400px)</td>
+</tr>
+</tbody>
+</table>
+<h3>통합 해시태그 시스템 확장 ⭐</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>항목</strong></th>
+<th style="text-align: left;"><strong>내용</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>연결 영역</strong></td>
+<td style="text-align: left;">4개 (커뮤니티, 플래너, 라이프스타일 채팅, 지출)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>중앙 테이블</strong></td>
+<td style="text-align: left;">globalHashtags</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>연결 테이블</strong></td>
+<td style="text-align: left;">communityPostHashtags, plannerEventHashtags, plannerExpenseHashtags, <strong>lifestylechatmessagehashtags</strong> ⭐</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>자동 추출</strong></td>
+<td style="text-align: left;">DB 트리거 기반 정규식 파싱</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>통계 추적</strong></td>
+<td style="text-align: left;">주간/월간 사용 통계, 인기도 계산 (usageCount)</td>
+</tr>
+</tbody>
+</table>
+<h3>커뮤니티 시스템 개선 ⭐⭐</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>항목</strong></th>
+<th style="text-align: left;"><strong>내용</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>실시간 댓글</strong></td>
+<td style="text-align: left;">모달 내 즉시 반영 + 페이지 동기화 (2025-11-07)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>좋아요 카운팅</strong></td>
+<td style="text-align: left;">트리거 기반 자동 집계 (성능 최적화)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>작성자 프로필</strong></td>
+<td style="text-align: left;">사용자/반려동물 구분 표시 (authorType)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>해시태그 통합</strong></td>
+<td style="text-align: left;">커뮤니티 + 플래너 + 라이프스타일 연동</td>
+</tr>
+</tbody>
+</table>
+<h3>반응형 디자인 적용 ⭐⭐⭐</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>페이지</strong></th>
+<th style="text-align: center;"><strong>브레이크포인트</strong></th>
+<th style="text-align: left;"><strong>작업 내용</strong></th>
+<th style="text-align: center;"><strong>상태</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Lifestyle</strong></td>
+<td style="text-align: center;">400px, 768px, 900px, 1280px</td>
+<td style="text-align: left;">4단계 반응형 적용 (8개 CSS 파일)</td>
+<td style="text-align: center;">✅ 완료</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Community</strong></td>
+<td style="text-align: center;">768px, 480px</td>
+<td style="text-align: left;">모바일 반응형 추가</td>
+<td style="text-align: center;">✅ 완료</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI Assistant</strong></td>
+<td style="text-align: center;">768px, 480px</td>
+<td style="text-align: left;">좌측 패널 모바일 개선</td>
+<td style="text-align: center;">✅ 완료</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Dashboard</strong></td>
+<td style="text-align: center;">768px, 480px</td>
+<td style="text-align: left;">우측 패널 카드 모바일 강화</td>
+<td style="text-align: center;">✅ 완료</td>
+</tr>
+</tbody>
+</table>
+<h3>Hook Composition 리팩토링 성과 ⭐⭐</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>파일명</strong></th>
+<th style="text-align: right;"><strong>Before</strong></th>
+<th style="text-align: right;"><strong>After</strong></th>
+<th style="text-align: right;"><strong>감소율</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>FeedDetailModal</strong></td>
+<td style="text-align: right;">528줄</td>
+<td style="text-align: right;">231줄</td>
+<td style="text-align: right;"><strong>56%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>useCommunityPosts</strong></td>
+<td style="text-align: right;">386줄</td>
+<td style="text-align: right;">128줄</td>
+<td style="text-align: right;"><strong>67%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>EventListSection</strong></td>
+<td style="text-align: right;">303줄</td>
+<td style="text-align: right;">117줄</td>
+<td style="text-align: right;"><strong>61%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>useRealtimeComments</strong></td>
+<td style="text-align: right;">310줄</td>
+<td style="text-align: right;">238줄</td>
+<td style="text-align: right;"><strong>23%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>FeedCard</strong></td>
+<td style="text-align: right;">561줄</td>
+<td style="text-align: right;">160줄</td>
+<td style="text-align: right;"><strong>71%</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>usePlanner</strong></td>
+<td style="text-align: right;">676줄</td>
+<td style="text-align: right;">165줄</td>
+<td style="text-align: right;"><strong>75%</strong></td>
+</tr>
+</tbody>
+</table>
+<h3>데이터베이스</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>측정 항목</strong></th>
+<th style="text-align: right;"><strong>수치</strong></th>
+<th style="text-align: left;"><strong>비고</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>총 테이블 수</strong></td>
+<td style="text-align: right;">40개+</td>
+<td style="text-align: left;">라이프스타일 채팅 4개 + RAG 1개 추가</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>총 SQL 파일</strong></td>
+<td style="text-align: right;">74개</td>
+<td style="text-align: left;">실행 중 66개 + 아카이브 8개</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>총 함수</strong></td>
+<td style="text-align: right;">30개+</td>
+<td style="text-align: left;">RAG 검색 함수 + 라이프스타일 해시태그 함수 포함</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>총 트리거</strong></td>
+<td style="text-align: right;">22개+</td>
+<td style="text-align: left;">채팅 해시태그 트리거 + RAG 트리거 추가</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>총 RLS 정책</strong></td>
+<td style="text-align: right;">60개+</td>
+<td style="text-align: left;">라이프스타일 채팅 + RAG 정책 포함</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>🎯 4차 프로젝트 주요 도전과제 및 해결</h2>
+<h3>1️⃣ Skin 모델 성능 저하 문제</h3>
+<p><strong>문제</strong><br />
+- 1차 훈련: mAP50 9.0% (목표 대비 50% 미달)<br />
+- 하이퍼파라미터 자동 최적화가 오히려 학습 불안정 초래</p>
+<p><strong>해결</strong><br />
+- 하이퍼파라미터 수동 튜닝 (lr, momentum, weight_decay 조정)<br />
+- 28 에포크 재훈련 → mAP50 18.3% 달성 (2배 향상)</p>
+<h3>2️⃣ 멀티모델 관리 복잡도</h3>
+<p><strong>문제</strong><br />
+- 3종 모델 동시 로딩 시 메모리 부족 (8GB VRAM)</p>
+<p><strong>해결</strong><br />
+- Lazy Loading 패턴 적용 (요청 시 모델 동적 로드)<br />
+- 모델 캐싱 시스템으로 재로딩 시간 단축</p>
+<h3>3️⃣ RAG 시스템 구축</h3>
+<p><strong>문제</strong><br />
+- 커뮤니티 경험담을 AI 답변에 활용하고 싶지만 LLM 환각 현상 발생<br />
+- 검증된 지식만 제공해야 하는 수의학적 책임</p>
+<p><strong>해결</strong><br />
+- pgvector Extension + HuggingFace 임베딩으로 벡터 검색 구현<br />
+- 커뮤니티 게시글 작성 시 자동 임베딩 트리거 생성<br />
+- quality_score + is_verified로 품질 관리 체계 구축</p>
+<h3>4️⃣ 라이프스타일 채팅 UI/UX 문제</h3>
+<p><strong>문제</strong><br />
+- 좌우 패널 높이 불일치<br />
+- Sticky 기능 작동 불량<br />
+- 툴팁이 다른 요소에 가려짐<br />
+- 804x824 화면에서 BookmarkTabs 툴팁이 보이지 않음</p>
+<p><strong>해결</strong><br />
+- 좌우 패널 <code>min-height: 80vh</code> 통일<br />
+- Sticky 속성 재적용 (<code>position: sticky, top: 100px</code>)<br />
+- 툴팁 <code>z-index: 10000</code> 설정 + <code>overflow: visible</code> 처리<br />
+- <strong>Flexbox 높이 통제</strong>: <code>align-items: stretch</code> + <code>min-height: 0</code><br />
+- <strong>Sticky + Tooltip 공존</strong>: <code>overflow: visible</code> + Z-Index 레이어링 (0 → 10 → 100 → 199999 → 200000)</p>
+<h3>5️⃣ 반응형 디자인 누락</h3>
+<p><strong>문제</strong><br />
+- ParticipantsDropdown, MoreMenu 컴포넌트에 1280px, 900px, 480px breakpoint 누락<br />
+- lifestyle.module.css에 일부 breakpoint 누락<br />
+- 400px 모바일에서 오른쪽 잘림</p>
+<p><strong>해결</strong><br />
+- 8개 CSS 파일에 4개 breakpoint 완전 추가<br />
+- 점진적 크기 축소 (1280px: 10-15%, 900px: 20-25%, 768px: 30-40%, 400px: 최대 축소)<br />
+- 일관된 패턴 적용</p>
+<h3>6️⃣ 라이프스타일 해시태그 시스템 누락</h3>
+<p><strong>문제</strong><br />
+- 커뮤니티, 플래너는 해시태그 시스템이 있지만 라이프스타일 채팅에는 없음</p>
+<p><strong>해결</strong><br />
+- <code>lifestylechatmessagehashtags</code> 테이블 신규 추가<br />
+- DB 트리거 작성: 채팅 메시지 작성 시 자동 해시태그 추출<br />
+- <code>globalHashtags</code> 테이블과 자동 연동<br />
+- 인기 해시태그 조회 함수 (<code>get_popular_hashtags_in_room</code>)</p>
+<h3>7️⃣ 회원탈퇴 로직 개선</h3>
+<p><strong>문제</strong><br />
+- 라이프스타일 채팅 데이터 삭제 누락<br />
+- RAG 지식 베이스 삭제 누락<br />
+- Supabase Dashboard에서 삭제 시 Foreign Key 에러</p>
+<p><strong>해결</strong><br />
+- <code>useAppActions.js</code>에 채팅 데이터 삭제 로직 추가<br />
+- RAG 지식 베이스 삭제 로직 추가<br />
+- <strong>관리자용 삭제 함수</strong> 생성 (<code>admin_delete_user_completely</code>)<br />
+- 테이블명 대소문자 정확히 구분 (CamelCase vs 소문자)</p>
+<h3>8️⃣ 실시간 댓글 시스템</h3>
+<p><strong>문제</strong><br />
+- 댓글 작성 후 모달에서만 반영되고 커뮤니티 페이지는 새로고침 필요<br />
+- 좋아요 카운트가 실시간으로 업데이트 안 됨</p>
+<p><strong>해결</strong><br />
+- Supabase Realtime 구독으로 postcomments 테이블 실시간 감지<br />
+- 트리거 기반 likesCount 자동 집계 (성능 최적화)<br />
+- 모달 ↔ 피드 카드 양방향 동기화 구현</p>
+<hr />
+<h2>📚 4차 프로젝트 산출물</h2>
+<h3>기술 문서</h3>
+<ol>
+<li>✅ <strong>YOLO 모델 결과 보고서</strong> (3종)<br />
+   - <code>Skin_YOLO_RESULT.md</code><br />
+   - <code>health_YOLO_RESULT.md</code><br />
+   - <code>eyes_YOLO_RESULT.md</code></li>
+<li>✅ <strong>YOLO 시스템 가이드</strong>: <code>yolo_README.md</code></li>
+<li>✅ <strong>API 문서</strong>: FastAPI Swagger UI</li>
+<li>✅ <strong>모델정의서</strong>: 하이퍼파라미터 상세 설명 (3종)</li>
+<li>✅ <strong>성능 평가 결과서</strong>: 클래스별 성능 분석</li>
+<li>✅ <strong>RAG 시스템 기획서</strong>: Vector Search 구축 가이드</li>
+<li>✅ <strong>라이프스타일 채팅 리팩토링 문서</strong>: UI/UX 개선 사항</li>
+</ol>
+<h3>발표 자료</h3>
+<ol>
+<li>✅ <strong>성능 지표 그래프</strong> (7종)<br />
+   - 학습곡선, F1점수, 정밀도, 재현율, PR 곡선, 혼동행렬</li>
+<li>✅ <strong>훈련 데이터 샘플</strong> (3장)</li>
+<li>✅ <strong>검증 결과 비교</strong> (정답 vs 예측)</li>
+<li>✅ <strong>데이터 분포도</strong></li>
+<li>✅ <strong>ERD 다이어그램</strong> (40개+ 테이블)</li>
+<li>✅ <strong>시스템 아키텍처 다이어그램</strong></li>
+<li>✅ <strong>시스템 흐름도</strong></li>
+<li>🚧 <strong>최종 발표 자료</strong> (251114 작성 중 60%)</li>
+<li>🚧 <strong>시연 영상</strong> (예정 0%)</li>
+</ol>
+<hr />
+<h2>🏆 주요 기술 성과</h2>
+<h3>1. Hook Composition 아키텍처 (2025-09-25)</h3>
+<ul>
+<li><strong>4개 전문 Hook</strong>: usePetAPI, usePetFormState, usePetValidation, usePetRegistration</li>
+<li><strong>독립 시스템</strong>: 복잡한 백신 시스템 의존성 우회</li>
+<li><strong>UI 보존</strong>: 기존 디자인 100% 유지하면서 최신 Hook 패턴 적용</li>
+</ul>
+<h3>2. 백신 시스템 구축 (2025-09)</h3>
+<ul>
+<li><strong>6개 백신 타입</strong> 지원 (DHPPL, 켄넬코프, 광견병 등)</li>
+<li><strong>생년월일 기반 자동 일정 생성</strong></li>
+<li><strong>플래너-백신 실시간 양방향 동기화</strong></li>
+<li><strong>긴급도별 색상 분류</strong> (지연/긴급/곧예정/정상)</li>
+</ul>
+<h3>3. 글로벌 해시태그 시스템 (2025-09~11)</h3>
+<ul>
+<li><strong>4개 영역 자동 <code>#{}</code> 추출</strong> (커뮤니티, 플래너, 라이프스타일 채팅, 지출)</li>
+<li><strong>실시간 usageCount 카운팅</strong></li>
+<li><strong>크로스 플랫폼 연동</strong> (커뮤니티 ↔ 플래너 ↔ 라이프스타일)</li>
+</ul>
+<h3>4. RAG 시스템 구축 (2025-10-14~11-06) ⭐⭐⭐</h3>
+<ul>
+<li><strong>pgvector 통합</strong>: PostgreSQL Vector 검색 기능 추가</li>
+<li><strong>HuggingFace 임베딩</strong>: sentence-transformers/all-MiniLM-L6-v2</li>
+<li><strong>커뮤니티 자동 수집</strong>: 게시글 작성 시 자동 지식 베이스 추가</li>
+<li><strong>Vector Similarity Search</strong>: 코사인 유사도 기반 검색</li>
+</ul>
+<h3>5. 라이프스타일 실시간 채팅 (2025-10-07~11-10) ⭐⭐⭐</h3>
+<ul>
+<li><strong>글로벌 로비 + 해시태그 채팅방</strong></li>
+<li><strong>자동 해시태그 추출</strong>: 트리거 기반 <code>#태그</code> 자동 감지</li>
+<li><strong>실시간 인기 태그</strong>: Top 5 업데이트</li>
+<li><strong>반응형 디자인</strong>: 4단계 브레이크포인트</li>
+</ul>
+<h3>6. 반응형 디자인 (2025-11-06~11-10) ⭐⭐⭐</h3>
+<ul>
+<li><strong>4단계 브레이크포인트</strong>: 400px, 768px, 900px, 1280px</li>
+<li><strong>Flexbox 높이 통제 패턴</strong>: <code>align-items: stretch</code> + <code>min-height: 0</code></li>
+<li><strong>Sticky + Tooltip 공존 패턴</strong>: <code>overflow: visible</code> + Z-Index 레이어링</li>
+<li><strong>8개 CSS 파일 반응형 적용</strong></li>
+</ul>
+<hr />
+<h2>🎓 기술적 학습 성과</h2>
+<h3>배운 핵심 개념</h3>
+<ol>
+<li>
+<p><strong>Flexbox 높이 통제의 마법 공식</strong><br />
+   - <code>align-items: stretch</code> + <code>min-height: 0</code> 조합으로 자식 높이 동일화<br />
+   - flex item의 최소 크기 동작 원리 깊은 이해</p>
+</li>
+<li>
+<p><strong>Sticky + Tooltip 공존 패턴</strong><br />
+   - <code>overflow: visible</code> + 높은 z-index로 두 기능 동시 지원<br />
+   - 레이어링 시스템 설계 (0 → 10 → 100 → 199999 → 200000)</p>
+</li>
+<li>
+<p><strong>Flex 스크롤 작동</strong><br />
+   - <code>min-height: 0</code>의 숨겨진 의미 이해<br />
+   - flex container/item 관계 명확히 파악</p>
+</li>
+<li>
+<p><strong>4단계 반응형 시스템</strong><br />
+   - 체계적 축소 전략 설계 (10% → 20% → 30% → 50%)<br />
+   - 모든 요소에 일관된 패턴 적용</p>
+</li>
+<li>
+<p><strong>RAG (Retrieval-Augmented Generation)</strong><br />
+   - Vector DB 개념 및 코사인 유사도 검색<br />
+   - LLM 환각 현상 최소화 기법</p>
+</li>
+</ol>
+<hr />
+<h2>🔮 향후 개선 방향</h2>
+<h3>모델 성능 개선</h3>
+<ul>
+<li>[ ] Skin 모델 추가 훈련 (50+ epochs)</li>
+<li>[ ] 데이터 증강 기법 확대 (Rotation, Flip, Color Jitter)</li>
+<li>[ ] 앙상블 모델 적용 (YOLOv8 + YOLOv11)</li>
+</ul>
+<h3>서비스 확장</h3>
+<ul>
+<li>[ ] AI 서버 클라우드 배포 (AWS EC2 / Railway)</li>
+<li>[ ] LLM(RAG) 답변 품질 향상</li>
+<li>[ ] 라이프스타일 채팅 기능 확장 (음성 메시지, 화상 통화)</li>
+</ul>
+<h3>사용자 경험 개선</h3>
+<ul>
+<li>[ ] PWA 모바일 최적화</li>
+<li>[ ] 결과 PDF 리포트 다운로드</li>
+<li>[ ] 과거 분석 기록 조회 기능</li>
+<li>[ ] 실시간 알림 시스템 강화</li>
+</ul>
+<hr />
+<h2>📊 최종 평가</h2>
+<h3>목표 달성도</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>목표</strong></th>
+<th style="text-align: center;"><strong>계획</strong></th>
+<th style="text-align: center;"><strong>실적</strong></th>
+<th style="text-align: center;"><strong>달성률</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">YOLO 모델 개발</td>
+<td style="text-align: center;">3종</td>
+<td style="text-align: center;">3종 완성</td>
+<td style="text-align: center;">✅ 100%</td>
+</tr>
+<tr>
+<td style="text-align: left;">AI 서버 구축</td>
+<td style="text-align: center;">FastAPI</td>
+<td style="text-align: center;">로컬 완성</td>
+<td style="text-align: center;">✅ 100%</td>
+</tr>
+<tr>
+<td style="text-align: left;">프론트엔드 연동</td>
+<td style="text-align: center;">1개 페이지</td>
+<td style="text-align: center;">완전 연동</td>
+<td style="text-align: center;">✅ 100%</td>
+</tr>
+<tr>
+<td style="text-align: left;">RAG 시스템 구축</td>
+<td style="text-align: center;">pgvector</td>
+<td style="text-align: center;">완성</td>
+<td style="text-align: center;">✅ 100%</td>
+</tr>
+<tr>
+<td style="text-align: left;">라이프스타일 채팅</td>
+<td style="text-align: center;">기본 기능</td>
+<td style="text-align: center;">완전 리팩토링</td>
+<td style="text-align: center;">✅ 120%</td>
+</tr>
+<tr>
+<td style="text-align: left;">통합 해시태그</td>
+<td style="text-align: center;">3개 영역</td>
+<td style="text-align: center;">4개 영역</td>
+<td style="text-align: center;">✅ 133%</td>
+</tr>
+<tr>
+<td style="text-align: left;">반응형 디자인</td>
+<td style="text-align: center;">기본</td>
+<td style="text-align: center;">4단계 완전 적용</td>
+<td style="text-align: center;">✅ 133%</td>
+</tr>
+<tr>
+<td style="text-align: left;">성능 평가 문서</td>
+<td style="text-align: center;">3종</td>
+<td style="text-align: center;">7종 완성</td>
+<td style="text-align: center;">✅ 233%</td>
+</tr>
+<tr>
+<td style="text-align: left;">발표 자료</td>
+<td style="text-align: center;">PPT + 영상</td>
+<td style="text-align: center;">준비중</td>
+<td style="text-align: center;">🚧 60%</td>
+</tr>
+</tbody>
+</table>
+<h3>핵심 성과</h3>
+<ul>
+<li>✅ <strong>668,547개 이미지</strong> 대용량 데이터 처리 경험</li>
+<li>✅ <strong>131시간 GPU 훈련</strong> 완주 (3종 모델)</li>
+<li>✅ <strong>Health 모델 88.2%</strong> 높은 정확도 달성</li>
+<li>✅ <strong>멀티모델 API</strong> 실시간 추론 시스템 구축</li>
+<li>✅ <strong>RAG 시스템 완성</strong> pgvector + HuggingFace + LLM</li>
+<li>✅ <strong>라이프스타일 채팅 완전 리팩토링</strong> UI/UX 대폭 개선</li>
+<li>✅ <strong>통합 해시태그 시스템 확장</strong> 4개 영역 연결</li>
+<li>✅ <strong>반응형 디자인 완전 적용</strong> 4단계 브레이크포인트</li>
+<li>✅ <strong>완전한 문서화</strong> 기술 문서 15개+ 작성</li>
+<li>✅ <strong>Vercel 배포</strong> (https://fetpal.vercel.app)</li>
+</ul>
+<h3>프로젝트 완성도</h3>
+<p><strong>전체 완성도: 94%</strong> ⭐ (프로덕션 준비 완료)</p>
+<ul>
+<li>✅ AI 건강진단: <strong>100%</strong> (3개 모델 완성)</li>
+<li>✅ RAG 시스템: <strong>100%</strong> (지식 베이스 구축)</li>
+<li>✅ 라이프스타일 채팅: <strong>100%</strong> (완전 리팩토링)</li>
+<li>✅ 커뮤니티: <strong>100%</strong> (실시간 댓글 완성)</li>
+<li>✅ 플래너: <strong>100%</strong> (백신 자동화 완성)</li>
+<li>✅ 프론트엔드 배포: <strong>100%</strong> (Vercel)</li>
+<li>🚧 AI 서버 배포: <strong>80%</strong> (로컬만)</li>
+<li>🚧 발표 준비: <strong>60%</strong> (PPT 작성 중)</li>
+</ul>
+<hr />
+<p><strong>작성일</strong>: 2025-11-14<br />
+<strong>작성자</strong>: LYSS with Claude<br />
+<strong>문서 버전</strong>: v2.0 (4차 스프린트 최종 통합)<br />
+<strong>이전 문서</strong>: <a href="./01_프로젝트_기획서.md">01_프로젝트_기획서.md</a><br />
+<strong>다음 문서</strong>: <a href="./03_시스템_흐름도.md">03_시스템_흐름도.md</a></p>
+
+    <script>
+        // Mermaid 렌더링 완료 후 페이지 로드 이벤트
+        window.addEventListener('load', function() {
+            console.log('Mermaid diagrams loaded successfully!');
+        });
+    </script>
+</body>
+</html>

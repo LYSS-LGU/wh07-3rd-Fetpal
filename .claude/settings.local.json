@@ -21,7 +21,10 @@
       "Bash(move \"09_YOLO_모델_정의서.md\" \"07_YOLO_모델_정의서.md\")",
       "Bash(move \"10_RAG-LLM_시스템_정의서.md\" \"08_RAG-LLM_시스템_정의서.md\")",
       "Bash(ls:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(fc:*)"
     ],
     "deny": [],
     "ask": []

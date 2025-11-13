@@ -43,9 +43,6 @@ node_modules/
 convert_*.py
 html_to_pdf_auto.py
 
-# PDF 파일들 (Mermaid 렌더링 이슈로 로컬 전용)
-docs/*.pdf
-
 # SQL 파일들 (민감 정보 포함 가능)
 *.sql
 

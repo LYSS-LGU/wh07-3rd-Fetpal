@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>07 YOLO 모델 정의서</title>
+
+    <!-- Mermaid.js CDN -->
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            },
+            sequence: {
+                diagramMarginX: 50,
+                diagramMarginY: 10,
+                actorMargin: 50,
+                width: 150,
+                height: 65,
+                boxMargin: 10,
+                boxTextMargin: 5,
+                noteMargin: 10,
+                messageMargin: 35,
+                mirrorActors: true,
+                useMaxWidth: true
+            }
+        });
+    </script>
+
+    <style>
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 2cm;
+            }
+
+            /* 브라우저 기본 헤더/푸터 숨기기 */
+            @page {
+                margin-top: 2cm;
+                margin-bottom: 2cm;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            .print-button {
+                display: none !important;
+            }
+
+            /* Mermaid 다이어그램 페이지 브레이크 방지 */
+            .mermaid {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            pre {
+                page-break-inside: avoid;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕",
+                         "Segoe UI", "Noto Sans KR", Arial, sans-serif;
+            line-height: 1.7;
+            color: #24292e;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #ffffff;
+        }
+
+        /* 헤더 스타일 */
+        h1 {
+            color: #1a1a1a;
+            border-bottom: 4px solid #0366d6;
+            padding-bottom: 12px;
+            margin-top: 32px;
+            margin-bottom: 24px;
+            font-size: 2.2em;
+            font-weight: 700;
+            page-break-after: avoid;
+        }
+
+        h2 {
+            color: #24292e;
+            border-bottom: 2px solid #e1e4e8;
+            padding-bottom: 10px;
+            margin-top: 28px;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            font-weight: 600;
+            page-break-after: avoid;
+        }
+
+        h3 {
+            color: #24292e;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        h4 {
+            color: #24292e;
+            margin-top: 20px;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        /* 단락 및 텍스트 */
+        p {
+            margin: 16px 0;
+        }
+
+        /* 리스트 */
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 32px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        /* 테이블 */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 24px 0;
+            font-size: 0.95em;
+        }
+
+        th, td {
+            border: 1px solid #d0d7de;
+            padding: 12px 16px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #0366d6;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f6f8fa;
+        }
+
+        tr:hover {
+            background-color: #f0f3f5;
+        }
+
+        /* 코드 블록 */
+        code {
+            background-color: #f6f8fa;
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-family: "Consolas", "Monaco", "Courier New", monospace;
+            font-size: 0.9em;
+            color: #24292e;
+        }
+
+        pre {
+            background-color: #f6f8fa;
+            padding: 16px;
+            border-radius: 6px;
+            overflow-x: auto;
+            border-left: 4px solid #0366d6;
+            margin: 16px 0;
+        }
+
+        pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+
+        /* Blockquote */
+        blockquote {
+            border-left: 4px solid #0366d6;
+            padding-left: 20px;
+            margin: 20px 0;
+            color: #57606a;
+            background-color: #f6f8fa;
+            padding: 15px 20px;
+            border-radius: 4px;
+        }
+
+        /* 수평선 */
+        hr {
+            border: none;
+            border-top: 2px solid #e1e4e8;
+            margin: 32px 0;
+        }
+
+        /* Mermaid 다이어그램 */
+        .mermaid {
+            margin: 24px 0;
+            text-align: center;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .mermaid svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* 이미지 */
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+        }
+
+        /* 인쇄 버튼 */
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            background-color: #0366d6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: background-color 0.2s;
+            z-index: 1000;
+        }
+
+        .print-button:hover {
+            background-color: #0256c7;
+        }
+
+        /* 강조 */
+        strong {
+            color: #24292e;
+            font-weight: 600;
+        }
+
+        em {
+            color: #57606a;
+            font-style: italic;
+        }
+
+        /* 링크 */
+        a {
+            color: #0366d6;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <button class="print-button" onclick="window.print()">
+        <span>🖨️</span> PDF로 저장
+    </button>
+
+<h1>Fetpal - YOLO 모델 정의서</h1>
+<blockquote>
+<p><strong>4차 스프린트 발표</strong> (2025.11.14)<br />
+<strong>최종 발표</strong>: 2025-11-21</p>
+</blockquote>
+<hr />
+<h2>📋 문서 개요</h2>
+<p>이 문서는 Fetpal 프로젝트의 <strong>YOLO 기반 객체 탐지</strong> 시스템을 설명합니다.<br />
+반려동물의 피부질환, 안구질환, 건강상태를 이미지로 분석하는 AI 모델에 대한 기술 명세입니다.</p>
+<hr />
+<h2>🎯 프로젝트 개요</h2>
+<h3>핵심 기능</h3>
+<p><strong>🔍 YOLO 기반 객체 탐지</strong></p>
+<ul>
+<li>3개 독립 모델로 다양한 질환 감지</li>
+<li>FastAPI 서버를 통한 추론 서비스</li>
+<li>이미지에서 바운딩 박스 + 신뢰도 반환</li>
+</ul>
+<h3>시스템 구성</h3>
+<div class="mermaid">
+graph TB
+    User[👤 사용자] --> Frontend[🌐 Next.js Frontend]
+    Frontend --> FastAPI[🐍 FastAPI Server]
+    FastAPI --> YOLO[🤖 YOLO Models]
+
+    YOLO --> Skin[Skin Model<br/>피부질환 6종]
+    YOLO --> Eyes[Eyes Model<br/>안구질환 30종]
+    YOLO --> Health[Health Model<br/>건강상태 3종]
+
+    style User fill:#E3F2FD
+    style Frontend fill:#F3E5F5
+    style FastAPI fill:#FCE4EC
+    style YOLO fill:#FFF3E0
+    style Skin fill:#FFCDD2
+    style Eyes fill:#B2DFDB
+    style Health fill:#C8E6C9
+</div>
+
+<h3>모델 성능 요약</h3>
+<table>
+<thead>
+<tr>
+<th>모델명</th>
+<th>탐지 대상</th>
+<th>클래스 수</th>
+<th>데이터셋 규모</th>
+<th>성능 (mAP50)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Skin Model</strong></td>
+<td>피부질환</td>
+<td>6개</td>
+<td>232,253개</td>
+<td>18.3%</td>
+</tr>
+<tr>
+<td><strong>Eyes Model</strong></td>
+<td>안구질환</td>
+<td>30개</td>
+<td>217,547개</td>
+<td>25.4%</td>
+</tr>
+<tr>
+<td><strong>Health Model</strong></td>
+<td>건강상태</td>
+<td>3개</td>
+<td>108,000개+</td>
+<td>88.2% ⭐</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>💡 용어 설명</strong></p>
+<ul>
+<li><strong>mAP50</strong>: IoU(Intersection over Union) 임계값이 50%일 때의 평균 정밀도(Mean Average Precision)</li>
+<li>쉽게 말하면: AI가 그린 박스와 정답 박스가 50% 이상 겹칠 때를 맞다고 판단하는 정확도</li>
+<li>0~100% 범위이며, 높을수록 좋음</li>
+<li><strong>클래스</strong>: 모델이 구분할 수 있는 질환의 종류 개수</li>
+</ul>
+</blockquote>
+<hr />
+<h2>📌 목차</h2>
+<ol>
+<li><a href="#1-모델-공통-사양">모델 공통 사양</a></li>
+<li><a href="#2-skin-model---피부질환">Skin Model - 피부질환</a></li>
+<li><a href="#3-eyes-model---안구질환">Eyes Model - 안구질환</a></li>
+<li><a href="#4-health-model---건강상태">Health Model - 건강상태</a></li>
+<li><a href="#5-데이터셋-구조">데이터셋 구조</a></li>
+<li><a href="#6-yolo-모델-시스템-아키텍처">YOLO 모델 시스템 아키텍처</a></li>
+<li><a href="#7-성능-분석">성능 분석</a></li>
+</ol>
+<hr />
+<h2>1. 모델 공통 사양</h2>
+<h3>1.1. YOLOv8m 아키텍처</h3>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>모델 아키텍처</strong></td>
+<td>YOLOv8m (You Only Look Once v8 Medium)</td>
+</tr>
+<tr>
+<td><strong>모델 유형</strong></td>
+<td>객체 탐지 (Object Detection) - 이미지에서 물체를 찾아내고 위치를 표시</td>
+</tr>
+<tr>
+<td><strong>프레임워크</strong></td>
+<td>Ultralytics YOLO - YOLO 모델을 쉽게 사용할 수 있게 만든 라이브러리</td>
+</tr>
+<tr>
+<td><strong>입력 크기</strong></td>
+<td>640 × 640 pixels - 모델에 넣기 전 이미지 크기 조정</td>
+</tr>
+<tr>
+<td><strong>출력 형식</strong></td>
+<td>Bounding Box(박스 좌표) + 클래스 확률 + 신뢰도</td>
+</tr>
+<tr>
+<td><strong>파라미터 수</strong></td>
+<td>약 25.9M - 모델이 학습하는 변수 개수 (많을수록 성능 높지만 무거움)</td>
+</tr>
+<tr>
+<td><strong>학습 환경</strong></td>
+<td>NVIDIA RTX 4060 (8GB VRAM) - GPU 그래픽카드</td>
+</tr>
+</tbody>
+</table>
+<h3>1.2. 모델 구조</h3>
+<blockquote>
+<p><strong>💡 YOLOv8m의 3단계 구조</strong></p>
+<ul>
+<li><strong>Backbone</strong>: 이미지에서 특징을 추출 (눈, 코, 귀 같은 특징 찾기)</li>
+<li><strong>Neck</strong>: 다양한 크기의 특징을 결합 (작은 것~큰 것 모두 감지)</li>
+<li><strong>Head</strong>: 최종 예측 (여기가 질환이다! 박스 그리기)</li>
+</ul>
+</blockquote>
+<div class="mermaid">
+graph LR
+    Input["📷 입력 이미지<br/>640×640×3"]
+
+    B["🔍 Backbone<br/>CSPDarknet53<br/><br/>• Conv Layer<br/>• C2f Modules<br/>• SPPF"]
+
+    N["🔗 Neck<br/>PAN<br/><br/>• FPN<br/>• Bottom-up"]
+
+    H["🎯 Head<br/>Detection<br/><br/>• 3-Scale<br/>• BBox Regression<br/>• Class Probability"]
+
+    Output["📤 출력<br/>[x, y, w, h,<br/>confidence,<br/>class_id]"]
+
+    Input --> B --> N --> H --> Output
+
+    style Input fill:#E3F2FD,stroke:#1976D2,stroke-width:2px
+    style B fill:#FFF3E0,stroke:#F57C00,stroke-width:2px
+    style N fill:#F3E5F5,stroke:#7B1FA2,stroke-width:2px
+    style H fill:#E8F5E9,stroke:#388E3C,stroke-width:2px
+    style Output fill:#FFCDD2,stroke:#D32F2F,stroke-width:2px
+</div>
+
+<p><strong>주요 레이어 구성:</strong></p>
+<ul>
+<li><strong>Backbone</strong>: CSPDarknet53 (특징 추출)</li>
+<li><strong>Neck</strong>: PANet (다중 스케일 특징 융합)</li>
+<li><strong>Head</strong>: Decoupled Head (분류 + 위치 예측 분리)</li>
+</ul>
+<h3>1.3. 손실 함수 (Loss Function)</h3>
+<blockquote>
+<p><strong>💡 손실 함수란?</strong> AI 모델이 얼마나 틀렸는지 측정하는 지표입니다. 값이 작을수록 모델이 잘 학습되고 있다는 뜻입니다.</p>
+</blockquote>
+<pre><code class="language-python"># YOLO는 3가지 손실 함수를 결합하여 사용
+Total_Loss = λ1·Box_Loss + λ2·Class_Loss + λ3·DFL_Loss
+</code></pre>
+<p><strong>1. Box Loss (Bounding Box Loss)</strong> - 박스 위치 오차</p>
+<ul>
+<li>CIoU Loss (Complete Intersection over Union)</li>
+<li>바운딩 박스 위치와 크기의 정확도 측정</li>
+<li>쉽게 말하면: AI가 그린 박스가 정답 박스와 얼마나 잘 맞는지 계산</li>
+</ul>
+<p><strong>2. Class Loss (Classification Loss)</strong> - 분류 오차</p>
+<ul>
+<li>Binary Cross Entropy Loss</li>
+<li>클래스 분류 정확도 측정</li>
+<li>쉽게 말하면: "이게 구진인지 농포인지" 제대로 맞췄는지 계산</li>
+</ul>
+<p><strong>3. DFL Loss (Distribution Focal Loss)</strong> - 객체 탐지 오차</p>
+<ul>
+<li>객체 존재 확률 측정</li>
+<li>배경과 객체를 구분</li>
+<li>쉽게 말하면: 여기에 진짜 질환이 있는지 없는지 판단하는 정확도</li>
+</ul>
+<hr />
+<h2>2. Skin Model - 피부질환</h2>
+<h3>2.1. 모델 개요</h3>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>모델 파일</strong></td>
+<td><code>skin_yolov8m_best.pt</code> (52MB)</td>
+</tr>
+<tr>
+<td><strong>학습 기간</strong></td>
+<td>28 Epochs, 약 38시간</td>
+</tr>
+<tr>
+<td><strong>클래스 수</strong></td>
+<td>6개</td>
+</tr>
+<tr>
+<td><strong>데이터셋</strong></td>
+<td>232,253개 이미지</td>
+</tr>
+<tr>
+<td><strong>최종 mAP50</strong></td>
+<td>18.3%</td>
+</tr>
+</tbody>
+</table>
+<h3>2.2. 학습 클래스 정의 (6개)</h3>
+<pre><code class="language-python"># 클래스 ID와 질환명 매핑
+class_mapping = {
+    0: 'A1_구진_플라크',              # Papule &amp; Plaque
+    1: 'A2_비듬_각질_상피성잔고리',    # Dandruff &amp; Scale
+    2: 'A3_태선화_과다색소침착',       # Lichenification &amp; Hyperpigmentation
+    3: 'A4_농포_여드름',              # Pustule &amp; Acne
+    4: 'A5_미란_궤양',                # Erosion &amp; Ulcer
+    5: 'A6_결절_종괴'                 # Nodule &amp; Mass
+}
+</code></pre>
+<h3>2.3. 클래스별 특징</h3>
+<table>
+<thead>
+<tr>
+<th>클래스 ID</th>
+<th>질환명</th>
+<th>주요 특징</th>
+<th>데이터 개수</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>0</strong></td>
+<td>A1<em>구진</em>플라크</td>
+<td>피부 위 돌출된 구진, 편평한 플라크</td>
+<td>36,635개</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>A2<em>비듬</em>각질_상피성잔고리</td>
+<td>각질, 비듬, 하얀 상피성 잔고리</td>
+<td>88,365개</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>A3<em>태선화</em>과다색소침착</td>
+<td>피부 두꺼워짐, 색소 침착</td>
+<td>60,911개</td>
+</tr>
+<tr>
+<td><strong>3</strong></td>
+<td>A4<em>농포</em>여드름</td>
+<td>화농성 병변, 고름 형성</td>
+<td>38,089개</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>A5<em>미란</em>궤양</td>
+<td>표면 손상, 궤양, 상처</td>
+<td>13,884개</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>A6<em>결절</em>종괴</td>
+<td>깊은 결절, 종괴, 덩어리</td>
+<td>21,573개</td>
+</tr>
+</tbody>
+</table>
+<h3>2.4. 데이터 분포</h3>
+<pre><code>A2_비듬각질 ████████████████████████████ 88,365 (38.1%)
+A3_태선화   ████████████████████ 60,911 (26.2%)
+A4_농포     ████████████ 38,089 (16.4%)
+A1_구진     ████████████ 36,635 (15.8%)
+A6_결절     ██████ 21,573 (9.3%)
+A5_미란     ████ 13,884 (6.0%)
+</code></pre>
+<h3>2.5. 하이퍼파라미터 설정</h3>
+<blockquote>
+<p><strong>💡 하이퍼파라미터란?</strong> 모델 학습 전에 사람이 직접 설정해주는 값들입니다. 요리할 때 불 세기, 시간 조절하는 것과 비슷합니다.</p>
+</blockquote>
+<pre><code class="language-yaml"># Skin Model 학습 설정
+epochs: 28 # 전체 데이터를 28번 반복 학습
+batch_size: 8 # 한 번에 8장씩 이미지를 학습 (GPU 메모리에 따라 조정)
+image_size: 640 # 이미지를 640×640 크기로 조정
+optimizer: SGD # 최적화 알고리즘 (경사하강법)
+lr0: 0.01 # 초기 학습률 (학습 속도, 너무 크면 불안정, 너무 작으면 느림)
+momentum: 0.937 # 관성 (이전 학습 방향을 얼마나 유지할지)
+weight_decay: 0.0005 # 가중치 감소 (과적합 방지)
+</code></pre>
+<h3>2.6. 성능 지표</h3>
+<table>
+<thead>
+<tr>
+<th>지표</th>
+<th>수치</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>mAP50</strong></td>
+<td>18.3%</td>
+<td>IoU 50% 기준 평균 정밀도 (박스가 50% 이상 겹치면 맞다고 판단)</td>
+</tr>
+<tr>
+<td><strong>mAP50-95</strong></td>
+<td>8.3%</td>
+<td>IoU 50%~95% 범위의 평균 정밀도 (더 엄격한 기준, 더 정확해야 함)</td>
+</tr>
+<tr>
+<td><strong>Precision</strong></td>
+<td>31.8%</td>
+<td>정밀도: AI가 "질환이다"라고 한 것 중 실제로 맞은 비율</td>
+</tr>
+<tr>
+<td><strong>Recall</strong></td>
+<td>23.1%</td>
+<td>재현율: 실제 질환 중 AI가 찾아낸 비율</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>💡 성능 지표 이해하기</strong></p>
+<ul>
+<li><strong>mAP50</strong>: 관대한 기준 (박스가 50% 이상만 겹치면 OK)</li>
+<li><strong>mAP50-95</strong>: 엄격한 기준 (박스가 정확하게 겹쳐야 OK) → 보통 mAP50보다 낮음</li>
+<li><strong>Precision vs Recall</strong>:</li>
+<li>Precision 높음 = 거짓 경보가 적음 (AI가 말한 건 대부분 맞음)</li>
+<li>Recall 높음 = 놓친 게 적음 (실제 질환을 대부분 찾아냄)</li>
+</ul>
+</blockquote>
+<h3>2.7. 학습 손실 변화</h3>
+<table>
+<thead>
+<tr>
+<th>Epoch</th>
+<th>Box Loss</th>
+<th>Class Loss</th>
+<th>DFL Loss</th>
+<th>Total Loss</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2.500</td>
+<td>3.772</td>
+<td>1.942</td>
+<td>8.214</td>
+</tr>
+<tr>
+<td>14</td>
+<td>2.297</td>
+<td>3.135</td>
+<td>1.774</td>
+<td>7.206</td>
+</tr>
+<tr>
+<td>28</td>
+<td>2.073</td>
+<td>2.531</td>
+<td>1.650</td>
+<td>6.254</td>
+</tr>
+</tbody>
+</table>
+<p><strong>손실 감소율:</strong></p>
+<ul>
+<li>Box Loss: 17.1% 감소</li>
+<li>Class Loss: 32.9% 감소</li>
+<li>DFL Loss: 15.0% 감소</li>
+</ul>
+<hr />
+<h2>3. Eyes Model - 안구질환</h2>
+<h3>3.1. 모델 개요</h3>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>모델 파일</strong></td>
+<td><code>eyes_yolov8m_best.pt</code> (50MB)</td>
+</tr>
+<tr>
+<td><strong>학습 기간</strong></td>
+<td>28 Epochs, 약 72시간 (3일)</td>
+</tr>
+<tr>
+<td><strong>클래스 수</strong></td>
+<td>30개</td>
+</tr>
+<tr>
+<td><strong>데이터셋</strong></td>
+<td>217,547개 이미지</td>
+</tr>
+<tr>
+<td><strong>최종 mAP50</strong></td>
+<td>25.35%</td>
+</tr>
+</tbody>
+</table>
+<h3>3.2. 학습 클래스 정의 (30개)</h3>
+<pre><code class="language-python"># 안구질환 클래스 (개 24개 + 고양이 6개)
+eyes_classes = {
+    # 개 안구질환 (0-23)
+    0: '결막염_무', 1: '결막염_유',
+    2: '궤양성각막질환_무', 3: '궤양성각막질환_상', 4: '궤양성각막질환_하',
+    5: '백내장_무', 6: '백내장_초기', 7: '백내장_비성숙', 8: '백내장_성숙',
+    9: '비궤양성각막질환_무', 10: '비궤양성각막질환_상', 11: '비궤양성각막질환_하',
+    12: '색소침착성각막염_무', 13: '색소침착성각막염_유',
+    14: '안검내반증_무', 15: '안검내반증_유',
+    16: '안검염_무', 17: '안검염_유',
+    18: '안검종양_무', 19: '안검종양_유',
+    20: '유루증_무', 21: '유루증_유',
+    22: '핵경화_무', 23: '핵경화_유',
+
+    # 고양이 안구질환 (24-29)
+    24: '각막궤양_무', 25: '각막궤양_유',
+    26: '각막부골편_무', 27: '각막부골편_유',
+    28: '비궤양성각막염_무', 29: '비궤양성각막염_유'
+}
+</code></pre>
+<h3>3.3. 클래스 명명 규칙</h3>
+<ul>
+<li><strong>무(無)</strong>: 질병 없음 (정상)</li>
+<li><strong>유(有)</strong>: 질병 있음</li>
+<li><strong>상(上)</strong>: 심각도 높음</li>
+<li><strong>하(下)</strong>: 심각도 낮음</li>
+<li><strong>초기/비성숙/성숙</strong>: 백내장 진행 단계</li>
+</ul>
+<h3>3.4. 데이터 구성</h3>
+<ul>
+<li>개(Dog) 안구질환: 24개 클래스 (193,134개 이미지)</li>
+<li>고양이(Cat) 안구질환: 6개 클래스 (24,413개 이미지)</li>
+</ul>
+<h3>3.5. 하이퍼파라미터 설정</h3>
+<pre><code class="language-yaml"># Eyes Model 학습 설정
+epochs: 28
+batch_size: 16
+image_size: 640
+optimizer: SGD
+lr0: 0.01
+momentum: 0.937
+weight_decay: 0.0005
+workers: 4
+</code></pre>
+<h3>3.6. 성능 지표</h3>
+<table>
+<thead>
+<tr>
+<th>지표</th>
+<th>수치</th>
+<th>설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>mAP50</strong></td>
+<td>25.35%</td>
+<td>IoU 50% 기준 평균 정밀도</td>
+</tr>
+<tr>
+<td><strong>mAP50-95</strong></td>
+<td>21.48%</td>
+<td>IoU 50%~95% 범위의 평균 정밀도 (더 엄격한 평가)</td>
+</tr>
+</tbody>
+</table>
+<h3>3.7. 우수 클래스 성능</h3>
+<table>
+<thead>
+<tr>
+<th>클래스</th>
+<th>mAP50</th>
+<th>mAP50-95</th>
+<th>특징</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>백내장_무</td>
+<td>49.3%</td>
+<td>48.8%</td>
+<td>가장 높은 정확도</td>
+</tr>
+<tr>
+<td>궤양성각막질환_상</td>
+<td>53.4%</td>
+<td>53.3%</td>
+<td>심각도 높은 질환 검출</td>
+</tr>
+<tr>
+<td>백내장_초기</td>
+<td>37.4%</td>
+<td>36.0%</td>
+<td>초기 단계 검출 가능</td>
+</tr>
+<tr>
+<td>결막염_유</td>
+<td>27.9%</td>
+<td>25.1%</td>
+<td>일반적 질환 검출</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>4. Health Model - 건강상태</h2>
+<h3>4.1. 모델 개요</h3>
+<table>
+<thead>
+<tr>
+<th>항목</th>
+<th>내용</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>모델 파일</strong></td>
+<td><code>health_yolov8m_best.pt</code> (52MB)</td>
+</tr>
+<tr>
+<td><strong>학습 기간</strong></td>
+<td>28 Epochs, 약 21.5시간</td>
+</tr>
+<tr>
+<td><strong>클래스 수</strong></td>
+<td>3개</td>
+</tr>
+<tr>
+<td><strong>데이터셋</strong></td>
+<td>108,000개+ 이미지</td>
+</tr>
+<tr>
+<td><strong>최종 mAP50</strong></td>
+<td>88.2% ⭐ (가장 높은 성능!)</td>
+</tr>
+</tbody>
+</table>
+<h3>4.2. 학습 클래스 정의 (3개)</h3>
+<pre><code class="language-python"># 건강상태 클래스
+health_classes = {
+    0: 'full_body',  # 전신 (Body-Part 01-13)
+    1: 'head',       # 두상 (Body-Part 14-19)
+    2: 'nose'        # 코/비문 (Body-Part 20)
+}
+</code></pre>
+<h3>4.3. 클래스별 특징</h3>
+<table>
+<thead>
+<tr>
+<th>클래스 ID</th>
+<th>부위명</th>
+<th>설명</th>
+<th>AI Hub 매핑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>0</strong></td>
+<td>full_body</td>
+<td>반려동물 전신</td>
+<td>Body-Part 01-13</td>
+</tr>
+<tr>
+<td><strong>1</strong></td>
+<td>head</td>
+<td>머리/두상</td>
+<td>Body-Part 14-19</td>
+</tr>
+<tr>
+<td><strong>2</strong></td>
+<td>nose</td>
+<td>코/비문</td>
+<td>Body-Part 20</td>
+</tr>
+</tbody>
+</table>
+<h3>4.4. 데이터 출처</h3>
+<ul>
+<li><strong>AI Hub</strong> 반려견, 반려묘 건강정보 데이터</li>
+<li>반려견: 개체식별, 건강관리용</li>
+<li>반려묘: 개체식별, 건강관리용</li>
+</ul>
+<h3>4.5. 데이터 구성</h3>
+<ul>
+<li>훈련 데이터: 약 96,000개</li>
+<li>검증 데이터: 약 12,000개</li>
+<li>반려견(Dog): 94%, 반려묘(Cat): 6%</li>
+</ul>
+<h3>4.6. 하이퍼파라미터 설정</h3>
+<pre><code class="language-yaml"># Health Model 학습 설정
+epochs: 28
+batch_size: 16
+image_size: 640
+optimizer: SGD
+lr0: 0.01
+momentum: 0.937
+weight_decay: 0.0005
+workers: 4
+</code></pre>
+<h3>4.7. 성능 지표 (우수!)</h3>
+<table>
+<thead>
+<tr>
+<th>지표</th>
+<th>수치</th>
+<th>평가</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>mAP50</strong></td>
+<td>88.2% ⭐</td>
+<td>매우 우수! (일반적으로 70% 이상이면 실용적)</td>
+</tr>
+<tr>
+<td><strong>mAP50-95</strong></td>
+<td>77.1%</td>
+<td>엄격한 기준에서도 높은 성능 유지</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>💡 Health Model이 왜 이렇게 높을까?</strong></p>
+<ul>
+<li>클래스가 3개로 단순 (전신, 머리, 코만 구분)</li>
+<li>데이터 품질이 우수 (AI Hub 공공 데이터)</li>
+<li>객체가 명확 (피부 질환처럼 애매한 것이 아님)</li>
+</ul>
+</blockquote>
+<h3>4.8. 클래스별 성능</h3>
+<table>
+<thead>
+<tr>
+<th>클래스</th>
+<th>mAP50</th>
+<th>mAP50-95</th>
+<th>Precision</th>
+<th>Recall</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>full_body</td>
+<td>98.8% ⭐</td>
+<td>95.9%</td>
+<td>높음</td>
+<td>높음</td>
+</tr>
+<tr>
+<td>head</td>
+<td>86.8%</td>
+<td>71.9%</td>
+<td>중간</td>
+<td>중간</td>
+</tr>
+<tr>
+<td>nose</td>
+<td>78.9%</td>
+<td>63.5%</td>
+<td>보통</td>
+<td>보통</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>5. 데이터셋 구조</h2>
+<h3>5.1. 통합 데이터셋 통계</h3>
+<table>
+<thead>
+<tr>
+<th>모델</th>
+<th>전체 이미지</th>
+<th>훈련 데이터</th>
+<th>검증 데이터</th>
+<th>클래스 수</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Skin</strong></td>
+<td>232,253개</td>
+<td>185,802개 (80%)</td>
+<td>46,451개 (20%)</td>
+<td>6개</td>
+</tr>
+<tr>
+<td><strong>Eyes</strong></td>
+<td>217,547개</td>
+<td>193,134개 (89%)</td>
+<td>24,413개 (11%)</td>
+<td>30개</td>
+</tr>
+<tr>
+<td><strong>Health</strong></td>
+<td>108,000+개</td>
+<td>~96,000개 (89%)</td>
+<td>~12,000개 (11%)</td>
+<td>3개</td>
+</tr>
+<tr>
+<td><strong>총합</strong></td>
+<td><strong>557,800+개</strong></td>
+<td>~474,936개</td>
+<td>~82,864개</td>
+<td><strong>39개</strong></td>
+</tr>
+</tbody>
+</table>
+<h3>5.2. YOLO 라벨 형식</h3>
+<blockquote>
+<p><strong>💡 라벨이란?</strong> AI에게 "여기에 이런 질환이 있어요"라고 알려주는 정답 파일입니다.</p>
+</blockquote>
+<p>각 이미지마다 <code>.txt</code> 파일로 라벨링되어 있습니다:</p>
+<pre><code class="language-txt"># 파일명: img_0001.txt
+# 형식: &lt;class_id&gt; &lt;x_center&gt; &lt;y_center&gt; &lt;width&gt; &lt;height&gt;
+# 좌표는 정규화됨 (0.0 ~ 1.0)
+
+0 0.512 0.345 0.123 0.089
+2 0.678 0.567 0.145 0.234
+</code></pre>
+<p><strong>각 필드 설명:</strong></p>
+<ul>
+<li><code>class_id</code>: 클래스 ID (Skin: 0~5, Eyes: 0~29, Health: 0~2)</li>
+<li>예: 0 = A1<em>구진</em>플라크, 2 = A3<em>태선화</em>과다색소침착</li>
+<li><code>x_center</code>: 바운딩 박스 중심 X 좌표 (정규화, 0.0~1.0)</li>
+<li>정규화: 이미지 너비를 1로 봤을 때의 비율</li>
+<li><code>y_center</code>: 바운딩 박스 중심 Y 좌표 (정규화, 0.0~1.0)</li>
+<li><code>width</code>: 바운딩 박스 너비 (정규화, 0.0~1.0)</li>
+<li><code>height</code>: 바운딩 박스 높이 (정규화, 0.0~1.0)</li>
+</ul>
+<p><strong>예시 해석:</strong></p>
+<pre><code>0 0.512 0.345 0.123 0.089
+→ &quot;A1_구진_플라크가 이미지 중앙(0.512, 0.345) 부근에 작은 크기(0.123×0.089)로 있음&quot;
+</code></pre>
+<h3>5.3. 데이터셋 폴더 구조</h3>
+<pre><code>📁 YOLO_DATASETS/
+├── 📁 SKIN_YOLO_DATASET/
+│   ├── images/
+│   │   ├── train/              # 훈련 이미지 (185,802개)
+│   │   └── val/                # 검증 이미지 (46,451개)
+│   └── labels/
+│       ├── train/              # 훈련 라벨 (YOLO 형식)
+│       └── val/                # 검증 라벨
+│
+├── 📁 EYES_YOLO_DATASET/
+│   ├── images/
+│   │   ├── train/              # 훈련 이미지 (193,134개 - 개)
+│   │   └── val/                # 검증 이미지 (24,413개 - 고양이)
+│   └── labels/
+│       ├── train/              # 훈련 라벨
+│       └── val/                # 검증 라벨
+│
+└── 📁 HEALTH_YOLO_DATASET/
+    ├── images/
+    │   ├── train/              # 훈련 이미지 (~96,000개)
+    │   └── valid/              # 검증 이미지 (~12,000개)
+    └── labels/
+        ├── train/              # 훈련 라벨
+        └── valid/              # 검증 라벨
+</code></pre>
+<hr />
+<h2>6. YOLO 모델 시스템 아키텍처</h2>
+<h3>6.1. YOLO 이미지 분석 시스템 구조</h3>
+<div class="mermaid">
+graph TB
+    User[👤 사용자] --> Frontend[🌐 Next.js Frontend]
+    Frontend --> FastAPI[🐍 FastAPI Server]
+
+    FastAPI --> YOLO[🤖 YOLO Models]
+    YOLO --> Skin[Skin Model<br/>피부질환 6종]
+    YOLO --> Eyes[Eyes Model<br/>안구질환 30종]
+    YOLO --> Health[Health Model<br/>건강상태 3종]
+
+    FastAPI --> GPU[🎮 NVIDIA RTX 4060<br/>8GB VRAM]
+
+    style User fill:#E3F2FD
+    style Frontend fill:#F3E5F5
+    style FastAPI fill:#FCE4EC
+    style YOLO fill:#FFF3E0
+    style GPU fill:#E8EAF6
+</div>
+
+<h3>6.2. 처리 흐름 (AI 진단 Pipeline)</h3>
+<div class="mermaid">
+sequenceDiagram
+    participant User as 👤 사용자
+    participant Frontend as 🌐 Frontend
+    participant FastAPI as 🐍 FastAPI
+    participant YOLO as 🤖 YOLO
+
+    User->>Frontend: 1. 이미지 업로드 (Drag & Drop)
+    Frontend->>Frontend: 2. 이미지 미리보기 표시
+    User->>Frontend: 3. "분석 시작" 버튼 클릭
+    Frontend->>FastAPI: 4. POST /api/detect (이미지 + 모델 선택)
+    FastAPI->>FastAPI: 5. 이미지 전처리 (640x640)
+    FastAPI->>YOLO: 6. 모델 추론
+    YOLO->>YOLO: 7. 바운딩 박스 + 신뢰도 계산
+    YOLO->>FastAPI: 8. 탐지 결과 반환
+    FastAPI->>FastAPI: 9. 결과 이미지 생성 (바운딩 박스 표시)
+    FastAPI->>Frontend: 10. JSON 응답 (탐지 결과 + 이미지 URL)
+    Frontend->>User: 11. 탐지 결과 시각화
+</div>
+
+<h3>6.3. API 엔드포인트</h3>
+<pre><code class="language-python"># FastAPI 엔드포인트 정의
+@app.post(&quot;/api/detect-health&quot;)   # Health Model 추론
+@app.post(&quot;/api/detect-eyes&quot;)     # Eyes Model 추론
+@app.post(&quot;/api/detect-skin&quot;)     # Skin Model 추론
+</code></pre>
+<h3>6.4. 응답 형식</h3>
+<pre><code class="language-json">{
+  &quot;detections&quot;: [
+    {
+      &quot;class&quot;: &quot;A1_구진_플라크&quot;,
+      &quot;confidence&quot;: 0.82,
+      &quot;bbox&quot;: [x, y, w, h]
+    },
+    {
+      &quot;class&quot;: &quot;full_body&quot;,
+      &quot;confidence&quot;: 0.95,
+      &quot;bbox&quot;: [x, y, w, h]
+    }
+  ],
+  &quot;annotated_image&quot;: &quot;data:image/jpeg;base64,...&quot;
+}
+</code></pre>
+<hr />
+<h2>7. 성능 분석</h2>
+<h3>7.1. 통합 모델 성능 비교</h3>
+<table>
+<thead>
+<tr>
+<th>모델</th>
+<th>mAP50</th>
+<th>mAP50-95</th>
+<th>Precision</th>
+<th>Recall</th>
+<th>학습시간</th>
+<th>클래스 수</th>
+<th>평가</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Skin</strong></td>
+<td>18.3%</td>
+<td>8.3%</td>
+<td>31.8%</td>
+<td>23.1%</td>
+<td>38시간</td>
+<td>6개</td>
+<td>개선 필요</td>
+</tr>
+<tr>
+<td><strong>Eyes</strong></td>
+<td>25.4%</td>
+<td>21.5%</td>
+<td>-</td>
+<td>-</td>
+<td>72시간</td>
+<td>30개</td>
+<td>개선 필요</td>
+</tr>
+<tr>
+<td><strong>Health</strong></td>
+<td><strong>88.2%</strong> ⭐</td>
+<td><strong>77.1%</strong> ⭐</td>
+<td>-</td>
+<td>-</td>
+<td>21.5시간</td>
+<td>3개</td>
+<td><strong>우수</strong></td>
+</tr>
+<tr>
+<td><strong>평균</strong></td>
+<td>44.0%</td>
+<td>35.6%</td>
+<td>-</td>
+<td>-</td>
+<td>131.5시간</td>
+<td>39개</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>💡 성능 차이가 큰 이유</strong></p>
+<ul>
+<li><strong>Health 모델이 높은 이유</strong>: 클래스가 3개로 단순, 객체가 명확 (전신, 머리, 코)</li>
+<li><strong>Skin 모델이 낮은 이유</strong>: 피부 질환은 경계가 애매함, 데이터 불균형</li>
+<li><strong>Eyes 모델이 중간인 이유</strong>: 클래스가 30개로 많아서 학습이 어려움</li>
+</ul>
+</blockquote>
+<h3>7.2. 학습 시간 및 리소스</h3>
+<table>
+<thead>
+<tr>
+<th>모델</th>
+<th>총 학습시간</th>
+<th>1 Epoch 시간</th>
+<th>GPU 사용률</th>
+<th>GPU 메모리</th>
+<th>학습 이미지 수</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Skin</strong></td>
+<td>38시간</td>
+<td>~82분</td>
+<td>95%</td>
+<td>7.2GB/8GB</td>
+<td>185,802개</td>
+</tr>
+<tr>
+<td><strong>Eyes</strong></td>
+<td>72시간</td>
+<td>~154분</td>
+<td>90%</td>
+<td>6.8GB/8GB</td>
+<td>193,134개</td>
+</tr>
+<tr>
+<td><strong>Health</strong></td>
+<td>21.5시간</td>
+<td>~46분</td>
+<td>85%</td>
+<td>5.5GB/8GB</td>
+<td>~96,000개</td>
+</tr>
+<tr>
+<td><strong>총합</strong></td>
+<td>131.5시간</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>474,936개</td>
+</tr>
+</tbody>
+</table>
+<h3>7.3. 장점 분석</h3>
+<p><strong>1. Health Model의 높은 성능 (88.2% mAP50)</strong></p>
+<ul>
+<li>클래스가 3개로 단순하여 학습이 효율적</li>
+<li>데이터 품질이 우수 (AI Hub 공공 데이터)</li>
+<li>full_body 검출 98.8%로 매우 높은 정확도</li>
+</ul>
+<p><strong>2. Eyes Model의 광범위한 질환 커버 (30개 클래스)</strong></p>
+<ul>
+<li>개 24개 + 고양이 6개 안구질환 통합</li>
+<li>주요 질환(백내장, 궤양성각막질환) 검출 정확도 50% 이상</li>
+<li>심각도 단계별 분류 가능</li>
+</ul>
+<p><strong>3. Skin Model의 대규모 데이터셋 (232,253개)</strong></p>
+<ul>
+<li>가장 많은 이미지 데이터 활용</li>
+<li>6개 피부질환 클래스 분포</li>
+</ul>
+<h3>7.4. 개선이 필요한 부분</h3>
+<p><strong>1. Skin Model의 낮은 mAP (18.3%)</strong></p>
+<ul>
+<li>원인: 하이퍼파라미터 자동 최적화 설정 문제</li>
+<li>학습 중반에 성능 급락 발생</li>
+<li>데이터 불균형 (A5: 13,884개 vs A2: 88,365개)</li>
+</ul>
+<p><strong>2. Eyes Model의 클래스 복잡도</strong></p>
+<ul>
+<li>30개 클래스로 인한 학습 난이도 증가</li>
+<li>일부 클래스(핵경화, 각막부골편) 낮은 정확도</li>
+<li>개와 고양이 데이터 불균형 (9:1 비율)</li>
+</ul>
+<p><strong>3. 전체적인 학습 시간</strong></p>
+<ul>
+<li>총 131.5시간 (약 5.5일) 소요</li>
+<li>GPU 연속 가동에 따른 부담</li>
+</ul>
+<h3>7.5. 개선 방안</h3>
+<h4>Skin Model 개선</h4>
+<p><strong>1. 하이퍼파라미터 재조정</strong></p>
+<ul>
+<li><code>optimizer: auto</code> → <code>optimizer: SGD</code> (수동 설정)</li>
+<li>Learning Rate 감소: 0.01 → 0.001</li>
+<li>Batch Size 증가: 8 → 16</li>
+</ul>
+<p><strong>2. 데이터 증강 강화</strong></p>
+<ul>
+<li>Mixup, CutMix 추가</li>
+<li>Class-balanced Sampling 적용</li>
+<li>데이터 재샘플링으로 A5 클래스 증강</li>
+</ul>
+<p><strong>3. 학습 전략 변경</strong></p>
+<ul>
+<li>Epoch 수 증가: 28 → 100</li>
+<li>Early Stopping 적극 활용</li>
+<li>Warmup Epoch 증가: 3 → 5</li>
+</ul>
+<h4>Eyes Model 개선</h4>
+<p><strong>1. 클래스 통합</strong></p>
+<ul>
+<li>유사 클래스 통합 (무/유만 남기고 상/하 제거)</li>
+<li>30개 → 15개 클래스로 단순화</li>
+</ul>
+<p><strong>2. 데이터 밸런싱</strong></p>
+<ul>
+<li>고양이 데이터 증강 (24,413개 → 50,000개)</li>
+<li>저빈도 클래스 오버샘플링</li>
+<li>Focal Loss 적용</li>
+</ul>
+<hr />
+<h2>🔗 참고 자료</h2>
+<h3>기술 문서</h3>
+<ol>
+<li><strong>YOLOv8 공식 문서</strong>: https://docs.ultralytics.com/</li>
+<li><strong>논문</strong>: Jocher, G. et al. (2023). Ultralytics YOLOv8</li>
+<li><strong>PyTorch 공식 문서</strong>: https://pytorch.org/docs/</li>
+<li><strong>Ultralytics GitHub</strong>: https://github.com/ultralytics/ultralytics</li>
+</ol>
+<h3>데이터셋 출처 - 출처: https://aihub.or.kr/</h3>
+<ol>
+<li><strong>Skin Model</strong>: AI Hub 반려동물 피부질환</li>
+<li><strong>Eyes Model</strong>: AI Hub 반려동물 안구질환</li>
+<li><strong>Health Model</strong>: AI Hub 반려견/반려묘 건강정보 데이터</li>
+</ol>
+<hr />
+<h2>⚖️ 법적 고지사항</h2>
+<p>⚠️ <strong>중요 안내</strong></p>
+<ol>
+<li>
+<p><strong>진단 목적 제한</strong></p>
+</li>
+<li>
+<p>본 AI 시스템은 <strong>참고용</strong>이며, 실제 진단은 반드시 자격을 갖춘 수의사가 수행해야 합니다.</p>
+</li>
+<li>
+<p>수의사법 준수: 본 시스템은 진단이 아닌 "정보 제공" 목적입니다.</p>
+</li>
+<li>
+<p><strong>책임의 한계</strong></p>
+</li>
+<li>AI 예측 결과의 정확성을 100% 보장하지 않습니다.</li>
+<li>치료 결정은 반드시 전문 수의사와 상담 후 진행하세요.</li>
+</ol>
+<hr />
+<h2>🏆 YOLO 트레이닝 요약</h2>
+<p><strong>3개 YOLOv8m 모델 학습 완료</strong></p>
+<p>✅ <strong>총 557,800+개 이미지 학습</strong></p>
+<ul>
+<li>131.5시간 GPU 학습 완주</li>
+<li>39개 클래스 통합 진단 가능</li>
+</ul>
+<p>✅ <strong>3개 독립 모델 구축</strong></p>
+<ul>
+<li>Skin: 232,253개 데이터, 6개 클래스</li>
+<li>Eyes: 217,547개 데이터, 30개 클래스</li>
+<li>Health: 108,000+개 데이터, 3개 클래스 (가장 높은 성능)</li>
+</ul>
+<p>✅ <strong>FastAPI 서버 통합</strong></p>
+<ul>
+<li>Next.js 14 프론트엔드 연동</li>
+<li>GPU 가속 추론 지원</li>
+</ul>
+<hr />
+<p><strong>📝 문서 정보</strong></p>
+<ul>
+<li><strong>작성일</strong>: 2025-11-14</li>
+<li><strong>작성자</strong>: LYSS with Claude</li>
+<li><strong>버전</strong>: v2.0 (4차 스프린트 최종)</li>
+<li><strong>관련 문서</strong>: <a href="./10_RAG-LLM_시스템_정의서.md">10<em>RAG-LLM</em>시스템_정의서.md</a></li>
+</ul>
+
+    <script>
+        // Mermaid 렌더링 완료 후 페이지 로드 이벤트
+        window.addEventListener('load', function() {
+            console.log('Mermaid diagrams loaded successfully!');
+        });
+    </script>
+</body>
+</html>

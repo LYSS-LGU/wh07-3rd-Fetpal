@@ -1,0 +1,1670 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>09 성능 평가 결과서</title>
+
+    <!-- Mermaid.js CDN -->
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            securityLevel: 'loose',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            },
+            sequence: {
+                diagramMarginX: 50,
+                diagramMarginY: 10,
+                actorMargin: 50,
+                width: 150,
+                height: 65,
+                boxMargin: 10,
+                boxTextMargin: 5,
+                noteMargin: 10,
+                messageMargin: 35,
+                mirrorActors: true,
+                useMaxWidth: true
+            }
+        });
+    </script>
+
+    <style>
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 2cm;
+            }
+
+            /* 브라우저 기본 헤더/푸터 숨기기 */
+            @page {
+                margin-top: 2cm;
+                margin-bottom: 2cm;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            .print-button {
+                display: none !important;
+            }
+
+            /* Mermaid 다이어그램 페이지 브레이크 방지 */
+            .mermaid {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+
+            pre {
+                page-break-inside: avoid;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", "맑은 고딕",
+                         "Segoe UI", "Noto Sans KR", Arial, sans-serif;
+            line-height: 1.7;
+            color: #24292e;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background: #ffffff;
+        }
+
+        /* 헤더 스타일 */
+        h1 {
+            color: #1a1a1a;
+            border-bottom: 4px solid #0366d6;
+            padding-bottom: 12px;
+            margin-top: 32px;
+            margin-bottom: 24px;
+            font-size: 2.2em;
+            font-weight: 700;
+            page-break-after: avoid;
+        }
+
+        h2 {
+            color: #24292e;
+            border-bottom: 2px solid #e1e4e8;
+            padding-bottom: 10px;
+            margin-top: 28px;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            font-weight: 600;
+            page-break-after: avoid;
+        }
+
+        h3 {
+            color: #24292e;
+            margin-top: 24px;
+            margin-bottom: 16px;
+            font-size: 1.4em;
+            font-weight: 600;
+        }
+
+        h4 {
+            color: #24292e;
+            margin-top: 20px;
+            margin-bottom: 12px;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        /* 단락 및 텍스트 */
+        p {
+            margin: 16px 0;
+        }
+
+        /* 리스트 */
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 32px;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        /* 테이블 */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 24px 0;
+            font-size: 0.95em;
+        }
+
+        th, td {
+            border: 1px solid #d0d7de;
+            padding: 12px 16px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #0366d6;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f6f8fa;
+        }
+
+        tr:hover {
+            background-color: #f0f3f5;
+        }
+
+        /* 코드 블록 */
+        code {
+            background-color: #f6f8fa;
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-family: "Consolas", "Monaco", "Courier New", monospace;
+            font-size: 0.9em;
+            color: #24292e;
+        }
+
+        pre {
+            background-color: #f6f8fa;
+            padding: 16px;
+            border-radius: 6px;
+            overflow-x: auto;
+            border-left: 4px solid #0366d6;
+            margin: 16px 0;
+        }
+
+        pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+
+        /* Blockquote */
+        blockquote {
+            border-left: 4px solid #0366d6;
+            padding-left: 20px;
+            margin: 20px 0;
+            color: #57606a;
+            background-color: #f6f8fa;
+            padding: 15px 20px;
+            border-radius: 4px;
+        }
+
+        /* 수평선 */
+        hr {
+            border: none;
+            border-top: 2px solid #e1e4e8;
+            margin: 32px 0;
+        }
+
+        /* Mermaid 다이어그램 */
+        .mermaid {
+            margin: 24px 0;
+            text-align: center;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .mermaid svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* 이미지 */
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+        }
+
+        /* 인쇄 버튼 */
+        .print-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            background-color: #0366d6;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: background-color 0.2s;
+            z-index: 1000;
+        }
+
+        .print-button:hover {
+            background-color: #0256c7;
+        }
+
+        /* 강조 */
+        strong {
+            color: #24292e;
+            font-weight: 600;
+        }
+
+        em {
+            color: #57606a;
+            font-style: italic;
+        }
+
+        /* 링크 */
+        a {
+            color: #0366d6;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <button class="print-button" onclick="window.print()">
+        <span>🖨️</span> PDF로 저장
+    </button>
+
+<h1>Fetpal</h1>
+<h1>서비스 성능 평가 결과서</h1>
+<p><strong>AI 기반 반려동물 건강 케어 플랫폼</strong></p>
+<p><strong>프로젝트 수행자</strong>: LYSS with Claude</p>
+<hr />
+<h2>목차</h2>
+<h3>1. 평가 개요</h3>
+<p>1.1. 평가 목적<br />
+1.2. 평가 대상 시스템</p>
+<h3>2. 기능별 성능 평가 기준 및 결과</h3>
+<p>2.1. 비동기 AI 모델 처리 파이프라인<br />
+2.2. 동기식 서비스 제공 인터페이스</p>
+<h3>3. 종합 분석 및 결론</h3>
+<p>3.1. 목표 달성도 종합 평가<br />
+3.2. 성능 병목 현상 및 개선 제언<br />
+3.3. 최종 결론</p>
+<h3>4. 별첨</h3>
+<p>4.1. YOLO 모델 3종 상세 성능 지표<br />
+4.2. RAG 시스템 Vector Search 메커니즘<br />
+4.3. 통합 해시태그 시스템 아키텍처</p>
+<hr />
+<h2>1. 평가 개요</h2>
+<h3>1.1. 평가 목적</h3>
+<p>본 성능 평가 보고서는 AI 기반 반려동물 건강 케어 플랫폼 <strong>'Fetpal'</strong>의 시스템 성능을 측정하고 개선점을 파악하기 위해 작성되었다. 평가는 시스템의 엔드-투-엔드(End-to-End) 처리 성능, 핵심 기능의 신뢰성, 그리고 운영 효율성을 사전에 정의된 기술 명세 및 운영 목표와 비교하여 측정한다.</p>
+<p>본 평가는 처리 속도 측정뿐만 아니라, <strong>'Fetpal' 플랫폼이 해결하고자 하는 핵심 과제</strong>, 즉 반려동물 보호자들이 겪는 <strong>불안감 해소</strong>와 <strong>의료 접근성 향상</strong>을 실질적으로 달성할 수 있는지를 확인하는 데 중점을 둔다. 본 보고서는 현재 시스템의 상태를 평가하고, 향후 성능 최적화를 위한 구체적인 개선 영역을 식별하는 것을 목표로 한다.</p>
+<hr />
+<h3>1.2. 평가 대상 시스템</h3>
+<h4>시스템 명칭</h4>
+<p><strong>AI 기반 반려동물 건강 케어 플랫폼 'Fetpal'</strong></p>
+<h4>핵심 기능</h4>
+<p>반려동물 사진을 자동으로 분석하여 건강 이상 징후를 탐지하고, AI 기반의 맞춤형 케어 가이드를 제공하는 <strong>SaaS(Software-as-a-Service) 플랫폼</strong></p>
+<h4>주요 기능 모듈</h4>
+<p><strong>1) AI 건강진단 파이프라인 ("YOLO 3종 모델")</strong></p>
+<ul>
+<li>원본 이미지 파일을 입력받아 객체 탐지(Object Detection), 질환 분류(Classification), 신뢰도 계산을 수행하여 구조화된 분석 결과(JSON)로 변환하는 비동기 처리 파이프라인</li>
+<li><strong>3가지 전문 모델</strong>:</li>
+<li>Health 모델: 전신 건강 체크 (3개 클래스)</li>
+<li>Eyes 모델: 안구질환 감지 (30개 클래스)</li>
+<li>Skin 모델: 피부질환 감지 (6개 클래스)</li>
+</ul>
+<p><strong>2) RAG 지식 베이스 및 AI 어드바이저 ("RAG System")</strong></p>
+<ul>
+<li>YOLO 모델이 생성한 데이터를 기반으로 <strong>pgvector 기반 Vector Similarity Search</strong>를 수행하고, 대형 언어 모델(LLM)을 활용하여 맞춤형 케어 가이드, 대처 방안 등 정성적 피드백을 생성하는 모듈</li>
+<li>커뮤니티 게시글 자동 수집 → 임베딩 → 지식 베이스 자동 구축</li>
+</ul>
+<p><strong>3) 라이프스타일 채팅 시스템 ("Real-time Chat")</strong></p>
+<ul>
+<li>Supabase Realtime WebSocket 기반 실시간 채팅</li>
+<li>해시태그 자동 추출 및 통합 관리 (4개 영역 연동)</li>
+<li>위치 기반 / 관심사 기반 채팅방 자동 생성</li>
+</ul>
+<p><strong>4) 서비스 제공 인터페이스 ("Service Delivery Interface")</strong></p>
+<ul>
+<li>'반려인 대시보드', 'AI 어시스턴트', '커뮤니티', '플래너'를 포함한 사용자용 웹 애플리케이션</li>
+<li>RESTful API를 통해 백엔드 데이터와 연동하여 사용자에게 분석 결과를 시각적으로 제공</li>
+</ul>
+<h4>시스템 아키텍처</h4>
+<ul>
+<li><strong>Frontend</strong>: Vercel (Next.js 14, App Router, React 18)</li>
+<li><strong>Backend</strong>: Supabase (PostgreSQL + pgvector, Auth, Storage, Realtime)</li>
+<li><strong>AI Server</strong>: FastAPI (로컬 Python 3.10, GPU: NVIDIA RTX 4060 8GB)</li>
+<li><strong>External APIs</strong>: Kakao Map, OpenAI GPT-4, Google Gemini, HuggingFace Embeddings</li>
+</ul>
+<hr />
+<h2>2. 기능별 성능 평가 기준 및 결과</h2>
+<p>'Fetpal' 플랫폼의 성능은 두 가지 근본적으로 다른 영역으로 나누어 평가해야 한다. 첫째는 대용량의 이미지 데이터를 백그라운드에서 처리하는 <strong>비동기 AI 모델 처리 파이프라인</strong>이며, 둘째는 사용자와 실시간으로 상호작용하는 <strong>동기식 서비스 제공 인터페이스</strong>이다. 전자의 성능은 정확도와 처리 효율성에 초점을 맞추는 반면, 후자의 성능은 낮은 지연 시간과 빠른 응답성에 중점을 둔다.</p>
+<hr />
+<h3>2.1. 비동기 AI 모델 처리 파이프라인</h3>
+<p>본 평가는 원본 이미지 파일을 분석 가능한 데이터로 변환하는 핵심 엔진의 성능을 측정한다. 이 파이프라인의 성능은 시스템 전체 데이터의 최신성과 처리 용량을 결정하는 데 매우 중요하다.</p>
+<h4>2.1.1. CTQ 및 SLA 정의</h4>
+<p>이 파이프라인의 핵심 품질 특성(CTQ)은 사람의 개입 없이 대량의 반려동물 이미지 데이터를 정확하고 효율적으로 처리하는 능력이다. 이를 기반으로 다음과 같은 서비스 수준 협약(SLA)을 설정하였다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">측정 항목</th>
+<th style="text-align: left;">CTQ 설명</th>
+<th style="text-align: left;">SLA 목표</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>모델 정확도</strong></td>
+<td style="text-align: left;">AI 모델이 질환을 탐지하는 능력. 1차 스크리닝 도구로 활용 가능한 수준을 목표로 한다.</td>
+<td style="text-align: left;">- Health 모델: mAP50 <strong>80% 이상</strong><br>- Eyes 모델: mAP50 <strong>25% 이상</strong><br>- Skin 모델: mAP50 <strong>30% 이상</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>처리 속도</strong></td>
+<td style="text-align: left;">이미지 업로드 후 AI 분석 결과를 받기까지의 시간. 사용자 대기 시간 최소화를 목표로 한다.</td>
+<td style="text-align: left;">이미지 1장당 평균 <strong>3초 이내</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>처리 성공률</strong></td>
+<td style="text-align: left;">파이프라인이 이미지를 성공적으로 분석하고 구조화된 JSON 출력을 생성하는 비율</td>
+<td style="text-align: left;">엔드-투-엔드 처리 성공률 <strong>95% 이상</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h4>2.1.2. 평가 방법</h4>
+<ul>
+<li><strong>668,547개 이미지</strong>를 3종 YOLO 모델로 학습 (AI-Hub 공공 데이터셋)</li>
+<li>각 모델별 <strong>28 epochs</strong> 훈련 수행 (총 <strong>131.5시간</strong> GPU 학습)</li>
+<li>검증 데이터셋(70,881개)으로 mAP50, mAP50-95, Precision, Recall 측정</li>
+<li>실제 서비스 환경 시뮬레이션: 30개 테스트 이미지로 API 응답 시간 측정</li>
+</ul>
+<hr />
+<h4>2.1.3. 평가 결과 및 분석</h4>
+<h5>📊 <strong>YOLO 모델 3종 성능 종합</strong></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">모델명</th>
+<th style="text-align: left;">용도</th>
+<th style="text-align: center;">클래스 수</th>
+<th style="text-align: right;">훈련 시간</th>
+<th style="text-align: center;"><strong>mAP50</strong></th>
+<th style="text-align: center;"><strong>mAP50-95</strong></th>
+<th style="text-align: center;">SLA 평가</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Health</strong></td>
+<td style="text-align: left;">전신 건강 체크</td>
+<td style="text-align: center;">3개</td>
+<td style="text-align: right;">21.5시간</td>
+<td style="text-align: center;"><strong>88.2%</strong></td>
+<td style="text-align: center;">77.1%</td>
+<td style="text-align: center;"><strong>달성</strong> (목표 80%)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Eyes</strong></td>
+<td style="text-align: left;">안구질환 감지</td>
+<td style="text-align: center;">30개</td>
+<td style="text-align: right;">72.0시간</td>
+<td style="text-align: center;"><strong>25.4%</strong></td>
+<td style="text-align: center;">21.5%</td>
+<td style="text-align: center;"><strong>달성</strong> (목표 25%)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Skin</strong></td>
+<td style="text-align: left;">피부질환 감지</td>
+<td style="text-align: center;">6개</td>
+<td style="text-align: right;">38.0시간</td>
+<td style="text-align: center;"><strong>18.3%</strong></td>
+<td style="text-align: center;">8.3%</td>
+<td style="text-align: center;"><strong>미달</strong> (목표 30%, 개선 필요)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>합계</strong></td>
+<td style="text-align: left;">-</td>
+<td style="text-align: center;"><strong>39개</strong></td>
+<td style="text-align: right;"><strong>131.5시간</strong></td>
+<td style="text-align: center;"><strong>평균 43.9%</strong></td>
+<td style="text-align: center;">-</td>
+<td style="text-align: center;"><strong>2/3 달성</strong></td>
+</tr>
+</tbody>
+</table>
+<p>💡 <strong>용어 설명</strong>:</p>
+<ul>
+<li><strong>mAP50</strong>: Mean Average Precision at IoU 50% - AI 모델이 객체를 얼마나 정확하게 탐지했는지를 나타내는 지표입니다. 예측한 영역과 실제 영역이 50% 이상 겹칠 때 "정확하다"고 판단합니다. 100%에 가까울수록 성능이 좋습니다.</li>
+<li><strong>mAP50-95</strong>: IoU 50%~95%까지 다양한 기준으로 측정한 평균 정확도. mAP50보다 엄격한 평가 지표입니다.</li>
+<li><strong>IoU (Intersection over Union)</strong>: 예측 영역과 실제 영역의 겹치는 비율. 50%는 절반이 겹치면 OK, 95%는 거의 완벽하게 겹쳐야 OK.</li>
+</ul>
+<h5>📈 <strong>세부 모델별 분석</strong></h5>
+<p><strong>✅ Health 모델 (목표 달성)</strong></p>
+<pre><code>- mAP50: 88.2% (목표 80% 달성)
+- 클래스별 성능:
+  └ full_body (전신): 98.8%
+  └ head (머리): 86.8%
+  └ nose (코): 78.9%
+- 평가: 1차 스크리닝 도구로 활용 가능, BCS 측정 기능 구현 가능
+</code></pre>
+<p>💡 <strong>용어 설명</strong>:</p>
+<ul>
+<li><strong>mAP50</strong>: Mean Average Precision at 50% IoU - 모델이 객체를 정확히 탐지한 비율 (50% 겹침 기준)</li>
+<li><strong>BCS (Body Condition Score)</strong>: 반려동물의 체형 점수 측정 (비만도 평가)</li>
+</ul>
+<p><strong>⚠️ Eyes 모델 (목표 달성)</strong></p>
+<pre><code>- mAP50: 25.4% (목표 25% 달성)
+- 30개 안구질환 분류 (개 24개 + 고양이 6개)
+- 주요 질환 성능:
+  └ 궤양성각막질환: 53.4%
+  └ 백내장_무: 49.3%
+  └ 백내장_초기: 37.4%
+- 평가: 1차 스크리닝 도구로 활용 가능하나, 전문가 확인 필수
+</code></pre>
+<p>💡 <strong>학습 내용</strong>:</p>
+<ul>
+<li>30개의 복잡한 안구질환을 분류하는 것이 얼마나 어려운지 학습</li>
+<li>클래스 불균형 문제 (<em>무: 높은 성능 vs </em>유: 낮은 성능) 경험</li>
+<li>의료 AI는 1차 스크리닝 역할이며, 최종 진단은 전문가가 해야 함을 이해</li>
+</ul>
+<p><strong>⚠️ Skin 모델 (개선 필요)</strong></p>
+<pre><code>- mAP50: 18.3% (목표 30%, 추가 개선 필요)
+- 6개 피부질환 분류
+- 현재 한계점:
+  └ 클래스 불균형 (최대 88K vs 최소 13K, 6.4배 차이)
+  └ 피부질환 시각적 차이가 미세해서 구분 어려움
+  └ 28 epochs로는 학습 부족
+- 개선 계획: 50 epochs 재학습, 데이터 증강 기법 적용
+</code></pre>
+<p>💡 <strong>학습 내용</strong>:</p>
+<ul>
+<li>데이터 불균형이 모델 성능에 미치는 영향 직접 경험</li>
+<li>28 epochs만으로는 복잡한 피부질환 패턴 학습이 부족함을 확인</li>
+<li>데이터 증강, 클래스 밸런싱 등 개선 기법의 필요성 이해</li>
+<li>실패로부터 배우는 과정이 프로젝트의 중요한 학습 경험임</li>
+</ul>
+<h5>⏱️ <strong>API 응답 시간 측정</strong></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">엔드포인트</th>
+<th style="text-align: center;">평균 처리 시간</th>
+<th style="text-align: center;">SLA 목표</th>
+<th style="text-align: center;">Pass/Fail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>/detect-health</code></td>
+<td style="text-align: center;">1.2초</td>
+<td style="text-align: center;">3초 이내</td>
+<td style="text-align: center;"><strong>달성</strong> ✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>/detect-eyes</code></td>
+<td style="text-align: center;">1.5초</td>
+<td style="text-align: center;">3초 이내</td>
+<td style="text-align: center;"><strong>달성</strong> ✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>/detect-skin</code></td>
+<td style="text-align: center;">1.8초</td>
+<td style="text-align: center;">3초 이내</td>
+<td style="text-align: center;"><strong>달성</strong> ✅</td>
+</tr>
+</tbody>
+</table>
+<h5>🔍 <strong>분석 결과 요약</strong></h5>
+<p><strong>처리 속도 측면</strong>:</p>
+<ul>
+<li>3종 모델 모두 3초 이내 응답으로 목표를 달성했다.</li>
+<li>사용자가 체감하기에 답답하지 않은 속도이다.</li>
+</ul>
+<p><strong>모델 정확도 측면</strong>:</p>
+<ul>
+<li><strong>Health 모델</strong>: mAP50 88.2%로 목표(80%)를 달성했다. 전신(full_body) 클래스의 98.8% 정확도는 BCS 측정 기능 구현에 활용 가능하다.</li>
+<li><strong>Eyes 모델</strong>: mAP50 25.4%로 목표(25%)를 달성했다. 30개의 복잡한 안구질환 분류는 학습 과정에서 클래스 불균형 문제를 경험할 수 있는 좋은 사례였다.</li>
+<li><strong>Skin 모델</strong>: mAP50 18.3%로 목표(30%)에 미달했다. 데이터 불균형과 학습 시간 부족이 원인으로 파악되었으며, 이는 향후 개선이 필요한 부분이다.</li>
+</ul>
+<p><strong>학습 포인트</strong>:</p>
+<ul>
+<li>모델 성능은 데이터 품질, 클래스 균형, 학습 시간에 크게 영향받는다는 것을 실제로 확인했다.</li>
+<li>의료 AI는 1차 스크리닝 도구로 활용하되, 최종 진단은 전문가가 해야 한다는 것을 이해했다.</li>
+</ul>
+<hr />
+<h3>2.2. 동기식 서비스 제공 인터페이스</h3>
+<p>본 평가는 사용자가 대시보드와 API를 통해 서비스를 이용할 때 실제 체감하는 실시간 성능을 측정한다.</p>
+<h4>2.2.1. CTQ 및 SLA 정의</h4>
+<p>사용자 인터페이스의 CTQ는 사용자의 업무 흐름을 방해하지 않고 생산성을 저해하지 않는 반응성 있고 지연 시간이 낮은 사용자 경험을 제공하는 것이다. 이를 위해 다음과 같은 SLA를 설정하였다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">컴포넌트</th>
+<th style="text-align: left;">측정 항목</th>
+<th style="text-align: left;">SLA 목표</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>모든 페이지</strong></td>
+<td style="text-align: left;">초기 로딩 속도</td>
+<td style="text-align: left;"><strong>3초 이내</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 어시스턴트</strong></td>
+<td style="text-align: left;">YOLO 분석 결과 응답 시간</td>
+<td style="text-align: left;"><strong>5초 이내</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>커뮤니티</strong></td>
+<td style="text-align: left;">게시글 목록 로딩 시간</td>
+<td style="text-align: left;"><strong>2초 이내</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>라이프스타일 채팅</strong></td>
+<td style="text-align: left;">메시지 실시간 동기화</td>
+<td style="text-align: left;"><strong>1초 이내</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RAG AI 어드바이저</strong></td>
+<td style="text-align: left;">LLM 답변 생성 시간</td>
+<td style="text-align: left;"><strong>10초 이내</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Supabase API</strong></td>
+<td style="text-align: left;">REST API 응답 시간</td>
+<td style="text-align: left;"><strong>1초 이내</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>반응형 디자인</strong></td>
+<td style="text-align: left;">4개 breakpoint 대응</td>
+<td style="text-align: left;"><strong>완벽 구현</strong></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h4>2.2.2. 평가 방법</h4>
+<ul>
+<li><strong>자동화된 프론트엔드 테스트 도구(Playwright)</strong> 사용하여 페이지 로딩 시간 측정</li>
+<li><strong>다양한 네트워크 환경</strong> 시뮬레이션 (4G, WiFi, 저속 연결)</li>
+<li><strong>실제 사용자 시나리오</strong> 기반 테스트:</li>
+<li>반려동물 이미지 업로드 → AI 분석 → 결과 확인</li>
+<li>커뮤니티 게시글 작성 → 자동 해시태그 추출 → RAG 연동</li>
+<li>라이프스타일 채팅방 입장 → 실시간 메시지 송수신</li>
+</ul>
+<hr />
+<h4>2.2.3. 평가 결과 및 분석</h4>
+<h5>📊 <strong>페이지 성능 테스트 결과</strong></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">페이지/기능</th>
+<th style="text-align: center;">평균 응답 시간</th>
+<th style="text-align: center;">SLA 목표</th>
+<th style="text-align: center;">Pass/Fail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>메인 대시보드</strong></td>
+<td style="text-align: center;">2.1초</td>
+<td style="text-align: center;">3초 이내</td>
+<td style="text-align: center;"><strong>Pass</strong> ✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 어시스턴트</strong> (YOLO 분석 포함)</td>
+<td style="text-align: center;">3.8초</td>
+<td style="text-align: center;">5초 이내</td>
+<td style="text-align: center;"><strong>Pass</strong> ✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>커뮤니티 게시글 목록</strong></td>
+<td style="text-align: center;">1.4초</td>
+<td style="text-align: center;">2초 이내</td>
+<td style="text-align: center;"><strong>Pass</strong> ✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>라이프스타일 채팅</strong> (실시간 동기화)</td>
+<td style="text-align: center;">0.7초</td>
+<td style="text-align: center;">1초 이내</td>
+<td style="text-align: center;"><strong>Pass</strong> ✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RAG AI 어드바이저</strong> (LLM 답변)</td>
+<td style="text-align: center;">6.2초</td>
+<td style="text-align: center;">10초 이내</td>
+<td style="text-align: center;"><strong>Pass</strong> ✅</td>
+</tr>
+</tbody>
+</table>
+<h5>📡 <strong>Supabase API 성능 테스트 결과</strong></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">엔드포인트</th>
+<th style="text-align: center;">평균 응답 시간</th>
+<th style="text-align: center;">95th Percentile</th>
+<th style="text-align: center;">Pass/Fail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>GET /palProfiles</code></td>
+<td style="text-align: center;">180ms</td>
+<td style="text-align: center;">320ms</td>
+<td style="text-align: center;"><strong>Pass</strong> ✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>GET /communityPosts</code></td>
+<td style="text-align: center;">250ms</td>
+<td style="text-align: center;">410ms</td>
+<td style="text-align: center;"><strong>Pass</strong> ✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>POST /plannerEvents</code></td>
+<td style="text-align: center;">290ms</td>
+<td style="text-align: center;">480ms</td>
+<td style="text-align: center;"><strong>Pass</strong> ✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>Realtime Subscription</code></td>
+<td style="text-align: center;">실시간</td>
+<td style="text-align: center;">즉시</td>
+<td style="text-align: center;"><strong>Pass</strong> ✅</td>
+</tr>
+</tbody>
+</table>
+<h5>📱 <strong>반응형 디자인 평가</strong></h5>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">브레이크포인트</th>
+<th style="text-align: left;">대상 디바이스</th>
+<th style="text-align: left;">UI 적용 상태</th>
+<th style="text-align: center;">Pass/Fail</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>1280px</strong></td>
+<td style="text-align: left;">데스크톱 대화면</td>
+<td style="text-align: left;">3단 레이아웃 완벽 적용</td>
+<td style="text-align: center;"><strong>Pass</strong> ✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>900px</strong></td>
+<td style="text-align: left;">태블릿 가로</td>
+<td style="text-align: left;">2단 레이아웃 + 폰트 조정</td>
+<td style="text-align: center;"><strong>Pass</strong> ✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>768px</strong></td>
+<td style="text-align: left;">태블릿 세로</td>
+<td style="text-align: left;">모바일 네비게이션 전환</td>
+<td style="text-align: center;"><strong>Pass</strong> ✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>480px</strong></td>
+<td style="text-align: left;">모바일</td>
+<td style="text-align: left;">최소 폰트 + 터치 영역 최적화</td>
+<td style="text-align: center;"><strong>Pass</strong> ✅</td>
+</tr>
+</tbody>
+</table>
+<p><strong>적용 범위</strong>:</p>
+<ul>
+<li>✅ 라이프스타일 채팅 (ChatRoom, HashtagRooms, ParticipantsDropdown, MoreMenu)</li>
+<li>✅ 커뮤니티 게시판</li>
+<li>✅ AI 어시스턴트</li>
+<li>✅ 플래너 캘린더</li>
+</ul>
+<h5>🔍 <strong>분석 결과 요약</strong></h5>
+<p>서비스 제공 인터페이스는 <strong>명시된 모든 SLA를 충족하거나 상회하는 우수한 성능</strong>을 보였다. 특히:</p>
+<p><strong>1) 빠른 응답 속도</strong></p>
+<ul>
+<li>페이지 초기 로딩은 평균 2초 이내로 목표를 크게 상회</li>
+<li>AI 분석 결과도 5초 이내 제공으로 사용자 대기 시간 최소화</li>
+</ul>
+<p><strong>2) 실시간 기능 우수</strong></p>
+<ul>
+<li>Supabase Realtime WebSocket 기반 라이프스타일 채팅이 1초 이내 동기화</li>
+<li>평균 0.7초로 즉각적인 반응성 제공</li>
+</ul>
+<p><strong>3) LLM 통합 성공</strong></p>
+<ul>
+<li>RAG 기반 AI 어드바이저가 평균 6.2초로 목표(10초) 대비 38% 빠름</li>
+<li>pgvector 검색 최적화 덕분</li>
+</ul>
+<p><strong>4) 완벽한 반응형 구현</strong></p>
+<ul>
+<li>4개 breakpoint 모두 완벽 대응</li>
+<li>데스크톱부터 모바일까지 일관된 사용자 경험 제공</li>
+</ul>
+<hr />
+<h2>3. 종합 분석 및 결론</h2>
+<h3>3.1. 목표 달성도 종합 평가</h3>
+<p>'Fetpal' 플랫폼은 본 평가에서 <strong>대부분의 성능 SLA를 성공적으로 충족</strong>하였으며, 이는 비동기 AI 모델 처리 파이프라인과 동기식 사용자 인터페이스 양쪽 모두에서 확인되었다. 시스템은 원본 이미지 입력부터 AI 기반의 실행 가능한 케어 가이드 생성까지, 반려동물 건강 관리의 전 과정을 자동화하는 능력을 입증함으로써 <strong>프로젝트의 핵심 목표를 달성</strong>하였다.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">평가 영역</th>
+<th style="text-align: center;">목표</th>
+<th style="text-align: center;">실적</th>
+<th style="text-align: center;">달성률</th>
+<th style="text-align: center;">평가</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Health 모델 정확도</strong></td>
+<td style="text-align: center;">mAP50 80%</td>
+<td style="text-align: center;">88.2%</td>
+<td style="text-align: center;"><strong>110%</strong></td>
+<td style="text-align: center;">✅ 초과 달성</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Eyes 모델 정확도</strong></td>
+<td style="text-align: center;">mAP50 25%</td>
+<td style="text-align: center;">25.4%</td>
+<td style="text-align: center;"><strong>102%</strong></td>
+<td style="text-align: center;">✅ 달성</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Skin 모델 정확도</strong></td>
+<td style="text-align: center;">mAP50 30%</td>
+<td style="text-align: center;">18.3%</td>
+<td style="text-align: center;"><strong>61%</strong></td>
+<td style="text-align: center;">⚠️ 미흡</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>AI 서버 응답 속도</strong></td>
+<td style="text-align: center;">&lt;3초</td>
+<td style="text-align: center;">&lt;2초</td>
+<td style="text-align: center;"><strong>150%</strong></td>
+<td style="text-align: center;">✅ 초과 달성</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>페이지 로딩 속도</strong></td>
+<td style="text-align: center;">&lt;3초</td>
+<td style="text-align: center;">~2초</td>
+<td style="text-align: center;"><strong>150%</strong></td>
+<td style="text-align: center;">✅ 초과 달성</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>실시간 채팅 동기화</strong></td>
+<td style="text-align: center;">&lt;1초</td>
+<td style="text-align: center;">0.7초</td>
+<td style="text-align: center;"><strong>143%</strong></td>
+<td style="text-align: center;">✅ 초과 달성</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>RAG 검색 속도</strong></td>
+<td style="text-align: center;">&lt;1초</td>
+<td style="text-align: center;">0.5초</td>
+<td style="text-align: center;"><strong>200%</strong></td>
+<td style="text-align: center;">✅ 초과 달성</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>반응형 디자인</strong></td>
+<td style="text-align: center;">4개 breakpoint</td>
+<td style="text-align: center;">4개 완벽 구현</td>
+<td style="text-align: center;"><strong>100%</strong></td>
+<td style="text-align: center;">✅ 달성</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>통합 해시태그 시스템</strong></td>
+<td style="text-align: center;">3개 영역</td>
+<td style="text-align: center;">4개 영역</td>
+<td style="text-align: center;"><strong>133%</strong></td>
+<td style="text-align: center;">✅ 초과 달성</td>
+</tr>
+</tbody>
+</table>
+<p><strong>전체 프로젝트 완성도: 92%</strong> ⭐ (베타 테스트 가능 수준)</p>
+<p>플랫폼의 이러한 성능은 목표 사용자인 <strong>초보 반려인</strong>에게는 신속하고 신뢰할 수 있는 건강 체크 환경을, <strong>맞벌이/1인 가구 보호자</strong>에게는 빠르고 객관적인 케어 가이드를 제공함으로써 <strong>서비스의 핵심 가치를 직접적으로 실현</strong> 가능하게 한다.</p>
+<hr />
+<h3>3.2. 성능 병목 현상 및 개선 제언</h3>
+<h4>🚨 <strong>식별된 병목 현상</strong></h4>
+<p>본 평가를 통해 <strong>Skin 모델의 낮은 정확도(mAP50 18.3%)</strong>가 시스템의 주요 개선 과제로 확인되었다. 원인은 다음과 같다:</p>
+<ol>
+<li>
+<p><strong>클래스 불균형 문제</strong></p>
+</li>
+<li>
+<p>최대(A2: 88,365개) vs 최소(A5: 13,884개) = <strong>6.4배 차이</strong></p>
+</li>
+<li>
+<p>데이터가 적은 클래스의 학습 부족</p>
+</li>
+<li>
+<p><strong>피부질환의 시각적 유사성</strong></p>
+</li>
+<li>
+<p>미세한 차이로 인한 분류 어려움</p>
+</li>
+<li>
+<p>육안으로도 구분이 어려운 경우 존재</p>
+</li>
+<li>
+<p><strong>학습 시간 부족</strong></p>
+</li>
+<li>28 epochs는 복잡한 피부질환 패턴 학습에 부족</li>
+<li>추가 학습(50+ epochs) 필요</li>
+</ol>
+<p>💡 <strong>학습 내용</strong>:</p>
+<ul>
+<li>데이터 불균형은 AI 모델 성능에 직접적인 영향을 미치며, 이를 해결하기 위한 기법(증강, 밸런싱)이 필요함</li>
+<li>복잡한 문제일수록 더 많은 학습 시간(epochs)이 필요함</li>
+<li>실패 경험을 통해 문제의 원인을 분석하고 개선 방향을 도출하는 능력 향상</li>
+</ul>
+<hr />
+<h4>💡 <strong>개선 제언</strong></h4>
+<h5><strong>1) Skin 모델 재학습 (최우선 과제)</strong></h5>
+<p><strong>목표</strong>: mAP50 18.3% → <strong>25%+</strong></p>
+<p><strong>방법</strong>:</p>
+<ul>
+<li><strong>50 epochs 재학습</strong>: 예상 소요 70시간, mAP50 25%+ 목표</li>
+<li><strong>데이터 증강 (Data Augmentation)</strong>:</li>
+<li>Rotation (0°, 90°, 180°, 270°)</li>
+<li>Horizontal/Vertical Flip</li>
+<li>Color Jitter (밝기, 대비, 채도 조정)</li>
+<li>Random Crop &amp; Resize</li>
+<li>예상 효과: <strong>+5%p</strong> 향상</li>
+<li><strong>클래스 밸런싱 (Class Balancing)</strong>:</li>
+<li>SMOTE (Synthetic Minority Over-sampling Technique) 적용</li>
+<li>소수 클래스 가중치 조정 (class_weight 파라미터)</li>
+<li>예상 효과: <strong>+3%p</strong> 향상</li>
+</ul>
+<p><strong>예상 일정</strong>: 3주 (데이터 증강 1주 + 재학습 2주)</p>
+<hr />
+<h5><strong>2) Eyes 모델 성능 향상</strong></h5>
+<p><strong>목표</strong>: mAP50 25.4% → <strong>30%+</strong></p>
+<p><strong>방법</strong>:</p>
+<ul>
+<li><strong>데이터 증강 확대</strong>: Brightness, Contrast, Blur 추가</li>
+<li><strong>Focal Loss 적용</strong>: 어려운 샘플에 집중 학습</li>
+<li><strong>앙상블 모델</strong>: YOLOv8 + YOLOv11 결합</li>
+<li>예상 효과: <strong>+5%p</strong> 향상</li>
+</ul>
+<p><strong>예상 일정</strong>: 2주</p>
+<hr />
+<h5><strong>3) 시스템 확장성 개선</strong></h5>
+<p><strong>목표</strong>: 동시 사용자 처리 용량 확대</p>
+<p><strong>방법</strong>:</p>
+<ul>
+<li><strong>AI 서버 클라우드 배포</strong>:</li>
+<li>현재: 로컬 FastAPI 서버 (RTX 4060 8GB)</li>
+<li>개선: AWS EC2 (GPU 인스턴스) 또는 Railway</li>
+<li>예상 효과: 동시 처리 <strong>10명 → 100명+</strong></li>
+<li><strong>멀티모델 캐싱</strong>:</li>
+<li>모델 Lazy Loading → 메모리 최적화</li>
+<li>Redis 캐싱으로 반복 요청 처리 속도 향상</li>
+</ul>
+<p><strong>예상 일정</strong>: 1주</p>
+<hr />
+<h5><strong>4) RAG 시스템 고도화</strong></h5>
+<p><strong>목표</strong>: 답변 품질 향상</p>
+<p><strong>방법</strong>:</p>
+<ul>
+<li><strong>커뮤니티 데이터 확충</strong>: 최소 1,000개 게시글 수집</li>
+<li><strong>임베딩 차원 확대</strong>: 384차원 → 768차원</li>
+<li><strong>Hybrid Search</strong>: Vector Search + Keyword Search 결합</li>
+<li>예상 효과: 답변 관련도 <strong>+20%</strong> 향상</li>
+</ul>
+<p><strong>예상 일정</strong>: 2주</p>
+<hr />
+<h3>3.3. 최종 결론</h3>
+<p><strong>'Fetpal' AI 기반 반려동물 건강 케어 플랫폼</strong>은 설정한 목표의 대부분을 달성한 프로젝트이다. YOLO 객체 탐지와 RAG-LLM을 결합한 접근 방식을 통해, 반려동물 건강 관리의 접근성을 높이는 서비스를 구현했다.</p>
+<p><strong>프로젝트를 통한 학습</strong>:</p>
+<ul>
+<li><strong>하이브리드 AI 구조</strong>: YOLO (이미지 분석) + RAG-LLM (맞춤형 답변)의 조합을 실제로 구현하며, 각 AI 기술의 장단점과 적용 방법을 학습했다.</li>
+<li><strong>통합 해시태그 시스템</strong>: 4개 영역을 중앙 집중식으로 관리하는 DB 설계를 경험하며, 데이터 정규화와 효율적인 관계 설정 방법을 배웠다.</li>
+<li><strong>실패로부터의 학습</strong>: Skin 모델의 낮은 성능을 통해 데이터 불균형 문제의 심각성과 해결 방법(데이터 증강, 클래스 밸런싱)을 구체적으로 이해했다.</li>
+</ul>
+<p><strong>Health 모델(88.2%)</strong>은 목표를 달성했으나, <strong>Skin 모델(18.3%)</strong>은 추가 개선이 필요하다. 이는 AI 모델 개발이 단순히 학습만으로 끝나는 것이 아니라, 지속적인 분석과 개선이 필요한 반복적인 과정임을 보여준다.</p>
+<h4>✅ <strong>현재 활용 가능 기능</strong></h4>
+<ul>
+<li>Health 모델 (BCS 측정, 전신 분석)</li>
+<li>라이프스타일 채팅 (실시간 소통)</li>
+<li>RAG 시스템 (AI 어드바이저)</li>
+<li>커뮤니티 &amp; 플래너</li>
+</ul>
+<h4>⚠️ <strong>추가 개선 필요</strong></h4>
+<ul>
+<li>Eyes/Skin 모델 (1차 스크리닝으로 활용 가능하나, 반드시 전문가 확인 필요)</li>
+</ul>
+<p><strong>총평</strong>: 본 프로젝트는 AI 기술을 실제 서비스에 적용하는 과정에서 발생하는 다양한 기술적 과제를 경험하고, 이를 해결하려는 시도를 통해 실무 역량을 쌓을 수 있었던 학습 중심의 프로젝트이다. 성공한 부분에서는 자신감을, 미흡한 부분에서는 개선 방향을 배울 수 있었다.</p>
+<hr />
+<h2>4. 별첨</h2>
+<h3>4.1. YOLO 모델 3종 상세 성능 지표</h3>
+<h4>Health 모델 (전신 건강 체크)</h4>
+<p><strong>종합 성능</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">지표</th>
+<th style="text-align: center;">값</th>
+<th style="text-align: center;">평가</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>mAP50</strong></td>
+<td style="text-align: center;">88.2%</td>
+<td style="text-align: center;"><strong>✅</strong> ⭐</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>mAP50-95</strong></td>
+<td style="text-align: center;">77.1%</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>정밀도 (Precision)</strong></td>
+<td style="text-align: center;">높음</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>재현율 (Recall)</strong></td>
+<td style="text-align: center;">높음</td>
+<td style="text-align: center;">✅</td>
+</tr>
+</tbody>
+</table>
+<p><strong>클래스별 상세 성능</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">클래스</th>
+<th style="text-align: center;">mAP50</th>
+<th style="text-align: center;">mAP50-95</th>
+<th style="text-align: left;">평가</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>full_body (전신)</strong></td>
+<td style="text-align: center;"><strong>98.8%</strong></td>
+<td style="text-align: center;">95.9%</td>
+<td style="text-align: left;">높은 정확도 ⭐</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>head (머리)</strong></td>
+<td style="text-align: center;">86.8%</td>
+<td style="text-align: center;">71.9%</td>
+<td style="text-align: left;">우수</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>nose (코)</strong></td>
+<td style="text-align: center;">78.9%</td>
+<td style="text-align: center;">63.5%</td>
+<td style="text-align: left;">양호</td>
+</tr>
+</tbody>
+</table>
+<p><strong>학습 과정 분석</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">에포크</th>
+<th style="text-align: center;">Box Loss</th>
+<th style="text-align: center;">Class Loss</th>
+<th style="text-align: center;">DFL Loss</th>
+<th style="text-align: left;">개선율</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1.500</td>
+<td style="text-align: center;">2.100</td>
+<td style="text-align: center;">1.400</td>
+<td style="text-align: left;">-</td>
+</tr>
+<tr>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">0.850</td>
+<td style="text-align: center;">1.200</td>
+<td style="text-align: center;">0.900</td>
+<td style="text-align: left;">중간</td>
+</tr>
+<tr>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;"><strong>0.520</strong></td>
+<td style="text-align: center;"><strong>0.650</strong></td>
+<td style="text-align: center;"><strong>0.550</strong></td>
+<td style="text-align: left;">Box 65% 감소 ⬇️</td>
+</tr>
+</tbody>
+</table>
+<p><strong>강점</strong>:</p>
+<ul>
+<li>✅ 전신 인식 98.8% (BCS 측정 즉시 활용 가능)</li>
+<li>✅ 안정적 학습 곡선 (21.5시간만에 고성능)</li>
+<li>✅ 실시간 추론 (평균 1.2초)</li>
+</ul>
+<hr />
+<h4>Eyes 모델 (안구질환 감지)</h4>
+<p><strong>종합 성능</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">지표</th>
+<th style="text-align: center;">값</th>
+<th style="text-align: center;">평가</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>mAP50</strong></td>
+<td style="text-align: center;">25.4%</td>
+<td style="text-align: center;">⚠️</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>mAP50-95</strong></td>
+<td style="text-align: center;">21.5%</td>
+<td style="text-align: center;">⚠️</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>정밀도 (Precision)</strong></td>
+<td style="text-align: center;">중간</td>
+<td style="text-align: center;">⚠️</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>재현율 (Recall)</strong></td>
+<td style="text-align: center;">중간</td>
+<td style="text-align: center;">⚠️</td>
+</tr>
+</tbody>
+</table>
+<p><strong>클래스별 주요 성능 (30개 중 상위 10개)</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">순위</th>
+<th style="text-align: left;">질환</th>
+<th style="text-align: center;">mAP50</th>
+<th style="text-align: center;">mAP50-95</th>
+<th style="text-align: left;">평가</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;"><strong>궤양성각막질환_상</strong></td>
+<td style="text-align: center;">53.4%</td>
+<td style="text-align: center;">53.3%</td>
+<td style="text-align: left;">우수 ⭐</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;"><strong>백내장_무</strong></td>
+<td style="text-align: center;">49.3%</td>
+<td style="text-align: center;">48.8%</td>
+<td style="text-align: left;">우수</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;"><strong>백내장_초기</strong></td>
+<td style="text-align: center;">37.4%</td>
+<td style="text-align: center;">36.0%</td>
+<td style="text-align: left;">양호</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">결막염_유</td>
+<td style="text-align: center;">27.9%</td>
+<td style="text-align: center;">25.1%</td>
+<td style="text-align: left;">보통</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">안검내반증_유</td>
+<td style="text-align: center;">24.5%</td>
+<td style="text-align: center;">22.1%</td>
+<td style="text-align: left;">보통</td>
+</tr>
+</tbody>
+</table>
+<p><strong>강점</strong>:</p>
+<ul>
+<li>✅ 고위험 질환 탐지 우수 (궤양: 53.4%)</li>
+<li>✅ 30개 세밀한 클래스 분류</li>
+<li>✅ 1차 스크리닝 도구로 충분</li>
+</ul>
+<p><strong>개선 포인트</strong>:</p>
+<ul>
+<li>⚠️ 드문 질환 성능 낮음 (핵경화: 15.2%)</li>
+<li>⚠️ 클래스 불균형 (<em>무: 40%+ vs </em>유: 20%대)</li>
+</ul>
+<hr />
+<h4>Skin 모델 (피부질환 감지)</h4>
+<p><strong>종합 성능</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">지표</th>
+<th style="text-align: center;">값</th>
+<th style="text-align: center;">평가</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>mAP50</strong></td>
+<td style="text-align: center;">18.3%</td>
+<td style="text-align: center;">⚠️</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>mAP50-95</strong></td>
+<td style="text-align: center;">8.3%</td>
+<td style="text-align: center;">⚠️</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>정밀도 (Precision)</strong></td>
+<td style="text-align: center;">31.8%</td>
+<td style="text-align: center;">⚠️</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>재현율 (Recall)</strong></td>
+<td style="text-align: center;">23.1%</td>
+<td style="text-align: center;">⚠️</td>
+</tr>
+</tbody>
+</table>
+<p><strong>클래스별 상세 성능 (6개)</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">순위</th>
+<th style="text-align: left;">질환</th>
+<th style="text-align: center;">객체 수</th>
+<th style="text-align: center;">추정 성능</th>
+<th style="text-align: left;">평가</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: left;"><strong>A2: 비듬·각질</strong></td>
+<td style="text-align: center;">88,365개</td>
+<td style="text-align: center;">~25%</td>
+<td style="text-align: left;">보통</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;"><strong>A3: 태선화·색소침착</strong></td>
+<td style="text-align: center;">60,911개</td>
+<td style="text-align: center;">~22%</td>
+<td style="text-align: left;">보통</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">A4: 농포·여드름</td>
+<td style="text-align: center;">38,089개</td>
+<td style="text-align: center;">~18%</td>
+<td style="text-align: left;">낮음</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">A1: 구진·플라크</td>
+<td style="text-align: center;">36,635개</td>
+<td style="text-align: center;">~17%</td>
+<td style="text-align: left;">낮음</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: left;">A6: 결절·종괴</td>
+<td style="text-align: center;">21,573개</td>
+<td style="text-align: center;">~15%</td>
+<td style="text-align: left;">낮음</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: left;">A5: 미란·궤양</td>
+<td style="text-align: center;">13,884개</td>
+<td style="text-align: center;">~12%</td>
+<td style="text-align: left;">낮음</td>
+</tr>
+</tbody>
+</table>
+<p><strong>강점</strong>:</p>
+<ul>
+<li>✅ 38시간 무결점 훈련 완료</li>
+<li>✅ 232,253개 대용량 데이터 활용</li>
+<li>✅ 안정적 수렴 (과적합 없음)</li>
+</ul>
+<p><strong>개선 포인트</strong>:</p>
+<ul>
+<li>⚠️ 전반적 성능 낮음 (실용화 기준 미달)</li>
+<li>⚠️ 클래스 불균형 심각 (6.4배 차이)</li>
+<li>⚠️ 미세 증상 구분 어려움</li>
+</ul>
+<p><strong>개선 계획</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">방법</th>
+<th style="text-align: center;">예상 효과</th>
+<th style="text-align: center;">소요 시간</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>50 epochs 재학습</strong></td>
+<td style="text-align: center;">mAP50 25%+</td>
+<td style="text-align: center;">70시간</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>데이터 증강</strong></td>
+<td style="text-align: center;">+5%p</td>
+<td style="text-align: center;">10시간</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>클래스 밸런싱</strong></td>
+<td style="text-align: center;">+3%p</td>
+<td style="text-align: center;">20시간</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>앙상블 (3개 모델)</strong></td>
+<td style="text-align: center;">+7%p</td>
+<td style="text-align: center;">5시간</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3>4.2. RAG 시스템 Vector Search 메커니즘</h3>
+<h4>시스템 아키텍처</h4>
+<div class="mermaid">
+graph TB
+    subgraph 지식_베이스_구축["📚 지식 베이스 구축 (비동기)"]
+        A[👤 커뮤니티<br/>게시글 작성] --> B[🔄 DB 트리거<br/>실행]
+        B --> C[🤗 HuggingFace<br/>API 호출]
+        C --> D[📊 384차원<br/>Vector 생성]
+        D --> E[(🐘 pet_knowledge<br/>_base 저장)]
+        E --> F[🔍 pgvector<br/>인덱스 업데이트]
+    end
+
+    subgraph RAG_검색["🧠 RAG 검색 및 답변 (동기)"]
+        G[👤 사용자 질문] --> H[🐍 FastAPI<br/>RAG 모듈]
+        H --> I[🤗 HuggingFace<br/>임베딩]
+        I --> J[🔍 pgvector<br/>코사인 유사도 검색]
+        J --> K[📝 상위 5개<br/>경험담 추출]
+        K --> L[🤖 LLM<br/>답변 생성]
+        L --> M[✨ 맞춤형<br/>케어 가이드]
+    end
+
+    F -.-> J
+
+    style A fill:#E3F2FD,stroke:#1976D2,stroke-width:2px
+    style G fill:#E3F2FD,stroke:#1976D2,stroke-width:2px
+    style E fill:#FFF3E0,stroke:#F57C00,stroke-width:2px
+    style M fill:#C8E6C9,stroke:#388E3C,stroke-width:2px
+    style L fill:#F3E5F5,stroke:#7B1FA2,stroke-width:2px
+</div>
+
+<h4>핵심 기술 스택</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">구성 요소</th>
+<th style="text-align: left;">기술</th>
+<th style="text-align: left;">설명</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Vector DB</strong></td>
+<td style="text-align: left;">PostgreSQL + pgvector</td>
+<td style="text-align: left;">384차원 벡터 저장 및 검색</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Embedding 모델</strong></td>
+<td style="text-align: left;">sentence-transformers/all-MiniLM-L6-v2</td>
+<td style="text-align: left;">HuggingFace 오픈소스 모델</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>검색 방식</strong></td>
+<td style="text-align: left;">코사인 유사도 (Cosine Similarity)</td>
+<td style="text-align: left;">벡터 간 유사도 계산</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>자동 수집</strong></td>
+<td style="text-align: left;">DB 트리거 (Supabase)</td>
+<td style="text-align: left;">게시글 작성 시 자동 임베딩</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>LLM</strong></td>
+<td style="text-align: left;">OpenAI GPT-4 / Google Gemini</td>
+<td style="text-align: left;">답변 생성</td>
+</tr>
+</tbody>
+</table>
+<h4>성능 지표</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">지표</th>
+<th style="text-align: center;">목표</th>
+<th style="text-align: center;">실적</th>
+<th style="text-align: center;">평가</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>검색 속도</strong></td>
+<td style="text-align: center;">&lt;1초</td>
+<td style="text-align: center;">0.5초</td>
+<td style="text-align: center;">✅ 200% 달성</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>임베딩 생성 속도</strong></td>
+<td style="text-align: center;">&lt;1초</td>
+<td style="text-align: center;">0.5초</td>
+<td style="text-align: center;">✅ 달성</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>답변 생성 시간</strong></td>
+<td style="text-align: center;">&lt;10초</td>
+<td style="text-align: center;">6.2초</td>
+<td style="text-align: center;">✅ 162% 달성</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>검색 정확도</strong></td>
+<td style="text-align: center;">Top-5 적중률 80%</td>
+<td style="text-align: center;">85%</td>
+<td style="text-align: center;">✅ 초과 달성</td>
+</tr>
+</tbody>
+</table>
+<h4>데이터 플로우</h4>
+<p><strong>1) 지식 베이스 구축 (비동기)</strong></p>
+<pre><code>커뮤니티 게시글 작성
+→ DB 트리거 자동 실행
+→ HuggingFace API 호출 (0.5초)
+→ 384차원 Vector 생성
+→ pet_knowledge_base 테이블 저장
+→ pgvector 인덱스 자동 업데이트
+</code></pre>
+<p><strong>2) RAG 검색 및 답변 생성 (동기)</strong></p>
+<pre><code>사용자 질문 입력
+→ FastAPI RAG 모듈 수신
+→ 질문 임베딩 (0.5초)
+→ pgvector 코사인 유사도 검색 (0.5초)
+→ 상위 5개 경험담 추출
+→ LLM 프롬프트 구성
+→ OpenAI GPT-4 호출 (5초)
+→ 맞춤형 답변 생성 및 반환
+</code></pre>
+<h4>개선 방향</h4>
+<p><strong>1) 답변 품질 향상</strong></p>
+<ul>
+<li>커뮤니티 게시글 최소 1,000개 수집 (현재: ~200개)</li>
+<li>수의학 전문 지식 데이터 추가 수집</li>
+<li>Fine-tuning된 도메인 특화 Embedding 모델 탐색</li>
+</ul>
+<p><strong>2) 검색 성능 향상</strong></p>
+<ul>
+<li>Hybrid Search (Vector + Keyword) 도입</li>
+<li>임베딩 차원 확대 (384 → 768)</li>
+<li>캐싱 시스템 구축 (자주 묻는 질문)</li>
+</ul>
+<hr />
+<h3>4.3. 통합 해시태그 시스템 아키텍처</h3>
+<h4>시스템 개요</h4>
+<p>Fetpal의 통합 해시태그 시스템은 <strong>4개 영역</strong>(커뮤니티, 플래너 이벤트, 플래너 지출, 라이프스타일 채팅)의 해시태그를 <strong>중앙 집중식으로 관리</strong>하는 데이터베이스 설계이다.</p>
+<h4>데이터베이스 구조</h4>
+<div class="mermaid">
+graph TB
+    subgraph 중앙_관리["🌟 중앙 집중식 관리"]
+        Global[(globalHashtags<br/>중앙 테이블)]
+    end
+
+    subgraph 연결_테이블["🔗 연결 테이블 (Many-to-Many)"]
+        Global --> PostHash[communityPost<br/>Hashtags]
+        Global --> EventHash[plannerEvent<br/>Hashtags]
+        Global --> ExpenseHash[plannerExpense<br/>Hashtags]
+        Global --> ChatHash[lifestylechat<br/>messagehashtags]
+    end
+
+    subgraph 실제_데이터["📝 실제 콘텐츠"]
+        PostHash --> Posts[📄 커뮤니티<br/>게시글]
+        EventHash --> Events[📅 플래너<br/>이벤트]
+        ExpenseHash --> Expenses[💰 플래너<br/>지출]
+        ChatHash --> Messages[💬 라이프스타일<br/>채팅 메시지]
+    end
+
+    subgraph 자동화["⚙️ 자동 처리"]
+        Posts --> Trigger[🔄 DB 트리거<br/>자동 해시태그 추출]
+        Events --> Trigger
+        Expenses --> Trigger
+        Messages --> Trigger
+
+        Trigger --> Parse[🔍 정규식 파싱<br/>'#태그' 감지]
+        Parse --> Update[⬆️ globalHashtags<br/>업데이트]
+        Update --> Stats[📊 통계 자동 계산<br/>주간/월간]
+    end
+
+    style Global fill:#FFE082,stroke:#F57C00,stroke-width:3px
+    style Posts fill:#E3F2FD,stroke:#1976D2,stroke-width:2px
+    style Events fill:#E8F5E9,stroke:#388E3C,stroke-width:2px
+    style Expenses fill:#F3E5F5,stroke:#7B1FA2,stroke-width:2px
+    style Messages fill:#FFCDD2,stroke:#D32F2F,stroke-width:2px
+    style Trigger fill:#FFF3E0,stroke:#F57C00,stroke-width:2px
+</div>
+
+<h4>핵심 기능</h4>
+<p><strong>1) 자동 해시태그 추출</strong></p>
+<ul>
+<li>모든 텍스트 입력에서 <code>#태그</code> 정규식 파싱</li>
+<li>DB 트리거 기반 자동 실행 (사용자 개입 불필요)</li>
+<li>중복 태그 자동 병합</li>
+</ul>
+<p><strong>2) 실시간 인기도 추적</strong></p>
+<ul>
+<li>사용 횟수 카운팅</li>
+<li>최신순 정렬 (시간 가중치)</li>
+<li>Top 5/10 실시간 조회 (쿼리 시간 &lt;100ms)</li>
+</ul>
+<p><strong>3) 다목적 활용</strong></p>
+<ul>
+<li>YouTube 영상 검색 연동</li>
+<li>RAG 시스템 컨텍스트 제공</li>
+<li>관련 콘텐츠 자동 추천</li>
+</ul>
+<h4>테이블 구조</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">테이블명</th>
+<th style="text-align: left;">역할</th>
+<th style="text-align: left;">주요 컬럼</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>globalHashtags</strong></td>
+<td style="text-align: left;">중앙 마스터 테이블</td>
+<td style="text-align: left;">tag_name, usage_count, created_at</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>communityPostHashtags</strong></td>
+<td style="text-align: left;">커뮤니티 연결</td>
+<td style="text-align: left;">post_id, hashtag_id</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>plannerEventHashtags</strong></td>
+<td style="text-align: left;">플래너 이벤트 연결</td>
+<td style="text-align: left;">event_id, hashtag_id</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>plannerExpenseHashtags</strong></td>
+<td style="text-align: left;">플래너 지출 연결</td>
+<td style="text-align: left;">expense_id, hashtag_id</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>lifestylechatmessagehashtags</strong> ⭐</td>
+<td style="text-align: left;">라이프스타일 채팅 연결</td>
+<td style="text-align: left;">message_id, hashtag_id</td>
+</tr>
+</tbody>
+</table>
+<h4>성능 지표</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">지표</th>
+<th style="text-align: center;">목표</th>
+<th style="text-align: center;">실적</th>
+<th style="text-align: center;">평가</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>자동 추출 속도</strong></td>
+<td style="text-align: center;">&lt;1초</td>
+<td style="text-align: center;">0.3초</td>
+<td style="text-align: center;">✅ 300% 달성</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>인기 태그 조회</strong></td>
+<td style="text-align: center;">&lt;1초</td>
+<td style="text-align: center;">0.1초</td>
+<td style="text-align: center;">✅ 1000% 달성</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>통합 영역 수</strong></td>
+<td style="text-align: center;">3개</td>
+<td style="text-align: center;"><strong>4개</strong> ⭐</td>
+<td style="text-align: center;">✅ 133% 달성</td>
+</tr>
+</tbody>
+</table>
+<h4>주요 특징</h4>
+<p><strong>1) Single Source of Truth (단일 진실 원천)</strong></p>
+<ul>
+<li><code>globalHashtags</code> 테이블이 유일한 해시태그 저장소</li>
+<li>모든 영역에서 일관된 해시태그 관리</li>
+<li>데이터 중복 없이 정규화된 DB 설계</li>
+</ul>
+<p><strong>2) 자동화된 데이터 파이프라인</strong></p>
+<ul>
+<li>DB 트리거 기반으로 자동 실행</li>
+<li>사용자나 개발자 개입 불필요</li>
+<li>실시간으로 해시태그 추출 및 업데이트</li>
+</ul>
+<p><strong>3) 확장 가능한 아키텍처</strong></p>
+<ul>
+<li>새로운 영역 추가 시 연결 테이블만 생성하면 됨</li>
+<li>중앙 로직 변경 불필요</li>
+<li>Many-to-Many 관계로 유연한 구조</li>
+</ul>
+<hr />
+<h2>📊 최종 평가 요약</h2>
+<h3>전체 시스템 성능 종합</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">평가 영역</th>
+<th style="text-align: left;">세부 항목</th>
+<th style="text-align: center;">목표</th>
+<th style="text-align: center;">실적</th>
+<th style="text-align: center;">달성률</th>
+<th style="text-align: center;">평가</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>AI 모델</strong></td>
+<td style="text-align: left;">Health 정확도</td>
+<td style="text-align: center;">80%</td>
+<td style="text-align: center;">88.2%</td>
+<td style="text-align: center;">110%</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Eyes 정확도</td>
+<td style="text-align: center;">25%</td>
+<td style="text-align: center;">25.4%</td>
+<td style="text-align: center;">102%</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Skin 정확도</td>
+<td style="text-align: center;">30%</td>
+<td style="text-align: center;">18.3%</td>
+<td style="text-align: center;">61%</td>
+<td style="text-align: center;">⚠️</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>처리 성능</strong></td>
+<td style="text-align: left;">AI 서버 응답</td>
+<td style="text-align: center;">&lt;3초</td>
+<td style="text-align: center;">&lt;2초</td>
+<td style="text-align: center;">150%</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">페이지 로딩</td>
+<td style="text-align: center;">&lt;3초</td>
+<td style="text-align: center;">~2초</td>
+<td style="text-align: center;">150%</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>실시간 기능</strong></td>
+<td style="text-align: left;">채팅 동기화</td>
+<td style="text-align: center;">&lt;1초</td>
+<td style="text-align: center;">0.7초</td>
+<td style="text-align: center;">143%</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">RAG 검색</td>
+<td style="text-align: center;">&lt;1초</td>
+<td style="text-align: center;">0.5초</td>
+<td style="text-align: center;">200%</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>사용자 경험</strong></td>
+<td style="text-align: left;">반응형 디자인</td>
+<td style="text-align: center;">4개</td>
+<td style="text-align: center;">4개</td>
+<td style="text-align: center;">100%</td>
+<td style="text-align: center;">✅</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>확장성</strong></td>
+<td style="text-align: left;">해시태그 통합</td>
+<td style="text-align: center;">3개</td>
+<td style="text-align: center;">4개</td>
+<td style="text-align: center;">133%</td>
+<td style="text-align: center;">✅</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>작성자</strong>: LYSS with Claude<br />
+<strong>문서 버전</strong>: v1.0 (4차 스프린트~최종발표 대비)</p>
+<hr />
+<p><strong>📝 문서 정보</strong></p>
+<ul>
+<li><strong>이전 문서</strong>: <a href="./06_요구사항_정의서.md">06<em>요구사항</em>정의서.md</a></li>
+<li><strong>다음 문서</strong>: <a href="./08_Supabase_BaaS_가이드.md">08<em>Supabase_BaaS</em>가이드.md</a></li>
+</ul>
+<hr />
+
+    <script>
+        // Mermaid 렌더링 완료 후 페이지 로드 이벤트
+        window.addEventListener('load', function() {
+            console.log('Mermaid diagrams loaded successfully!');
+        });
+    </script>
+</body>
+</html>

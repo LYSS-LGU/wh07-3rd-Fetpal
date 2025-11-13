@@ -1,0 +1,11 @@
+항목,내용
+프레임워크,FastAPI (Python 3.10)
+엔드포인트 수,5개
+엔드포인트 목록,"detect, detect-skin, detect-health, detect-eyes, health"
+평균 응답 시간,3~5초 (이미지 분석 포함)
+GPU 사용,NVIDIA GeForce RTX 4060 (8GB)
+동시 처리,멀티모델 자동 전환 지원
+배치 크기,8
+이미지 크기,640x640
+최적화기,SGD
+

@@ -1,0 +1,136 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36" version="28.2.7">
+  <diagram name="페이지-1" id="tNJH4QnbI89qBMLlHzCW">
+    <mxGraphModel dx="2085" dy="1112" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-1" value="AI 건강 진단 플로우" style="swimlane;whiteSpace=wrap;html=1;fillColor=#E1F5FE;strokeColor=#0277BD;fontSize=16;fontStyle=1;startSize=40;" vertex="1" parent="1">
+          <mxGeometry x="370" y="210" width="800" height="1030" as="geometry" />
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-2" value="&amp;nbsp;사용자가 /aiassistant 페이지 접속" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B3E5FC;strokeColor=#0277BD;fontSize=12;fontStyle=1;" vertex="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry x="40" y="60" width="720" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-3" value="&amp;nbsp;반려동물 사진 선택 및 업로드 (useYoloUpload Hook)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#B3E5FC;strokeColor=#0277BD;fontSize=12;fontStyle=1;" vertex="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry x="40" y="120" width="720" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-4" value="&amp;nbsp;Supabase Storage에 이미지 업로드 → Public URL 생성" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFB74D;strokeColor=#E65100;fontSize=12;fontStyle=1;" vertex="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry x="40" y="180" width="720" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-5" value="&amp;nbsp;FastAPI에 HTTP POST 요청 전송&lt;br&gt;{ image_url: &#39;...&#39;, type: &#39;eyes&#39; }" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F48FB1;strokeColor=#C2185B;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" vertex="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry x="40" y="240" width="720" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-6" value="&amp;nbsp;이미지 전처리 (크기 조정, 정규화, Tensor 변환)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F48FB1;strokeColor=#C2185B;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" vertex="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry x="40" y="310" width="720" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-7" value="&amp;nbsp;YOLO v8 Eyes 모델 로드 및 추론 실행 (약 1-2초 소요)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#F48FB1;strokeColor=#C2185B;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" vertex="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry x="40" y="370" width="720" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-8" value="&amp;nbsp;AI 분석 결과 생성&lt;br&gt;{ disease: &#39;결막염&#39;, confidence: 85%, severity: &#39;중간&#39;, recommendations: [...] }" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#EC407A;strokeColor=#AD1457;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" vertex="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry x="40" y="430" width="720" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-9" value="&amp;nbsp;FastAPI → Next.js로 JSON 응답 반환" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BA68C8;strokeColor=#7B1FA2;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" vertex="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry x="40" y="500" width="720" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-10" value="&amp;nbsp;useYoloAnalysis Hook이 응답 처리 및 상태 업데이트" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#BA68C8;strokeColor=#7B1FA2;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" vertex="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry x="40" y="560" width="720" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-11" value="&amp;nbsp;Supabase aiHealthAnalyses 테이블에 분석 기록 저장 (INSERT)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFB74D;strokeColor=#E65100;fontSize=12;fontStyle=1;" vertex="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry x="40" y="620" width="720" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-12" value="Supabase Trigger 발동 → Realtime Broadcast" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#A5D6A7;strokeColor=#43A047;fontSize=12;fontStyle=1;" vertex="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry x="40" y="680" width="720" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-13" value="&amp;nbsp;React 컴포넌트 자동 리렌더링 (Optimistic UI + Real Data)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#66BB6A;strokeColor=#2E7D32;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" vertex="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry x="40" y="740" width="720" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-14" value="&amp;nbsp;UI에 분석 결과 + 추천 병원 + 대처 방법 표시" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#66BB6A;strokeColor=#2E7D32;fontColor=#FFFFFF;fontSize=12;fontStyle=1;" vertex="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry x="40" y="800" width="720" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-15" value="&amp;nbsp;Toast 알림: ✅ 분석이 완료되었습니다!" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#66BB6A;strokeColor=#2E7D32;fontColor=#FFFFFF;fontSize=12;fontStyle=1;shadow=1;" vertex="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry x="40" y="860" width="720" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-16" value="⏱️ 전체 소요 시간: 약 3-4초&#xa;(이미지 업로드 1초 + AI 분석 1-2초 + DB 저장 0.5초 + UI 업데이트 0.5초)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF9C4;strokeColor=#F9A825;fontSize=12;fontStyle=1;align=center;" vertex="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry x="40" y="940" width="720" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-17" value="" style="endArrow=classic;html=1;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=default;fontStyle=1;labelBorderColor=none;horizontal=0;" edge="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="410" y="100" as="sourcePoint" />
+            <mxPoint x="410" y="120" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-18" value="" style="endArrow=classic;html=1;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=default;fontStyle=1;labelBorderColor=none;horizontal=0;" edge="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="410" y="160" as="sourcePoint" />
+            <mxPoint x="410" y="180" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-19" value="" style="endArrow=classic;html=1;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=default;fontStyle=1;labelBorderColor=none;horizontal=0;" edge="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="410" y="220" as="sourcePoint" />
+            <mxPoint x="410" y="240" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-20" value="" style="endArrow=classic;html=1;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=default;fontStyle=1;labelBorderColor=none;horizontal=0;" edge="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="410" y="290" as="sourcePoint" />
+            <mxPoint x="410" y="310" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-21" value="" style="endArrow=classic;html=1;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=default;fontStyle=1;labelBorderColor=none;horizontal=0;" edge="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="410" y="350" as="sourcePoint" />
+            <mxPoint x="410" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-22" value="" style="endArrow=classic;html=1;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=default;fontStyle=1;labelBorderColor=none;horizontal=0;" edge="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="410" y="410" as="sourcePoint" />
+            <mxPoint x="410" y="430" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-23" value="" style="endArrow=classic;html=1;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=default;fontStyle=1;labelBorderColor=none;horizontal=0;" edge="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="410" y="480" as="sourcePoint" />
+            <mxPoint x="410" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-24" value="" style="endArrow=classic;html=1;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=default;fontStyle=1;labelBorderColor=none;horizontal=0;" edge="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="410" y="540" as="sourcePoint" />
+            <mxPoint x="410" y="560" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-25" value="" style="endArrow=classic;html=1;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=default;fontStyle=1;labelBorderColor=none;horizontal=0;" edge="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="410" y="600" as="sourcePoint" />
+            <mxPoint x="410" y="620" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-26" value="" style="endArrow=classic;html=1;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=default;fontStyle=1;labelBorderColor=none;horizontal=0;" edge="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="410" y="660" as="sourcePoint" />
+            <mxPoint x="410" y="680" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-27" value="" style="endArrow=classic;html=1;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=default;fontStyle=1;labelBorderColor=none;horizontal=0;" edge="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="410" y="720" as="sourcePoint" />
+            <mxPoint x="410" y="740" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-28" value="" style="endArrow=classic;html=1;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=default;fontStyle=1;labelBorderColor=none;horizontal=0;" edge="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="410" y="780" as="sourcePoint" />
+            <mxPoint x="410" y="800" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="KsC7FU0cKeBvFhjwAjXe-29" value="" style="endArrow=classic;html=1;rounded=0;fontFamily=Helvetica;fontSize=16;fontColor=default;fontStyle=1;labelBorderColor=none;horizontal=0;" edge="1" parent="KsC7FU0cKeBvFhjwAjXe-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="410" y="840" as="sourcePoint" />
+            <mxPoint x="410" y="860" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

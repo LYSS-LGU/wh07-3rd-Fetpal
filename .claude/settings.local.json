@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(where:*)",
+      "Bash(findstr:*)",
+      "Bash(python:*)",
+      "Bash(pip install:*)",
+      "Bash(winget install:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

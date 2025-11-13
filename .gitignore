@@ -35,3 +35,23 @@ desktop.ini
 node_modules/
 .env*
 *.log
+
+# 매니저님 제출용 PDF 폴더 (HTML 변환 파일)
+매니저님_제출용_PDF/
+
+# SQL 파일들 (민감 정보 포함 가능)
+*.sql
+!docs/05_ERD_dbdiagramio.sql
+
+# 루트 폴더 이미지들 (정리되지 않은 파일)
+/*.png
+/*.jpg
+/*.jpeg
+!README_images/
+
+# 중복/임시 Claude 파일들
+*Claude*.md
+*Claude*.csv
+
+# 스프린트 발표 자료 (보관용, Git 제외)
+_스프린트발표/

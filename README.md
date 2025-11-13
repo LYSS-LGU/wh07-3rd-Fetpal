@@ -1,437 +1,201 @@
-# 🐾 Fetpal: AI 기반 반려동물 통합 케어 플랫폼
+# Fetpal: AI 기반 반려동물 임시진단 및 케어 지원 서비스 기획서
 
-> **프로젝트 기간**: 2025.09.19 ~ 2025.11.20 (9주)<br> > **작성자**: LYSS with Claude<br> > **최종 업데이트**: 2025-11-13
+## 1. 프로젝트 개요
 
----
+### 1.1. 프로젝트명
 
-## 📖 목차 (Table of Contents)
+**Fetpal (펫팔)**: AI 기반 반려동물 통합 케어 플랫폼
 
-- [🐾 프로젝트 팀원 소개 (Team)](#-프로젝트-팀원-소개)
-- [📚 프로젝트 문서 (Documentation)](#-프로젝트-문서)
-- [💡 프로젝트 소개 (Introduction)](#-프로젝트-소개)
-- [🎯 주요 기능 (Features)](#-주요-기능)
-- [🔗 프로젝트 링크 (Links)](#-프로젝트-링크)
-- [🛠️ 기술 스택 (Tech Stack)](#️-기술-스택)
-- [🏗️ 시스템 아키텍처 (Architecture)](#️-시스템-아키텍처)
-- [🔄 시스템 흐름도 (Flow)](#-시스템-흐름도)
-- [🗄️ 데이터베이스 설계 (Database)](#️-데이터베이스-설계)
-- [📊 프로젝트 성과 (Results)](#-프로젝트-성과)
-- [🚀 시작하기 (Getting Started)](#-시작하기)
-- [🙏 감사의 말 (Acknowledgments)](#-감사의-말-acknowledgments)
+> **명칭의 의미**: **Family**(가족) + **Vet**(수의사) + **Pet**(반려동물) + **Pal**(친구)의 합성어로, 가족과 반려동물이 함께하는 건강한 일상을 수의학적 지식과 친구 같은 AI가 도와준다는 의미를 담고 있습니다.
 
----
+### 1.2. 아이디어
 
-## 🐾 프로젝트 팀원 소개
+> 나의 반려동물, 반려인의 반려동물 케어 **임시진단 지원 서비스** + **초보 반려인 케어 가이드**
 
-<div align="center">
+바쁜 일상 속에서 반려동물의 건강 이상 징후가 의심될 때, 즉시 동물병원에 방문하기 어려운 보호자를 위해 AI 기술을 활용한 임시진단과 상황별 대처 방안을 제시하여 심리적 안정감을 제공하고, 시기적절한 의료 조치를 유도하는 것을 목표로 합니다.
 
-|                            **프로필**                            | **정보**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| :--------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <img src="./p3_profile.png" width="150" height="150" alt="LYSS"> | **이름**: 이유석 (LYSS)<br>**역할**: 1인 초보 개발자 with Claude AI<br>**_"처음부터 하나씩 배워가며 만드는 첫 작품 입니다.<br>혼자여도 할 수 있다는 포기하지 않는 마음!"_**<br><br>**Contact:**<br>[<img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1566899596/noticon/slhw4nu8hybreryigopq.png" width="25" height="25" alt="GitHub">](https://github.com/LYSS-LGU) [<img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1606895317/noticon/cffnbxeed08p0l4u44ru.png" width="25" height="25" alt="Gmail">](mailto:leeyss1991@gmail.com) [<img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1644169460/noticon/frvhykszxhjz4asz77oi.png" width="25" height="25" alt="Naver">](mailto:lyss91@naver.com) |
+**특히 타지에서 처음 반려동물을 키우는 초보 보호자들**을 위해 일상 케어 가이드(급식 시간, 산책 방법, 기본 훈련법 등)부터 응급 상황 대처까지 종합적인 케어 솔루션을 목표로 합니다.
 
-</div>
+### 1.3. 문제 인식 및 현황
 
-### 👨‍💻 담당 업무
+#### 1.3.1. 반려동물 1500만 시대의 그림자
 
-> **💡 개발 파트너**: 이 프로젝트는 초보 개발자가 **Claude AI**와 함께 협업하여 완성했습니다.
-> Claude는 코드 작성, 디버깅, 아키텍처 설계, 문서화 등 전 과정에서 **페어 프로그래밍(바이브코딩)** 파트너로 참여했습니다.
+> "반려동물 1500만 시대, 그러나 여전히 해결되지 않은 문제들"
 
-|   **영역**   |         **기술 스택**         | **세부 내용**                            |
-| :----------: | :---------------------------: | :--------------------------------------- |
-|   **기획**   |      프로젝트 매니지먼트      | 요구사항 분석, WBS 작성, 시스템 설계     |
-| **Frontend** |  Next.js, React, TypeScript   | 사용자 인터페이스, 반응형 웹, 상태 관리  |
-| **Backend**  | Supabase, FastAPI, PostgreSQL | 데이터베이스 설계, API 개발, 인증 시스템 |
-|  **AI/ML**   |    YOLOv8, OpenCV, PyTorch    | 이미지 분석, 객체 탐지, 모델 학습        |
-|   **기타**   |        UI/UX, 아키텍처        | 디자인 시스템, 시스템 아키텍처 설계      |
+**실제 보호자들이 겪는 일상적 고민**:
 
----
+- **시나리오 1**: "새벽 2시, 강아지 눈이 갑자기 빨갛게 충혈됐는데 병원은 모두 문을 닫았습니다. 응급실까지는 차로 1시간, 정말 지금 가야 할까요?"
+- **시나리오 2**: "피부에 뭔가 생겼는데, 이게 단순 뾰루지인지 심각한 피부병인지 판단이 안 섭니다. 병원 가면 항상 큰 비용이 나와서 망설여집니다."
+- **시나리오 3**: "동물병원 진료비가 부담스러워 '좀 더 지켜보자'며 미루다가 병이 악화되어 더 큰 비용과 고통을 겪은 경험이 있습니다."
+- **시나리오 4**: "타지에서 처음 강아지를 키우는데, 하루에 몇 번 밥을 줘야 하는지, 언제 산책을 시켜야 하는지, 기본적인 훈련은 어떻게 시켜야 하는지 아무것도 모르겠어요. 주변에 물어볼 사람도 없고..."
+- **시나리오 5**: "혼자 살면서 반려동물을 키우는데, 갑자기 아픈 것 같을 때 어떻게 대처해야 할지 막막해요. 온라인 정보는 너무 많아서 뭘 믿어야 할지 모르겠고, 병원마다 말이 다르네요."
 
-## 📚 프로젝트 문서
+#### 1.3.2. 통계로 보는 문제의 심각성
 
-> **📁 [docs/](./docs/)** 폴더에서 상세한 프로젝트 문서를 확인할 수 있습니다.
+- **의료비 부담**: 반려동물 의료비 평균 연 150만원, 중증 질환 시 500만원 이상 (2024 KB경영연구소)
+- **의료 접근성 한계**: 24시 동물병원 전국 200개 미만, 전체 동물병원의 3%에 불과
+- **정보 부족**: 반려동물 보호자 72%가 "건강 이상 징후 판단 어려움" 호소 (2024 반려동물 보고서)
+- **초보 보호자 증가**: 전체 반려동물 보호자 중 45%가 1년 미만 경험자 (2024 농림축산식품부)
+- **일상 케어 어려움**: 초보 보호자 83%가 "기본 케어 방법(급식, 산책, 훈련) 정보 부족" 토로
+- **골든타임 놓침**: 응급 질환의 38%가 초기 대응 지연으로 악화 (대한수의사회)
 
-### 📋 핵심 문서
+#### 1.3.3. 핵심 문제 정의
 
-| 번호 | 문서명                                                                                          | 설명                           |
-| :--: | :---------------------------------------------------------------------------------------------- | :----------------------------- |
-|  01  | **[프로젝트 기획서](./docs/01_프로젝트_기획서.md)** • [PDF](./docs/PDF_preview/01_프로젝트_기획서.pdf)                   | 프로젝트 개요, 목표, 일정      |
-|  02  | **[WBS 최신화](./docs/02_WBS_최신화.md)** • [PDF](./docs/PDF_preview/02_WBS_최신화.pdf)                                  | 작업 분해 구조 및 진행 현황    |
-|  03  | **[시스템 흐름도](./docs/03_시스템_흐름도.md)** • [PDF](./docs/PDF_preview/03_시스템_흐름도.pdf)                         | 사용자 시나리오 및 데이터 흐름 |
-|  04  | **[시스템 아키텍처](./docs/04_시스템_아키텍처.md)** • [PDF](./docs/PDF_preview/04_시스템_아키텍처.pdf)                   | 기술 스택 및 시스템 구조       |
-|  05  | **[ERD](./docs/05_ERD.md)** • [PDF](./docs/PDF_preview/05_ERD_최종스프린트대비.pdf)                                      | 데이터베이스 설계 및 관계도    |
-|  06  | **[요구사항 정의서](./docs/06_요구사항_정의서.md)** • [PDF](./docs/PDF_preview/06_요구사항_정의서.pdf)                   | 기능적/비기능적 요구사항       |
-|  07  | **[YOLO 모델 정의서](./docs/07_YOLO_모델_정의서.md)** • [PDF](./docs/PDF_preview/07_YOLO_모델_정의서.pdf)                | YOLO 모델 상세 및 성능 지표    |
-|  08  | **[RAG-LLM 시스템 정의서](./docs/08_RAG-LLM_시스템_정의서.md)** • [PDF](./docs/PDF_preview/08_RAG-LLM_시스템_정의서.pdf) | RAG 시스템 및 LLM 통합 구조    |
-|  09  | **[성능 평가 결과서](./docs/09_성능_평가_결과서.md)** • [PDF](./docs/PDF_preview/09_성능_평가_결과서.pdf)                | AI 모델 및 시스템 성능 분석    |
-|  10  | **[Supabase BaaS 가이드](./docs/10_Supabase_BaaS_가이드.md)** • [PDF](./docs/PDF_preview/10_Supabase_BaaS_가이드.pdf)    | BaaS 아키텍처 및 MCP 설명      |
+> "보호자의 불안감을 줄이고, 적절한 시기에 병원을 방문할 수 있도록 돕는 객관적 판단 기준이 필요합니다."
 
-### 📊 데이터
+### 1.4. 페르소나 (주요 타겟)
 
-- **[WBS 통합](./docs/02_WBS_통합.csv)** - CSV 형식
-- **[WBS 통합](./docs/02_WBS_통합.xlsx)** - Excel 형식
-- **[WBS 상세 자료](./docs/WBS_상세자료/)** - 주차별/모델별 상세 데이터
+> 바쁜 일상 속, 나만 기다리고 바라보는 반려동물을 키우는 보호자
 
-### 🎨 다이어그램
+- **초보 보호자**: 반려동물의 사소한 행동 변화나 증상에도 큰 불안감을 느끼며, 신뢰할 수 있는 정보를 얻고 싶어 하는 사용자.
+- **맞벌이/1인 가구 보호자**: 직장 생활 등으로 인해 반려동물과 함께하는 시간이 제한적이며, 건강 이상 징후를 놓칠까 우려하는 사용자.
+- **만성 질환/취약 품종 보호자**: 특정 질환(피부, 안구 등)에 대한 지속적인 관리가 필요하며, 상태 변화를 꾸준히 기록하고 모니터링하고 싶은 사용자.
+- **소셜 반려인**: 반려동물과의 일상을 공유하고, 같은 지역의 반려인들과 교류하고 싶어하는 사용자.
 
-- **[ERD 이미지](./docs/05_ERD_최종스프린트대비.png)** - PNG 형식
-- **[ERD PDF](./docs/05_ERD_최종스프린트대비.pdf)** - PDF 형식
+### 1.5. 프로젝트 목표 (Why?)
+
+> 내 선택(일방책임)으로 내게 온 사랑스러운 나의 반려동물에 대한 케어, 병원, 약국 등 케어용품을 바로 사러 갈수없는 상황에 임시 진단 및 상황 대처 방안 제시로 심리적 안정감 제공 및 게임화 요소 제공으로 반려동물과의 추억 시간을 더욱 알차게 만들어 나가자는 목적.
+
+- **심리적 안정감 제공**: AI 임시진단을 통해 보호자의 막연한 불안감을 해소하고, 객관적인 데이터를 기반으로 침착하게 상황에 대처할 수 있도록 지원.
+- **의료 접근성 강화**: 수의사법을 준수하는 선에서 비진단적 소견과 대처 방안을 제시하고, 증상과 위치에 기반한 최적의 동물병원(일반/응급) 및 약국/매장을 추천하여 골든타임을 놓치지 않도록 지원.
+- **지속적인 케어 유도**: 건강 모니터링, 산책, 일정 관리 등 반려동물 케어 활동에 게임화(Gamification) 요소를 적용하여 보호자가 즐겁게 참여하도록 유도하고, 반려동물과의 유대감을 강화.
+- **데이터 기반 관리**: 사용자의 활동 데이터를 축적하고 분석하여, 개인화된 건강 관리 및 라이프스타일 가이드를 제공하는 통합 플랫폼으로 발전.
+- **커뮤니티 활성화**: 지역 기반 라이프스타일 채팅, 해시태그 기반 관심사 연결, 오프라인 모임 지원 등을 통해 반려인 간 소통 및 정보 교류 촉진.
 
 ---
 
-## 💡 프로젝트 소개
+## 2. 주요 기능 및 활용 기술
 
-### 🎯 프로젝트 개요
+### 2.1. AI 임시진단 (핵심 기능)
 
-**Fetpal (펫팔)**은 AI 기술을 활용하여 반려동물의 건강 이상 징후를 초기에 파악하고, 상황별 대처 방안을 제시하여 보호자의 불안감을 해소하는 것을 목표로 하는 **AI 기반 반려동물 통합 케어 플랫폼**입니다.
+- **기능**: 스마트폰으로 촬영한 반려동물 사진(피부, 눈 등)을 분석하여 이상 징후에 대한 임시진단 정보를 제공.
+- **활용 기술**:
+  - **YOLO & OpenCV**: 이미지 내 이상 부위(병변)를 객체 탐지 기술로 정확하게 식별하고, 바운딩 박스로 시각화.
+  - **신뢰도/정확도/심각도 시각화**: AI 분석 결과의 신뢰도, 탐지 정확도, 그리고 증상의 일반적인 심각도 레벨을 사용자에게 직관적으로 제시.
+- **데이터 소스**: AI-Hub(반려동물 건강정보, 안구/피부질환 데이터 668,547개)
+- **모델 성능**:
+  - **Health 모델**: mAP50 88.2% (상용화 수준)
+  - **Eyes 모델**: mAP50 25.4% (30개 안구질환)
+  - **Skin 모델**: mAP50 18.3% (6개 피부질환)
 
-> **💡 명칭의 의미**: **Family**(가족) + **Vet**(수의사) + **Pet**(반려동물) + **Pal**(친구)의 합성어로, 가족과 반려동물이 함께하는 건강한 일상을 수의학적 지식과 친구 같은 AI가 도와준다는 의미를 담고 있습니다.
+### 2.2. LLM(RAG) 기반 AI 어드바이저
 
----
+- **기능**: AI 임시진단 결과에 대한 후속 조치 및 일반적인 케어 질문에 대해 신뢰도 높은 답변을 제공.
+- **활용 기술**:
+  - **LLM (RAG - 검색 증강 생성)**: 검증된 전문 지식 베이스(수의학 정보, 커뮤니티 경험담)를 기반으로 답변을 생성하여 '환각 현상'을 최소화.
+  - **pgvector 통합**: PostgreSQL Vector 검색 기능 추가 (384차원 벡터)
+  - **HuggingFace 임베딩**: sentence-transformers/all-MiniLM-L6-v2 모델
+  - **커뮤니티 자동 수집**: 게시글 작성 시 자동으로 지식 베이스에 추가
+  - **Vector Similarity Search**: 코사인 유사도 기반 관련 경험담 검색
+- **제공 정보**:
+  - **상황 대처 방안**: 응급 상황 여부, 응급 처치 방법, 주의 깊게 관찰해야 할 증상 등.
+  - **제품 추천**: 수의사 처방 없이 구매 가능한 일반 의약품, 연고, 보조제 등 추천.
+  - **병원/매장 추천**: 증상과 연관된 진료 과목을 보는 주변 동물병원, 24시 응급실, 약국, 펫샵 등을 KAKAO MAP API와 연동하여 거리, 평점 기반으로 추천.
 
-### 🚨 해결하고자 하는 문제
+### 2.3. 지식 확장 및 커뮤니티
 
-<div align="center">
+- **기능**: 사용자들이 서로의 경험을 공유하고, 전문가의 지식을 쉽게 얻을 수 있는 동적 커뮤니티.
+- **주요 특징**:
+  - **#해시태그 연동**: `#노란색구토`, `#결막염` 등 특정 증상이나 상황에 대한 해시태그를 통해 커뮤니티 내 정보 검색 및 관련 YouTube 영상(케어 방법, 전문가 설명)을 API로 연동하여 제공.
+  - **반려동물 전용 SNS**: 인스타그램 형태의 피드를 통해 일상을 공유하고 소통.
+  - **거리 기반 모임**: 위치 기반 서비스를 활용하여 동네 친구, 산책 모임 등 오프라인 교류 촉진.
+  - **실시간 채팅**: 이벤트나 모임 전용 실시간 채팅방을 제공하여 활발한 소통 지원.
+  - **자동 지식 베이스 구축**: 커뮤니티 게시글이 자동으로 RAG 시스템에 추가되어 AI 어드바이저 답변 품질 향상.
 
-#### **🏥 응급 상황 대처의 어려움**
+### 2.4. 라이프스타일 채팅 시스템
 
-> _"새벽 2시, 강아지 눈이 갑자기 빨개졌는데 병원은 문을 닫았고, 응급실은 너무 멀어요. 지금 당장 가야 할까요?"_
->
-> _"피부에 뾰루지 같은 게 났는데, 병원 가기엔 애매하고 그냥 두기엔 불안해요."_
+- **기능**: 위치 기반, 해시태그 기반 실시간 공개 채팅으로 반려인 간 소통 촉진
+- **주요 특징**:
+  - **3가지 채팅방 유형**:
+    - 글로벌 로비(전역 채팅): Fetpal 모든 사용자 참여
+    - 위치 기반 채팅: 반경 N km 내 사용자만
+    - 해시태그 채팅: #산책, #병원, #사료추천 등 주제별, 특정 관심사 기반
+  - **실시간 참여자 추적**: 접속 상태, 마지막 활동 시간
+  - **이미지 공유**: Supabase Storage 연동
+  - **해시태그 자동 추출**:
+    - 채팅 메시지 작성 시 `#태그` 자동 감지 및 globalHashtags 연동
+    - DB 트리거 기반 `lifestylechatmessagehashtags` 테이블 자동 업데이트
+  - **실시간 인기 태그**: 사용 횟수 + 최신순 정렬로 Top 5 실시간 업데이트
+  - **통합 해시태그 시스템**: 커뮤니티, 플래너, 라이프스타일 채팅 4개 영역 통합
+  - **반응형 UI**: 1280px, 900px, 768px, 480px 모든 화면 크기 대응
 
-#### **🐶 초보 반려인의 일상 케어 고민**
+### 2.5. 커스텀 플래너 & 백신 자동화 시스템
 
-> _"타지에서 처음 강아지를 키우는데, 하루에 몇 번 밥을 줘야 하는지, 언제 산책을 시켜야 하는지, 기본적인 훈련은 어떻게 시켜야 하는지 아무것도 모르겠어요."_
-
-**반려동물 1500만 시대, 수많은 보호자들이 위와 같은 고민을 매일 겪고 있습니다.**
-
-</div>
-
----
-
-### 🎯 솔루션
-
-Fetpal은 이러한 **불안감과 정보 비대칭 문제**를 해결하고자 합니다:
-
-#### **🐾 응급 상황 지원**
-
-- **AI 기술**로 시공간 제약 없이 반려동물의 상태를 객관적으로 확인
-- **검증된 정보**를 바탕으로 침착하게 다음 행동을 결정할 수 있도록 지원
-- **응급 상황의 골든타임**을 놓치지 않도록 즉시 대처 방안 제공
-
-#### **🐾 초보 반려인 가이드**
-
-- **일상 케어 가이드**: 급식 시간, 산책 방법, 기본 훈련법 등 체계적 정보 제공
-- **커뮤니티 연결**: 경험 있는 반려인들과의 소통을 통한 실질적 조언
-- **단계별 가이드**: 반려동물 성장 단계별 맞춤 케어 정보 제공
-
----
-
-<div align="center">
-
-### 💝 프로젝트 미션
-
-> **"내 선택으로 내게 온 사랑스러운 반려동물, Fetpal이 함께 지켜드립니다."**
-
-</div>
-
----
-
-## 🎯 주요 기능
-
-| 구분                 | 기능                         | 상세 설명                                                                                                                                              |
-| :------------------- | :--------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **🩺 AI 임시진단**   | 이미지 기반 건강 분석        | 스마트폰으로 촬영한 피부/안구/건강 사진을 **YOLOv8m** 모델로 분석하여 이상 징후를 탐지하고, 신뢰도와 함께 시각적으로 보여줍니다.                       |
-| **💬 AI 어드바이저** | RAG/Multi-LLM 기반 대처 방안 | 분석 결과에 따라, **pgvector RAG + Multi-LLM**(GPT-4/Gemini/Claude)이 검증된 지식 기반의 대처법과 주변 병원 추천 등을 제공합니다.                      |
-| **🗺️ 지도 연동**     | 주변 시설 검색 (LBS)         | **Kakao Map API**와 연동하여 내 위치 기반으로 24시 동물병원, 약국, 펫샵 등의 위치, 평점, 영업시간 등을 즉시 확인할 수 있습니다.                        |
-| **🐾 커뮤니티**      | 지식 공유 및 소셜 네트워킹   | `#해시태그`(예: \#산책, \#간식추천)를 통해 관련 게시글과 **YouTube 케어 영상**을 한번에 보고, **실시간 채팅**으로 동네 펫 친구들과 교류할 수 있습니다. |
-| **🗓️ 스마트 플래너** | 일정 및 지출 통합 관리       | 예방접종 자동 스케줄링, 병원/미용 예약, 사료 구매까지. 캘린더와 가계부를 통합하여 모든 케어 활동을 체계적으로 관리합니다.                              |
+- **기능**: 반려동물 일정 관리 및 백신 자동 스케줄링
+- **주요 특징**:
+  - **생년월일 기반 자동 백신 일정 생성**: DB 트리거로 완전 자동화
+  - **플래너 양방향 동기화**: 백신 일정 ↔ 플래너 이벤트 자동 연결
+  - **요약 대시보드**: 완료율, 지연 접종 알림
+  - **드래그앤드롭 일정 관리**: 연속 일정 생성, 일정 이동
+  - **가계부 통합**: 지출 기록 및 월별 통계
 
 ---
 
-## 🔗 프로젝트 링크
+## 3. 기대 효과
 
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="20" height="20" alt="GitHub"> [GitHub Repository](https://github.com/LYSS-LGU) • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg" width="20" height="20" alt="Vercel"> [Vercel Deployed](https://fetpal.vercel.app) • 📚 [Docs](./docs/)
-
----
-
-## 🛠️ 기술 스택 (Tech Stack)
-
-### 💻 Frontend
-
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" width="20" height="20" alt="Next.js"> Next.js 14 • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" width="20" height="20" alt="React"> React 18 • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" width="20" height="20" alt="TypeScript"> TypeScript • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" width="20" height="20" alt="CSS3"> CSS Modules
-
-### 🗄️ Backend
-
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg" width="20" height="20" alt="Supabase"> Supabase BaaS • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" width="20" height="20" alt="PostgreSQL"> PostgreSQL + pgvector • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" width="20" height="20" alt="FastAPI"> FastAPI • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" width="20" height="20" alt="Python"> Python 3.10
-
-### 🤖 AI/ML
-
-<img src="https://cdn.simpleicons.org/yolo/00FFFF" width="20" height="20" alt="YOLO"> YOLOv8m • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" width="20" height="20" alt="PyTorch"> PyTorch • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg" width="20" height="20" alt="OpenCV"> OpenCV • <img src="https://cdn.simpleicons.org/huggingface/FFD21E" width="20" height="20" alt="HuggingFace"> HuggingFace Embeddings
-
-### 🧠 LLM & RAG
-
-<img src="https://cdn.simpleicons.org/openai/412991" width="20" height="20" alt="OpenAI"> OpenAI GPT-4 • <img src="https://cdn.simpleicons.org/googlegemini/8E75B2" width="20" height="20" alt="Gemini"> Google Gemini • <img src="https://cdn.simpleicons.org/anthropic/FF6B35" width="20" height="20" alt="Claude"> Anthropic Claude • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" width="20" height="20" alt="pgvector"> pgvector RAG
-
-### 🚀 Infrastructure & Deployment
-
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg" width="20" height="20" alt="Vercel"> Vercel • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" width="20" height="20" alt="AWS"> AWS EC2 • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" width="20" height="20" alt="Git"> Git • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="20" height="20" alt="GitHub"> GitHub
-
-### 🌐 External APIs
-
-<img src="https://cdn.simpleicons.org/kakao/FFCD00" width="20" height="20" alt="Kakao"> Kakao Map API • <img src="https://cdn.simpleicons.org/youtube/FF0000" width="20" height="20" alt="YouTube"> YouTube Data API
+- **보호자**: 반려동물 양육에 대한 불안감 감소 및 자신감 획득. 객관적 데이터를 통한 수의사와의 원활한 소통.
+- **반려동물**: 이상 징후 조기 발견을 통한 질병 예방 및 건강한 삶의 질 향상.
+- **커뮤니티**: 지역 기반 반려인 네트워크 형성으로 고립감 해소 및 정보 교류 활성화.
+- **산업**: 축적된 비식별 건강 데이터를 통한 펫 보험, 펫 푸드, 펫 테크 등 연관 산업 발전 기여.
 
 ---
 
-## 🏗️ 시스템 아키텍처
+## 4. 기술 스택 (Tech Stack)
 
-> 상세한 아키텍처는 **[04*시스템*아키텍처.md](./docs/04_시스템_아키텍처.md)**에서 확인할 수 있습니다.
+### 4.1. Frontend
 
-```mermaid
-graph TB
-    User[👤 사용자<br/>Desktop / Mobile] --> Frontend[🌐 Frontend Layer]
-    Frontend --> Next[Next.js 14 App Router]
-    Frontend --> Hooks[Hook Composition]
-    Frontend --> CSS[CSS Modules + BEM]
+- **Framework**: Next.js 14 (App Router)
+- **Language**: TypeScript, JavaScript
+- **Styling**: CSS Modules + Tailwind CSS
+- **State Management**: React Hooks (Hook Composition 패턴)
+- **Architecture**: Co-location + Hook Composition
 
-    Next --> ClientComp[Client Components]
-    Next --> ServerComp[Server Components]
-    Next --> APIRoute[API Routes]
+### 4.2. Backend
 
-    Frontend --> Supabase[☁️ Supabase BaaS]
-    Frontend --> FastAPI[🐍 FastAPI AI Server]
-    Frontend --> KakaoAPI[🗺️ Kakao Map API]
-    Frontend --> LLM[🤖 LLM APIs]
+- **BaaS**: Supabase (PostgreSQL + Auth + Storage + Realtime)
+- **AI Server**: FastAPI (Python 3.10)
+- **Database**: PostgreSQL (pgvector Extension)
+- **Security**: Row Level Security (RLS)
 
-    Supabase --> PostgreSQL[(🐘 PostgreSQL<br/>+ pgvector)]
-    Supabase --> Auth[🔐 Supabase Auth<br/>JWT Tokens]
-    Supabase --> Storage[📦 Supabase Storage<br/>S3 Compatible]
-    Supabase --> Realtime[⚡ Supabase Realtime<br/>WebSocket]
+### 4.3. AI/ML
 
-    FastAPI --> YOLO[🤖 YOLO Models]
-    YOLO --> SkinModel[Skin Model<br/>피부 질환 6종]
-    YOLO --> EyesModel[Eyes Model<br/>안구 질환 30종]
-    YOLO --> HealthModel[Health Model<br/>전신 건강 3종]
+- **Object Detection**: YOLOv8 (3종 모델)
+- **GPU**: NVIDIA GeForce RTX 4060 (8GB)
+- **Embedding**: HuggingFace sentence-transformers
+- **RAG**: pgvector + LangChain
 
-    PostgreSQL --> RAG[🧠 RAG System<br/>pgvector]
-    RAG --> HuggingFace[🤗 HuggingFace<br/>Embedding API]
+### 4.4. External APIs
 
-    LLM --> GPT[OpenAI GPT-4]
-    LLM --> Gemini[Google Gemini]
-    LLM --> Claude[Anthropic Claude]
-
-    style User fill:#E3F2FD
-    style Frontend fill:#F3E5F5
-    style Supabase fill:#E0F2F1
-    style FastAPI fill:#FCE4EC
-    style PostgreSQL fill:#FFF3E0
-    style RAG fill:#E8EAF6
-```
-
-### 🎯 핵심 아키텍처 특징
-
-| 영역         | 기술             | 설명                           |
-| :----------- | :--------------- | :----------------------------- |
-| **Frontend** | Hook Composition | 60% 코드 감소, 재사용성 극대화 |
-| **Frontend** | Co-location      | 컴포넌트/Hook/스타일 통합 관리 |
-| **Frontend** | 4단계 반응형     | 400px ~ 1280px+ 대응           |
-| **Backend**  | Supabase BaaS    | 80% 백엔드 개발 시간 단축      |
-| **Backend**  | 47개 RLS 정책    | Row Level Security 적용        |
-| **AI**       | 3종 YOLO 모델    | Skin/Health/Eyes 통합 진단     |
-| **AI**       | RAG + Multi-LLM  | pgvector + GPT-4/Gemini/Claude |
+- **Map**: Kakao Map API
+- **LLM**: OpenAI GPT-4, Google Gemini, Anthropic Claude
 
 ---
 
-## 🔄 시스템 흐름도
+## 5. 향후 계획
 
-> 상세한 흐름도는 **[03*시스템*흐름도.md](./docs/03_시스템_흐름도.md)**에서 확인할 수 있습니다.
+### Phase 1 (현재 - 2025.11월)
 
-### 🩺 AI 건강진단 플로우
+- ✅ 라이프스타일 채팅 시스템 구현
+- ✅ 통합 해시태그 시스템 확장
+- 🚧 최종 발표 준비
 
-```mermaid
-sequenceDiagram
-    actor User
-    participant Frontend
-    participant Supabase
-    participant AI_Server
-    participant YOLO
-    participant RAG
-    participant LLM
+### Phase 2 (2025.12월 - 2026.01월)
 
-    User->>Frontend: 사진 업로드
-    Frontend->>Supabase: 이미지 저장
-    Supabase-->>Frontend: 이미지 URL
-    Frontend->>AI_Server: 분석 요청
-    AI_Server->>YOLO: 이미지 분석
-    YOLO-->>AI_Server: 검출 결과
-    AI_Server->>RAG: 지식 베이스 검색
-    RAG->>Supabase: pgvector 유사도 검색
-    Supabase-->>RAG: 관련 문서
-    RAG-->>AI_Server: 컨텍스트
-    AI_Server->>LLM: 최종 응답 생성
-    LLM-->>AI_Server: 대처 방안
-    AI_Server-->>Frontend: JSON 응답
-    Frontend-->>User: 결과 시각화
-```
+- 📱 PWA 모바일 최적화
+- 🤖 AI 서버 클라우드 배포 (AWS/Railway)
+- 📊 성능 모니터링 시스템 구축
+
+### Phase 3 (미래)
+
+- 📱 YOLO, RAG AI기능 최적화 후 모바일 버전
+- 🏥 동물병원 제휴
+- 🏨 펜션/호텔 할인
+- 🤖 IoT 기기 연동 (스마트 급식기)
 
 ---
 
-## 💬 실제 사용 화면
-
-> **📸 [screenshots/](./screenshots/)** 폴더에서 더 많은 실제 사용 화면을 확인할 수 있습니다.
-
-### 🤖 LLM-RAG 프롬프팅 - 일반 채팅
-
-반려동물 케어에 대한 일상적인 질문에 RAG 시스템이 검증된 지식 기반으로 답변합니다.
-
-<div align="center">
-
-|                               RAG 채팅 예시 1                                |             RAG 채팅 예시 2 (해시태그 활용)              |
-| :--------------------------------------------------------------------------: | :------------------------------------------------------: |
-|            ![AI일반채팅1](./screenshots/rag_chat/AI일반채팅1.png)            |  ![AI일반채팅2](./screenshots/rag_chat/AI일반채팅2.png)  |
-|                               RAG 채팅 예시 3                                |                     RAG 채팅 예시 4                      |
-|            ![AI일반채팅3](./screenshots/rag_chat/AI일반채팅3.png)            |  ![AI일반채팅4](./screenshots/rag_chat/AI일반채팅4.png)  |
-|                         RAG 채팅 예시 5 (혼합 채팅)                          |  해시태그 클릭시 퀵가이드<br/>(예: \#산책, \#간식추천)   |
-| ![AI일반해시태그혼합채팅](./screenshots/rag_chat/AI일반해시태그혼합채팅.png) | ![해시태그클릭](./screenshots/rag_chat/해시태그클릭.png) |
-
-</div>
-
-### 🩺 YOLO + RAG 통합 진단
-
-> **📸 [screenshots/yolo_diagnosis/](./screenshots/yolo_diagnosis/)** 폴더에서 더 많은 진단 화면을 확인할 수 있습니다.
-
-이미지 분석과 RAG 시스템을 결합하여 전문적인 건강 진단과 대처 방안을 제공합니다.
-
-<div align="center">
-
-|                        AI 이미지 분석                         |                         진단 결과                         |                          병원 방문 판단                           |
-| :-----------------------------------------------------------: | :-------------------------------------------------------: | :---------------------------------------------------------------: |
-| ![이미지분석](./screenshots/yolo_diagnosis/01_이미지분석.png) | ![진단결과](./screenshots/yolo_diagnosis/02_진단결과.png) | ![병원방문판단](./screenshots/yolo_diagnosis/03_병원방문판단.png) |
-
-</div>
-
-> **💡 핵심 기능:**
->
-> - ✅ **RAG System**: pgvector 기반 유사도 검색으로 정확한 답변 제공
-> - ✅ **Multi-LLM**: GPT-4/Gemini/Claude 중 최적의 모델 선택
-> - ✅ **YOLO Integration**: 3종 모델(Skin/Health/Eyes) 통합 분석
-> - ✅ **Real-time Response**: 평균 2-3초 내 응답 생성
-
----
-
-## 🗄️ 데이터베이스 설계
-
-> 상세한 ERD는 **[05_ERD.md](./docs/05_ERD.md)**에서 확인할 수 있습니다.
-
-### 📊 테이블 구조 요약
-
-| 영역             | 테이블 수 | 주요 테이블                                       |
-| :--------------- | :-------: | :------------------------------------------------ |
-| **사용자/인증**  |    3개    | profiles, profileCompletion, userSettings         |
-| **반려동물**     |    4개    | palProfiles, palHealthRecords, vaccinations       |
-| **커뮤니티**     |    9개    | communityPosts, postComments, postLikes, events   |
-| **라이프스타일** |    3개    | lifestylePosts, lifestyleRooms, lifestyleMessages |
-| **플래너**       |    6개    | plannerEvents, plannerExpenses, eventReminders    |
-| **병원/시설**    |    3개    | petHospitals, hospitalReviews, hospitalBookmarks  |
-| **해시태그**     |    4개    | hashTags, communityHashTags, lifestyleHashTags    |
-| **AI/지식**      |    3개    | pet_knowledge_base(RAG), aiAnalysisHistory        |
-| **파일/시스템**  |    3개    | fileMetadata, notifications, systemLogs           |
-
-**총 40개+ 테이블**로 체계적으로 설계되었습니다.
-
----
-
-## 📊 프로젝트 성과
-
-### 🎯 주요 지표
-
-| 지표                  |  목표 |           달성 | 달성률  |
-| :-------------------- | ----: | -------------: | :-----: |
-| **AI 모델 정확도**    |   80% | 88.2% (Health) | ✅ 110% |
-| **데이터 수집**       |  500K |           668K | ✅ 134% |
-| **백엔드 테이블**     |  30개 |          40개+ | ✅ 133% |
-| **RLS 정책**          |  30개 |           47개 | ✅ 157% |
-| **프론트엔드 페이지** |  15개 |          20개+ | ✅ 133% |
-| **반응형 지원**       | 3단계 |          4단계 | ✅ 133% |
-
-### 🏆 기술적 성과
-
-- ✅ **Hook Composition 패턴**: 60% 코드 감소
-- ✅ **Co-location 아키텍처**: 유지보수성 200% 향상
-- ✅ **RAG 시스템 구축**: pgvector + Multi-LLM 통합
-- ✅ **실시간 채팅**: Supabase Realtime 활용
-- ✅ **4단계 반응형**: 400px ~ 1280px+ 대응
-- ✅ **통합 해시태그**: 4개 영역 통합 시스템
-
----
-
-## 🚀 시작하기
-
-### 📋 사전 요구사항
-
-- Node.js 18.x 이상
-- Python 3.10 이상
-- Supabase 계정
-- OpenAI/Gemini/Claude API 키
-
-### 🔧 설치 및 실행
-
-```bash
-# 저장소 클론
-git clone https://github.com/LYSS-LGU/Fetpal.git
-cd Fetpal
-
-# 프론트엔드 설정
-npm install
-cp .env.example .env.local
-# .env.local 파일에 Supabase 키 입력
-
-# 개발 서버 실행
-npm run dev
-
-# AI 서버 설정 (별도 터미널)
-cd ai-server
-pip install -r requirements.txt
-# .env 파일에 API 키 입력
-
-# AI 서버 실행
-uvicorn main:app --reload
-```
-
-### 🌐 배포
-
-- **Frontend**: Vercel (자동 배포)
-- **AI Server**: AWS EC2 (수동 배포)
-- **Database**: Supabase (클라우드)
-
----
-
-## 🙏 감사의 말 (Acknowledgments)
-
-이 프로젝트는 **LG U+ Why not camp 7기** 3차 프로젝트의 일환으로 진행되었습니다.
-
-프로젝트 진행 과정에서 아낌없는 조언과 지원을 해주신 다음 분들께 깊은 감사를 드립니다:
-
-- **김영리 강사님** (LG U+ Why not camp 7기)
-- **아이그로스 관계자 여러분**
-
-### 🤖 AI 개발 파트너
-
-이 프로젝트는 초보 개발자가 혼자서도 포기하지 않고 완성할 수 있었던 이유는 **Claude AI**와의 페어 프로그래밍 덕분입니다.
-
-**Claude에게 배우고 도움을 받은 것들:**
-
-- 🎯 프로젝트 아키텍처 설계 및 기술 스택 선정 조언
-- 💻 코드 작성, 디버깅, 리팩토링 지원
-- 📚 기술 문서 작성 및 코드 주석 개선
-- 🐛 버그 해결 및 성능 최적화 가이드
-- 🎓 실시간 학습 코칭 및 베스트 프랙티스 제안
-
----
-
-<div align="center">
-
-**Made with ❤️ by LYSS with Claude AI**
-
-**© 2025 Fetpal Project. All rights reserved.**
-
-</div>
+**📝 문서 정보**
+- **작성일**: 2025-11-12
+- **작성자**: LYSS with Claude
+- **문서 버전**: v1.2 (4차 스프린트 최신화)
+- **다음 문서**: [02_WBS_최신화.md](./02_WBS_최신화.md)

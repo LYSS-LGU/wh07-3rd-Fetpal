@@ -147,65 +147,49 @@ Fetpal은 이러한 **불안감과 정보 비대칭 문제**를 해결하고자 
 
 ## 🛠️ 기술 스택
 
-<div align="center">
-
 [![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github)](https://github.com/LYSS-LGU)
 [![Vercel](https://img.shields.io/badge/Vercel-Deployed-000000?style=for-the-badge&logo=vercel)](https://fetpal.vercel.app)
 [![Docs](https://img.shields.io/badge/Docs-Available-blue?style=for-the-badge&logo=bookstack)](./docs/)
 
-</div>
-
 ### 💻 Frontend
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Next.js_14-000000?style=for-the-badge&logo=next.js&logoColor=white" />
-  <img src="https://img.shields.io/badge/React_18-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
-  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white" />
-  <img src="https://img.shields.io/badge/CSS_Modules-000000?style=for-the-badge&logo=css3&logoColor=white" />
-</p>
+<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" alt="Next.js" />
+<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" />
+<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="TypeScript" />
+<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3" />
 
 ### 🗄️ Backend
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white" />
-  <img src="https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white" />
-  <img src="https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white" />
-  <img src="https://img.shields.io/badge/Python_3.10-3776AB?style=for-the-badge&logo=python&logoColor=white" />
-</p>
+<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg" alt="Supabase" />
+<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL" />
+<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg" alt="FastAPI" />
+<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" />
 
 ### 🤖 AI/ML
 
-<p align="center">
-  <img src="https://img.shields.io/badge/YOLOv8m-00FFFF?style=for-the-badge&logo=yolo&logoColor=black" />
-  <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white" />
-  <img src="https://img.shields.io/badge/OpenCV-5C3EE8?style=for-the-badge&logo=opencv&logoColor=white" />
-  <img src="https://img.shields.io/badge/🤗_HuggingFace-FFD21E?style=for-the-badge&logoColor=black" />
-</p>
+<img height="50" src="https://cdn.simpleicons.org/yolo/00FFFF" alt="YOLO" />
+<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch" />
+<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg" alt="OpenCV" />
+<img height="50" src="https://cdn.simpleicons.org/huggingface/FFD21E" alt="HuggingFace" />
 
 ### 🧠 LLM & RAG
 
-<p align="center">
-  <img src="https://img.shields.io/badge/GPT--4-412991?style=for-the-badge&logo=openai&logoColor=white" />
-  <img src="https://img.shields.io/badge/Gemini-8E75B2?style=for-the-badge&logo=googlegemini&logoColor=white" />
-  <img src="https://img.shields.io/badge/Claude-FF6B35?style=for-the-badge&logo=anthropic&logoColor=white" />
-  <img src="https://img.shields.io/badge/pgvector-336791?style=for-the-badge&logo=postgresql&logoColor=white" />
-</p>
+<img height="50" src="https://cdn.simpleicons.org/openai/412991" alt="OpenAI" />
+<img height="50" src="https://cdn.simpleicons.org/googlegemini/8E75B2" alt="Gemini" />
+<img height="50" src="https://cdn.simpleicons.org/anthropic/FF6B35" alt="Claude" />
+<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="pgvector" />
 
 ### 🚀 Infrastructure & Deployment
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" />
-  <img src="https://img.shields.io/badge/AWS_EC2-FF9900?style=for-the-badge&logo=amazon-ec2&logoColor=white" />
-  <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white" />
-  <img src="https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white" />
-</p>
+<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg" alt="Vercel" />
+<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="AWS" />
+<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" />
+<img height="50" src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" />
 
 ### 📦 External APIs
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Kakao_Map-FFCD00?style=for-the-badge&logo=kakao&logoColor=black" />
-  <img src="https://img.shields.io/badge/YouTube_Data-FF0000?style=for-the-badge&logo=youtube&logoColor=white" />
-</p>
+<img height="50" src="https://cdn.simpleicons.org/kakao/FFCD00" alt="Kakao" />
+<img height="50" src="https://cdn.simpleicons.org/youtube/FF0000" alt="YouTube" />
 
 ---
 
@@ -304,16 +288,16 @@ sequenceDiagram
 
 ## 💬 실제 사용 화면
 
-### 🤖 RAG 기반 일반 상담
+### 🤖 프롬프팅 - 일반 채팅
 
 반려동물 케어에 대한 일상적인 질문에 RAG 시스템이 검증된 지식 기반으로 답변합니다.
 
 <div align="center">
 
-| 일상 케어 상담 | 건강 관리 조언 |
+| 프롬프팅 - 일반 채팅 1 | 프롬프팅 - 일반 채팅 2 |
 |:---:|:---:|
 | ![일상케어상담](./screenshots/rag_chat/01_일상케어상담.png) | ![건강관리조언](./screenshots/rag_chat/02_건강관리조언.png) |
-| 식습관 및 운동량 상담 | 예방접종 스케줄 안내 |
+| 프롬프팅 - 일반 채팅 5 | 프롬프팅 - 일반 채팅 6 |
 | ![식습관운동상담](./screenshots/rag_chat/03_식습관운동상담.png) | ![예방접종안내](./screenshots/rag_chat/04_예방접종안내.png) |
 
 </div>

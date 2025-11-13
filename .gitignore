@@ -36,12 +36,10 @@ node_modules/
 .env*
 *.log
 
-# 매니저님 제출용 PDF 폴더 (HTML 변환 파일)
-매니저님_제출용_PDF/
+
 
 # PDF 변환 스크립트들 (임시 파일)
-convert_*.py
-html_to_pdf_auto.py
+*.py
 
 # SQL 파일들 (민감 정보 포함 가능)
 *.sql
@@ -62,5 +60,3 @@ _스프린트발표/
 # Draw.io 다이어그램 원본 파일 (보관용, Git 제외)
 _draw.io아키텍쳐흐름도/
 
-# 원본 스크린샷 폴더 (screenshots/로 정리됨, Git 제외)
-_원본_스크린샷/

@@ -80,7 +80,6 @@
 
 - **[ERD 이미지](./docs/05_ERD_최종스프린트대비.png)** - PNG 형식
 - **[ERD PDF](./docs/05_ERD_최종스프린트대비.pdf)** - PDF 형식
-- **[ERD SQL](./docs/05_ERD_dbdiagramio.sql)** - dbdiagram.io 형식
 
 ---
 

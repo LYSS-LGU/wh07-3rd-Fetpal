@@ -2,6 +2,18 @@
 
 > **프로젝트 기간**: 2025.09.19 ~ 2025.11.20 (9주)<br> > **작성자**: LYSS with Claude<br> > **최종 업데이트**: 2025-11-14
 
+## 🔗 프로젝트 링크 & QR 코드
+
+<div align="center">
+
+| **Vercel 배포** | **LG U+ 7기 레포** | **원본 레포** |
+|:---:|:---:|:---:|
+| <img src="./qr_codes/Fetpal_Vercel_QR.png" width="120" height="120" alt="Vercel QR"><br>[Vercel Deployed](https://fetpal.vercel.app) | <img src="./qr_codes/Fetpal_LGU7_QR.png" width="120" height="120" alt="LGU7 QR"><br>[LG U+ 7기 Repository](https://github.com/LYSS-LGU/wh07-3rd-Fetpal) | <img src="./qr_codes/Fetpal_Origin_QR.png" width="120" height="120" alt="Origin QR"><br>[Original Repository](https://github.com/LYSS-LGU/Fetpal) |
+
+**📚 [프로젝트 문서 (Docs)](./docs/)**
+
+</div>
+
 ---
 
 ## 📖 목차 (Table of Contents)
@@ -10,7 +22,6 @@
 - [📚 프로젝트 문서 (Documentation)](#-프로젝트-문서)
 - [💡 프로젝트 소개 (Introduction)](#-프로젝트-소개)
 - [🎯 주요 기능 (Features)](#-주요-기능)
-- [🔗 프로젝트 링크 (Links)](#-프로젝트-링크)
 - [🛠️ 기술 스택 (Tech Stack)](#️-기술-스택)
 - [🏗️ 시스템 아키텍처 (Architecture)](#️-시스템-아키텍처)
 - [🔄 시스템 흐름도 (Flow)](#-시스템-흐름도)
@@ -158,12 +169,6 @@ Fetpal은 이러한 **불안감과 정보 비대칭 문제**를 해결하고자 
 | **🗺️ 지도 연동**     | 주변 시설 검색 (LBS)         | **Kakao Map API**와 연동하여 내 위치 기반으로 24시 동물병원, 약국, 펫샵 등의 위치, 평점, 영업시간 등을 즉시 확인할 수 있습니다.                        |
 | **🐾 커뮤니티**      | 지식 공유 및 소셜 네트워킹   | `#해시태그`(예: \#산책, \#간식추천)를 통해 관련 게시글과 **YouTube 케어 영상**을 한번에 보고, **실시간 채팅**으로 동네 펫 친구들과 교류할 수 있습니다. |
 | **🗓️ 스마트 플래너** | 일정 및 지출 통합 관리       | 예방접종 자동 스케줄링, 병원/미용 예약, 사료 구매까지. 캘린더와 가계부를 통합하여 모든 케어 활동을 체계적으로 관리합니다.                              |
-
----
-
-## 🔗 프로젝트 링크
-
-<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" width="20" height="20" alt="GitHub"> [GitHub Repository](https://github.com/LYSS-LGU) • <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vercel/vercel-original.svg" width="20" height="20" alt="Vercel"> [Vercel Deployed](https://fetpal.vercel.app) • 📚 [Docs](./docs/)
 
 ---
 

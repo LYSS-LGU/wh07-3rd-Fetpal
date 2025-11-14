@@ -6,9 +6,9 @@
 
 <div align="center">
 
-| **Vercel 배포** | **LG U+ 7기 레포** | **원본 레포** |
+| **Vercel 배포** | **LG U+ 7기 레포** | **Fetpal 레포** |
 |:---:|:---:|:---:|
-| <img src="./qr_codes/Fetpal_Vercel_QR.png" width="120" height="120" alt="Vercel QR"><br>[Vercel Deployed](https://fetpal.vercel.app) | <img src="./qr_codes/Fetpal_LGU7_QR.png" width="120" height="120" alt="LGU7 QR"><br>[LG U+ 7기 Repository](https://github.com/LYSS-LGU/wh07-3rd-Fetpal) | <img src="./qr_codes/Fetpal_Origin_QR.png" width="120" height="120" alt="Origin QR"><br>[Original Repository](https://github.com/LYSS-LGU/Fetpal) |
+| <img src="./qr_codes/Fetpal_Vercel_QR.png" width="120" height="120" alt="Vercel QR"><br>[Vercel Deployed](https://fetpal.vercel.app) | <img src="./qr_codes/Fetpal_LGU7_QR.png" width="120" height="120" alt="LGU7 QR"><br>[LG U+ 7기 Repository](https://github.com/LYSS-LGU/wh07-3rd-Fetpal) | <img src="./qr_codes/Fetpal_Origin_QR.png" width="120" height="120" alt="Origin QR"><br>[Fetpal Repository](https://github.com/LYSS-LGU/Fetpal) |
 
 **📚 [프로젝트 문서 (Docs)](./docs/)**
 

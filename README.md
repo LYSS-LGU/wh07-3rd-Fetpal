@@ -1,7 +1,8 @@
-# Fetpal 시스템 아키텍처
+# Fetpal 시스템 아키텍처 v3
 
-> **4차 스프린트 발표** (2025.11.14)  
+> **4차 스프린트 발표** (2025.11.14)
 > **최종 발표**: 2025-11-21
+> **작성자**: LYSS with Claude
 
 ---
 
@@ -13,91 +14,99 @@
 
 ## 🏗️ 1. 전체 시스템 아키텍처
 
-### 1.1. 전체 시스템 구조
+### 1.1. 레이어 기반 시스템 구조
+
+![레이어 기반 시스템 구조](./시스템아키텍쳐_레이어셀프.png)
+
+### 1.2. 데이터 플로우 (Detailed Flow)
+
+#### 1.2.1. 일반 데이터 조회 플로우
 
 ```mermaid
-graph TB
-    User[👤 사용자<br/>Desktop / Mobile] --> Frontend[🌐 Frontend Layer]
-    Frontend --> Next[Next.js 14 App Router]
-    Frontend --> Hooks[Hook Composition]
-    Frontend --> CSS[CSS Modules]
-    
-    Next --> ClientComp[Client Components]
-    Next --> ServerComp[Server Components]
-    Next --> APIRoute[API Routes]
-    
-    Frontend --> Supabase[☁️ Supabase BaaS]
-    Frontend --> FastAPI[🐍 FastAPI AI Server]
-    Frontend --> KakaoAPI[🗺️ Kakao Map API]
-    Frontend --> LLM[🤖 LLM APIs]
-    
-    Supabase --> PostgreSQL[(🐘 PostgreSQL<br/>+ pgvector)]
-    Supabase --> Auth[🔐 Supabase Auth<br/>JWT Tokens]
-    Supabase --> Storage[📦 Supabase Storage<br/>S3 Compatible]
-    Supabase --> Realtime[⚡ Supabase Realtime<br/>WebSocket]
-    
-    FastAPI --> YOLO[🤖 YOLO Models]
-    YOLO --> SkinModel[Skin Model<br/>피부 질환 6종]
-    YOLO --> EyesModel[Eyes Model<br/>안구 질환 30종]
-    YOLO --> HealthModel[Health Model<br/>전신 건강 3종]
-    
-    PostgreSQL --> RAG[🧠 RAG System<br/>pgvector]
-    RAG --> HuggingFace[🤗 HuggingFace<br/>Embedding API]
-    
-    LLM --> GPT[OpenAI GPT-4]
-    LLM --> Gemini[Google Gemini]
-    LLM --> Claude[Anthropic Claude]
-    
-    style User fill:#E3F2FD
-    style Frontend fill:#F3E5F5
-    style Supabase fill:#E0F2F1
-    style FastAPI fill:#FCE4EC
-    style PostgreSQL fill:#FFF3E0
-    style RAG fill:#E8EAF6
+%%{init: {'theme':'base', 'themeVariables': { 'fontSize':'22px', 'fontFamily':'arial'}}}%%
+sequenceDiagram
+    actor User as 👤 사용자
+    participant FE as 🌐 Frontend (Next.js)
+    participant Hook as 🪝 Custom Hook
+    participant Supa as ☁️ Supabase
+    participant DB as 🐘 PostgreSQL
+
+    rect rgb(200, 230, 255)
+        Note over User,DB: 📱 일반 데이터 조회 플로우
+        User->>FE: 1. 페이지 접속
+        FE->>Hook: 2. useAuth(), usePlanner() 호출
+        Hook->>Supa: 3. API 요청 (fetch)
+        Supa->>DB: 4. SQL 쿼리 (RLS 적용)
+        DB-->>Supa: 5. 데이터 반환
+        Supa-->>Hook: 6. JSON 응답
+        Hook-->>FE: 7. 상태 업데이트
+        FE-->>User: 8. UI 렌더링
+    end
 ```
 
-### 1.2. 데이터 흐름 (Data Flow)
+#### 1.2.2. 실시간 채팅 플로우
 
 ```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'fontSize':'22px', 'fontFamily':'arial'}}}%%
 sequenceDiagram
-    participant User as 👤 사용자
-    participant Frontend as 🌐 Frontend
-    participant Hooks as 🪝 Custom Hooks
-    participant Supabase as ☁️ Supabase
+    actor User as 👤 사용자
+    participant FE as 🌐 Frontend (Next.js)
+    participant Hook as 🪝 Custom Hook
+    participant Supa as ☁️ Supabase
     participant DB as 🐘 PostgreSQL
-    participant Realtime as ⚡ Realtime
-    participant FastAPI as 🐍 FastAPI
+    participant RT as ⚡ Realtime
 
-    User->>Frontend: 1. 페이지 접속
-    Frontend->>Hooks: 2. useAuth(), usePlanner() 호출
-    Hooks->>Supabase: 3. API 요청 (fetch)
-    Supabase->>DB: 4. SQL 쿼리 (RLS 적용)
-    DB->>Supabase: 5. 데이터 반환
-    Supabase->>Hooks: 6. JSON 응답
-    Hooks->>Frontend: 7. 상태 업데이트
-    Frontend->>User: 8. UI 렌더링
+    rect rgb(255, 230, 200)
+        Note over User,RT: ⚡ 실시간 업데이트 (Realtime)
+        User->>FE: 1. 데이터 작성 (게시글, 댓글 등)
+        FE->>Hook: 2. useOptimisticUpdate()
+        Hook->>Supa: 3. INSERT/UPDATE
+        Supa->>DB: 4. 트랜잭션 실행
+        DB->>DB: 5. Trigger 발동
+        DB->>RT: 6. Broadcast Event
+        RT-->>FE: 7. 실시간 Push (WebSocket)
+        FE-->>User: 8. UI 즉시 업데이트
+    end
+```
 
-    Note over User,FastAPI: ⚡ 실시간 업데이트 (Realtime)
+#### 1.2.3. YOLO + RAG 진단 플로우
 
-    User->>Frontend: 9. 데이터 작성 (게시글, 댓글 등)
-    Frontend->>Hooks: 10. useOptimisticUpdate()
-    Hooks->>Supabase: 11. INSERT/UPDATE
-    Supabase->>DB: 12. 트랜잭션 실행
-    DB->>DB: 13. Trigger 발동
-    DB->>Realtime: 14. Broadcast Event
-    Realtime->>Frontend: 15. 실시간 Push (WebSocket)
-    Frontend->>User: 16. UI 즉시 업데이트
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'fontSize':'22px', 'fontFamily':'arial'}}}%%
+sequenceDiagram
+    actor User as 👤 사용자
+    participant FE as 🌐 Frontend (Next.js)
+    participant Hook as 🪝 Custom Hook
+    participant AI as 🤖 FastAPI
+    participant YOLO as 🔬 YOLO Model
+    participant RAG as 🧠 RAG System
+    participant DB as 🐘 PostgreSQL
+    participant LLM as 💬 Multi-LLM
 
-    Note over User,FastAPI: 🤖 AI 건강 진단 플로우
+    rect rgb(255, 200, 220)
+        Note over User,AI: 🤖 AI 건강 진단 플로우
+        User->>FE: 1. 이미지 업로드
+        FE->>Hook: 2. useYoloUpload()
+        Hook->>AI: 3. HTTP POST (/api/detect)
+        AI->>AI: 4. 이미지 전처리
+        AI->>YOLO: 5. YOLO 추론
+        YOLO-->>AI: 6. 분석 결과 (JSON)
+        AI-->>Hook: 7. 탐지 결과 반환
+        Hook-->>FE: 8. 결과 시각화
+        FE-->>User: 9. 바운딩 박스 + 신뢰도 표시
+    end
 
-    User->>Frontend: 17. 이미지 업로드
-    Frontend->>Hooks: 18. useYoloUpload()
-    Hooks->>FastAPI: 19. HTTP POST (/api/detect)
-    FastAPI->>FastAPI: 20. 이미지 전처리
-    FastAPI->>FastAPI: 21. YOLO 추론
-    FastAPI->>Hooks: 22. 분석 결과 (JSON)
-    Hooks->>Frontend: 23. 결과 시각화
-    Frontend->>User: 24. 바운딩 박스 + 신뢰도 표시
+    rect rgb(230, 200, 255)
+        Note over User,LLM: 🧠 RAG 기반 AI 조언
+        User->>FE: 10. AI 조언 받기
+        FE->>RAG: 11. 벡터 검색 요청
+        RAG->>DB: 12. pgvector 유사도 검색
+        DB-->>RAG: 13. 관련 지식 반환
+        RAG->>LLM: 14. 컨텍스트 + 프롬프트
+        LLM-->>RAG: 15. 답변 생성
+        RAG-->>FE: 16. AI 조언
+        FE-->>User: 17. 대처 방안 표시
+    end
 ```
 
 ---
@@ -106,46 +115,46 @@ sequenceDiagram
 
 ### 2.1. Frontend Stack
 
-| **Category** | **Technology** | **Version** | **Purpose** |
-|:---|:---|:---:|:---|
-| **Framework** | Next.js | 14.2.x | App Router 기반 풀스택 React 프레임워크 |
-| **Language** | TypeScript | 5.x | 타입 안전성 확보 |
-| **Language** | JavaScript | ES6+ | 동적 로직 및 빠른 프로토타이핑 |
-| **Styling** | CSS Modules | - | Co-location 기반 스타일 관리 |
-| **Styling** | Tailwind CSS | 3.x | 유틸리티 우선 CSS 프레임워크 |
-| **State** | React Hooks | - | Hook Composition 패턴 |
-| **HTTP Client** | fetch API | - | 네이티브 브라우저 API |
+| **Category**    | **Technology** | **Version** | **Purpose**                             |
+| :-------------- | :------------- | :---------: | :-------------------------------------- |
+| **Framework**   | Next.js        |   14.2.x    | App Router 기반 풀스택 React 프레임워크 |
+| **Language**    | TypeScript     |     5.x     | 타입 안전성 확보                        |
+| **Language**    | JavaScript     |    ES6+     | 동적 로직 및 빠른 프로토타이핑          |
+| **Styling**     | CSS Modules    |      -      | Co-location 기반 스타일 관리            |
+| **Styling**     | Tailwind CSS   |     3.x     | 유틸리티 우선 CSS 프레임워크            |
+| **State**       | React Hooks    |      -      | Hook Composition 패턴                   |
+| **HTTP Client** | fetch API      |      -      | 네이티브 브라우저 API                   |
 
 ### 2.2. Backend Stack (BaaS)
 
-| **Category** | **Technology** | **Version** | **Purpose** |
-|:---|:---|:---:|:---|
-| **BaaS** | Supabase | 2.x | PostgreSQL + Auth + Storage + Realtime |
-| **Database** | PostgreSQL | 15.x | 관계형 데이터베이스 |
-| **Auth** | Supabase Auth | - | JWT 기반 인증 시스템 |
-| **Storage** | Supabase Storage | - | 이미지/파일 스토리지 (S3 호환) |
-| **Realtime** | Supabase Realtime | - | WebSocket 기반 실시간 구독 |
-| **Vector DB** | pgvector | 0.5.x | 벡터 검색 (RAG 시스템) |
+| **Category**  | **Technology**    | **Version** | **Purpose**                            |
+| :------------ | :---------------- | :---------: | :------------------------------------- |
+| **BaaS**      | Supabase          |     2.x     | PostgreSQL + Auth + Storage + Realtime |
+| **Database**  | PostgreSQL        |    15.x     | 관계형 데이터베이스                    |
+| **Auth**      | Supabase Auth     |      -      | JWT 기반 인증 시스템                   |
+| **Storage**   | Supabase Storage  |      -      | 이미지/파일 스토리지 (S3 호환)         |
+| **Realtime**  | Supabase Realtime |      -      | WebSocket 기반 실시간 구독             |
+| **Vector DB** | pgvector          |    0.5.x    | 벡터 검색 (RAG 시스템)                 |
 
 ### 2.3. AI Server Stack
 
-| **Category** | **Technology** | **Version** | **Purpose** |
-|:---|:---|:---:|:---|
-| **Framework** | FastAPI | 0.104.x | 고성능 Python API 프레임워크 |
-| **Language** | Python | 3.10.x | AI/ML 개발 언어 |
-| **AI Model** | YOLOv8 | 8.0.x | 객체 탐지 (Ultralytics) |
-| **CV Library** | OpenCV | 4.8.x | 이미지 처리 |
-| **GPU** | CUDA | 12.1 | NVIDIA GPU 가속 (RTX 4060) |
-| **Embedding** | HuggingFace | 4.x | sentence-transformers |
+| **Category**   | **Technology** | **Version** | **Purpose**                  |
+| :------------- | :------------- | :---------: | :--------------------------- |
+| **Framework**  | FastAPI        |   0.104.x   | 고성능 Python API 프레임워크 |
+| **Language**   | Python         |   3.10.x    | AI/ML 개발 언어              |
+| **AI Model**   | YOLOv8         |    8.0.x    | 객체 탐지 (Ultralytics)      |
+| **CV Library** | OpenCV         |    4.8.x    | 이미지 처리                  |
+| **GPU**        | CUDA           |    12.1     | NVIDIA GPU 가속 (RTX 4060)   |
+| **Embedding**  | HuggingFace    |     4.x     | sentence-transformers        |
 
 ### 2.4. External APIs
 
-| **Service** | **Purpose** | **사용 위치** |
-|:---|:---|:---|
-| **Kakao Map API** | 주변 동물병원/약국 검색 | AI Assistant, Hospital |
-| **OpenAI GPT-4** | AI 챗봇 (멀티 LLM 지원) | AI Assistant |
-| **Google Gemini** | AI 챗봇 (멀티 LLM 지원) | AI Assistant |
-| **Anthropic Claude** | AI 챗봇 (멀티 LLM 지원) | AI Assistant |
+| **Service**          | **Purpose**             | **사용 위치**          |
+| :------------------- | :---------------------- | :--------------------- |
+| **Kakao Map API**    | 주변 동물병원/약국 검색 | AI Assistant, Hospital |
+| **OpenAI GPT-4**     | AI 챗봇 (멀티 LLM 지원) | AI Assistant           |
+| **Google Gemini**    | AI 챗봇 (멀티 LLM 지원) | AI Assistant           |
+| **Anthropic Claude** | AI 챗봇 (멀티 LLM 지원) | AI Assistant           |
 
 ---
 
@@ -159,11 +168,11 @@ graph LR
     B --> C[전문 훅 1]
     B --> D[전문 훅 2]
     B --> E[전문 훅 3]
-    
+
     C --> F[API 통신]
     D --> G[상태 관리]
     E --> H[유효성 검사]
-    
+
     style A fill:#E3F2FD
     style B fill:#F3E5F5
     style C fill:#FFF3E0
@@ -175,6 +184,7 @@ graph LR
 ```
 
 **전통적 방식 (❌ 나쁜 예)**:
+
 ```
 📁 Planner/
 ├── page.tsx (700줄)  ❌ 하나의 거대한 컴포넌트
@@ -182,6 +192,7 @@ graph LR
 ```
 
 **Hook Composition 방식 (✅ 좋은 예)**:
+
 ```
 📁 Planner/
 ├── page.tsx (165줄)  ✅ 마스터 컴포넌트 (작고 명확)
@@ -259,14 +270,14 @@ graph LR
 
 ### 3.3. Hook Composition 성과
 
-| **파일명** | **Before** | **After** | **감소율** |
-|:---|---:|---:|---:|
-| **FeedDetailModal** | 528줄 | 231줄 | **56%** |
-| **useCommunityPosts** | 386줄 | 128줄 | **67%** |
-| **EventListSection** | 303줄 | 117줄 | **61%** |
-| **useRealtimeComments** | 310줄 | 238줄 | **23%** |
-| **FeedCard** | 561줄 | 160줄 | **71%** |
-| **usePlanner** | 676줄 | 165줄 | **75%** |
+| **파일명**              | **Before** | **After** | **감소율** |
+| :---------------------- | ---------: | --------: | ---------: |
+| **FeedDetailModal**     |      528줄 |     231줄 |    **56%** |
+| **useCommunityPosts**   |      386줄 |     128줄 |    **67%** |
+| **EventListSection**    |      303줄 |     117줄 |    **61%** |
+| **useRealtimeComments** |      310줄 |     238줄 |    **23%** |
+| **FeedCard**            |      561줄 |     160줄 |    **71%** |
+| **usePlanner**          |      676줄 |     165줄 |    **75%** |
 
 **평균 코드 축소율**: **60%** ✅
 
@@ -284,12 +295,12 @@ graph TB
     Feature --> Hooks[Custom Hooks]
     Feature --> CSS[CSS Modules]
     Feature --> Utils[Utility Functions]
-    
+
     Component --> JSX[index.jsx]
     Hooks --> Hook1[useFeature.js]
     CSS --> Style[feature.module.css]
     Utils --> Util[helper.js]
-    
+
     style Feature fill:#E3F2FD
     style Component fill:#F3E5F5
     style Hooks fill:#FFF3E0
@@ -298,6 +309,7 @@ graph TB
 ```
 
 **전통적 방식 (❌ 나쁜 예)**:
+
 ```
 📁 src/
 ├── components/
@@ -315,6 +327,7 @@ graph TB
 ```
 
 **Co-location 방식 (✅ 좋은 예)**:
+
 ```
 📁 Planner/
 ├── page.tsx
@@ -335,7 +348,7 @@ graph TB
 └── planner.module.css
 ```
 
-### 4.2. 전체 폴더 구조 (2025-11-13 기준)
+### 4.2. 전체 폴더 구조 (2025-11-14 기준)
 
 ```
 📁 frontend/src/app/
@@ -434,6 +447,7 @@ graph TB
 ```
 
 **예시**:
+
 ```
 📁 ChatRoom/
 ├── index.tsx
@@ -473,6 +487,7 @@ graph TB
 ```
 
 **네이밍 규칙**:
+
 - **Block**: `.기능_블록명`
 - **Element**: `.기능_블록명_요소명`
 - **Modifier**: `.기능_블록명_요소명--수정자`
@@ -538,37 +553,37 @@ erDiagram
     PROFILES ||--o{ PAL_PROFILES : "1:N"
     PAL_PROFILES ||--o{ PAL_VACCINATIONS : "1:N"
     PAL_PROFILES ||--o{ PAL_HEALTH_RECORDS : "1:N"
-    
+
     PROFILES ||--o{ COMMUNITY_POSTS : "1:N"
     COMMUNITY_POSTS ||--o{ POST_COMMENTS : "1:N"
     COMMUNITY_POSTS ||--o{ POST_LIKES : "1:N"
-    
+
     PROFILES ||--o{ PLANNER_EVENTS : "1:N"
     PROFILES ||--o{ PLANNER_EXPENSES : "1:N"
-    
+
     PROFILES ||--o{ LIFESTYLE_CHAT_ROOMS : "1:N"
     LIFESTYLE_CHAT_ROOMS ||--o{ LIFESTYLE_CHAT_MESSAGES : "1:N"
-    
+
     GLOBAL_HASHTAGS ||--o{ COMMUNITY_POST_HASHTAGS : "1:N"
     GLOBAL_HASHTAGS ||--o{ PLANNER_EVENT_HASHTAGS : "1:N"
     GLOBAL_HASHTAGS ||--o{ LIFESTYLE_CHAT_MESSAGE_HASHTAGS : "1:N"
-    
+
     COMMUNITY_POSTS ||--o{ PET_KNOWLEDGE_BASE : "1:N"
-    
+
     AUTH_USERS {
         uuid id PK
         string email
         string encrypted_password
         timestamp created_at
     }
-    
+
     PROFILES {
         uuid id PK
         string displayName
         string avatarUrl
         boolean profileComplete
     }
-    
+
     PAL_PROFILES {
         uuid palId PK
         uuid userId FK
@@ -577,7 +592,7 @@ erDiagram
         string palBreed
         boolean isPrimary
     }
-    
+
     PAL_VACCINATIONS {
         uuid id PK
         uuid palId FK
@@ -585,7 +600,7 @@ erDiagram
         date scheduledDate
         boolean isCompleted
     }
-    
+
     COMMUNITY_POSTS {
         uuid id PK
         uuid userId FK
@@ -593,14 +608,14 @@ erDiagram
         text content
         int likesCount
     }
-    
+
     GLOBAL_HASHTAGS {
         serial id PK
         text tagName
         int usageCount
         text primaryCategory
     }
-    
+
     PET_KNOWLEDGE_BASE {
         uuid id PK
         text content
@@ -609,13 +624,13 @@ erDiagram
         numeric quality_score
         boolean is_verified
     }
-    
+
     LIFESTYLE_CHAT_ROOMS {
         uuid roomid PK
         text roomtype
         text hashtagname
     }
-    
+
     LIFESTYLE_CHAT_MESSAGES {
         uuid id PK
         uuid roomid FK
@@ -631,16 +646,16 @@ graph TB
     Posts[communityPosts] --> Comments[postcomments]
     Posts --> Likes[postlikes]
     Posts --> PostHashtags[communityPostHashtags]
-    
+
     GlobalHashtags[globalHashtags] --> PostHashtags
     GlobalHashtags --> EventHashtags[plannerEventHashtags]
     GlobalHashtags --> MessageHashtags[lifestylechatmessagehashtags]
-    
+
     Events[plannerEvents] --> EventHashtags
     Messages[lifestylechatmessages] --> MessageHashtags
-    
+
     Posts --> RAG[pet_knowledge_base]
-    
+
     style Posts fill:#FFB74D
     style GlobalHashtags fill:#66BB6A
     style RAG fill:#BA68C8
@@ -689,17 +704,17 @@ USING (id = auth.uid());  -- ❌ 직접 호출 시 공격 가능
 ```mermaid
 graph TB
     Bucket[📦 profileImage Bucket]
-    
+
     Bucket --> UserProfiles[user-profiles/<br/>userId/]
     Bucket --> PalProfiles[pal-profiles/<br/>palId/]
     Bucket --> ChatImages[lifestyle-chat-images/<br/>roomId/]
     Bucket --> Public[public/<br/>3D Avatars]
-    
+
     UserProfiles --> RLS1[🔒 RLS 적용<br/>본인만 접근]
     PalProfiles --> RLS2[🔒 RLS 적용<br/>본인만 접근]
     ChatImages --> RLS3[🔒 RLS 적용<br/>참여자만 접근]
     Public --> Open[🔓 공개 접근]
-    
+
     style Bucket fill:#E3F2FD
     style RLS1 fill:#FFCDD2
     style RLS2 fill:#FFCDD2
@@ -709,46 +724,76 @@ graph TB
 
 ---
 
-## 🚀 8. 성능 최적화
+## 🚀 8. 배포 아키텍처
 
-### 8.1. 데이터베이스 최적화
+```mermaid
+%%{init: {'theme':'base', 'themeVariables': { 'fontSize':'20px'}}}%%
+graph LR
+    GitHub["<b>GitHub</b><br/>소스 코드 관리"]
+    Vercel["<b>Vercel</b><br/>Frontend 배포<br/>자동 CD"]
+    AWS["<b>AWS EC2</b><br/>AI Server<br/>Ubuntu 22.04"]
+    Supabase["<b>Supabase</b><br/>Database + BaaS<br/>Global CDN"]
+
+    GitHub --> Vercel
+    GitHub --> AWS
+
+    Vercel -->|HTTPS| Supabase
+    Vercel -->|HTTP| AWS
+
+    style GitHub fill:#F3E5F5
+    style Vercel fill:#E3F2FD
+    style AWS fill:#FCE4EC
+    style Supabase fill:#E0F2F1
+```
+
+**배포 정보**:
+
+- **Frontend**: Vercel (자동 배포)
+- **AI Server**: AWS EC2 (수동 배포)
+  > **📌 참고**: AI-hub 공공데이터를 활용하여 학습한 YOLO 모델은 배포를 하지 않고, 로컬 시연 영상으로 대체하였습니다.
+- **Database**: Supabase (클라우드)
+
+---
+
+## 📊 9. 성능 최적화 & 시스템 메트릭스
+
+### 9.1. 데이터베이스 최적화
 
 - **인덱스 적용**: userId, palId, roomid 등 FK에 인덱스
 - **트리거 최적화**: 필요한 경우에만 실행
 - **RLS 성능**: 서브쿼리 방식으로 보안 + 성능 확보
 
-### 8.2. 프론트엔드 최적화
+### 9.2. 프론트엔드 최적화
 
 - **Hook Composition**: 평균 60% 코드 축소
 - **Co-location**: 기능별 독립성 확보
 - **CSS Modules**: 런타임 최적화
 
-### 8.3. AI 서버 최적화
+### 9.3. AI 서버 최적화
 
 - **GPU 가속**: NVIDIA RTX 4060 활용
 - **멀티모델 관리**: 동시 처리 지원
 - **평균 응답 시간**: 3~5초
 
----
+### 9.4. 시스템 메트릭스
 
-## 📊 9. 시스템 메트릭스
-
-| **항목** | **수치** | **비고** |
-|:---|---:|:---|
-| **평균 응답 시간** | 3-5초 | YOLO 분석 포함 |
-| **실시간 지연** | 100ms 이하 | Supabase Realtime |
-| **데이터베이스 RLS 정책** | 47개 | 보안 강화 |
-| **Hook Composition 성과** | 60% 축소 | 코드 감소율 |
-| **지원 브레이크포인트** | 4단계 | 400px ~ 1280px+ |
-| **AI 모델 훈련 데이터** | 668,547개 | 이미지 |
-| **RAG 지식 베이스** | 384차원 | HuggingFace 임베딩 |
+| **항목**                  |   **수치** | **비고**           |
+| :------------------------ | ---------: | :----------------- |
+| **평균 응답 시간**        |      3-5초 | YOLO 분석 포함     |
+| **실시간 지연**           | 100ms 이하 | Supabase Realtime  |
+| **데이터베이스 RLS 정책** |       47개 | 보안 강화          |
+| **Hook Composition 성과** |   60% 축소 | 코드 감소율        |
+| **지원 브레이크포인트**   |      4단계 | 400px ~ 1280px+    |
+| **AI 모델 훈련 데이터**   |  668,547개 | 이미지             |
+| **RAG 지식 베이스**       |    384차원 | HuggingFace 임베딩 |
+| **총 테이블 수**          |      40개+ | PostgreSQL         |
 
 ---
 
 **📝 문서 정보**
-- **작성일**: 2025-11-13
-- **작성자**: LYSS with Claude
-- **버전**: v4.0 (4차 스프린트)
-- **이전 문서**: [03_시스템_흐름도.md](./03_시스템_흐름도.md)
-- **다음 문서**: [05_ERD.md](./05_ERD.md)
 
+- **작성일**: 2025-11-14
+- **작성자**: LYSS with Claude
+- **버전**: v3.0 (최종 발표용 통합 버전)
+- **이전 문서**: [03*시스템*흐름도.md](./03_시스템_흐름도.md)
+- **다음 문서**: [05_ERD.md](./05_ERD.md)

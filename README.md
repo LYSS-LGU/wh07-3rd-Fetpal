@@ -12,6 +12,8 @@
 
 **📚 [프로젝트 문서 (Docs)](./docs/)**
 
+> **📌 참고**: AI-hub 공공데이터를 활용하여 학습한 YOLO 모델은 배포를 하지 않고, 로컬 시연 영상으로 대체하였습니다.
+
 </div>
 
 ---
@@ -382,6 +384,7 @@ uvicorn main:app --reload
 
 - **Frontend**: Vercel (자동 배포)
 - **AI Server**: AWS EC2 (수동 배포)
+- **YOLO Model**: Railway (YOLO 배포)
   > **📌 참고**: AI-hub 공공데이터를 활용하여 학습한 YOLO 모델은 배포를 하지 않고, 로컬 시연 영상으로 대체하였습니다.
 - **Database**: Supabase (클라우드)
 

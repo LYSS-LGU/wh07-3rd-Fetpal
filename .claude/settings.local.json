@@ -27,7 +27,12 @@
       "Bash(fc:*)",
       "Bash(git restore:*)",
       "Bash(git ls-tree:*)",
-      "Bash(git check-ignore:*)"
+      "Bash(git check-ignore:*)",
+      "Bash(git pull:*)",
+      "Bash(rm:*)",
+      "Bash(git checkout:*)",
+      "Bash(git branch:*)",
+      "Bash(git merge:*)"
     ],
     "deny": [],
     "ask": []

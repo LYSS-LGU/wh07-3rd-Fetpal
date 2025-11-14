@@ -52,6 +52,8 @@
 
 ### 📋 핵심 문서
 
+> 💡 각 문서는 독립된 Branch에서 상세하게 확인하실 수 있습니다.
+
 | 번호 | 문서명                                                                                                                                                                                              | 설명                           |
 | :--: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------- |
 |  01  | **[프로젝트 기획서](./docs/01_프로젝트_기획서.md)** • [PDF](./docs/PDF_preview/01_프로젝트_기획서.pdf) • [Branch](https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/01_프로젝트기획서)                   | 프로젝트 개요, 목표, 일정      |
@@ -64,6 +66,17 @@
 |  08  | **[RAG-LLM 시스템 정의서](./docs/08_RAG-LLM_시스템_정의서.md)** • [PDF](./docs/PDF_preview/08_RAG-LLM_시스템_정의서.pdf) • [Branch](https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/08_RAG-LLM시스템정의서) | RAG 시스템 및 LLM 통합 구조    |
 |  09  | **[성능 평가 결과서](./docs/09_성능_평가_결과서.md)** • [PDF](./docs/PDF_preview/09_성능_평가_결과서.pdf) • [Branch](https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/09_서비스성능평가결과서)                | AI 모델 및 시스템 성능 분석    |
 |  10  | **[Supabase BaaS 가이드](./docs/10_Supabase_BaaS_가이드.md)** • [PDF](./docs/PDF_preview/10_Supabase_BaaS_가이드.pdf) • [Branch](https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/10_(부록)Supabase-BaaS가이드)    | BaaS 아키텍처 및 MCP 설명      |
+
+<details>
+<summary>📖 Branch 가이드 보기</summary>
+
+<br>
+
+<div align="center">
+  <img src="./branch_guide.png" alt="Branch Guide" width="600">
+</div>
+
+</details>
 
 ### 📊 데이터
 

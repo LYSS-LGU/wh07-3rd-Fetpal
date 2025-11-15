@@ -6,9 +6,20 @@
 
 <div align="center">
 
-| **Vercel 배포** | **LG U+ 7기 레포** | **Fetpal 레포** |
-|:---:|:---:|:---:|
-| <img src="./qr_codes/Fetpal_Vercel_QR.png" width="120" height="120" alt="Vercel QR"><br>[Vercel Deployed](https://fetpal.vercel.app) | <img src="./qr_codes/Fetpal_LGU7_QR.png" width="120" height="120" alt="LGU7 QR"><br>[LG U+ 7기 Repository](https://github.com/LYSS-LGU/wh07-3rd-Fetpal) | <img src="./qr_codes/Fetpal_Origin_QR.png" width="120" height="120" alt="Origin QR"><br>[Fetpal Repository](https://github.com/LYSS-LGU/Fetpal) |
+<table>
+<tr>
+<th>Vercel 배포</th>
+<th>LG U+ 7기 레포</th>
+<th>Fetpal 레포</th>
+</tr>
+<tr>
+<td align="center"><img src="./qr_codes/Fetpal_Vercel_QR.png" width="120" height="120" alt="Vercel QR"><br><a href="https://fetpal.vercel.app">Vercel Deployed</a></td>
+<td align="center"><img src="./qr_codes/Fetpal_LGU7_QR.png" width="120" height="120" alt="LGU7 QR"><br><a href="https://github.com/LYSS-LGU/wh07-3rd-Fetpal">LG U+ 7기 Repository</a></td>
+<td align="center"><img src="./qr_codes/Fetpal_Origin_QR.png" width="120" height="120" alt="Origin QR"><br><a href="https://github.com/LYSS-LGU/Fetpal">Fetpal Repository</a></td>
+</tr>
+</table>
+
+<br>
 
 **📚 [프로젝트 문서 (Docs)](./docs/)**
 
@@ -38,9 +49,24 @@
 
 <div align="center">
 
-|                            **프로필**                            | **정보**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| :--------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <img src="./p3_profile.png" width="150" height="150" alt="LYSS"> | **이름**: 이유석 (LYSS)<br>**역할**: 1인 초보 개발자 with Claude AI<br>**_"처음부터 하나씩 배워가며 만드는 첫 작품 입니다.<br>혼자여도 할 수 있다는 포기하지 않는 마음!"_**<br><br>**Contact:**<br>[<img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1566899596/noticon/slhw4nu8hybreryigopq.png" width="25" height="25" alt="GitHub">](https://github.com/LYSS-LGU) [<img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1606895317/noticon/cffnbxeed08p0l4u44ru.png" width="25" height="25" alt="Gmail">](mailto:leeyss1991@gmail.com) [<img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1644169460/noticon/frvhykszxhjz4asz77oi.png" width="25" height="25" alt="Naver">](mailto:lyss91@naver.com) |
+<table>
+<tr>
+<th>프로필</th>
+<th>정보</th>
+</tr>
+<tr>
+<td align="center"><img src="./p3_profile.png" width="150" height="150" alt="LYSS"></td>
+<td align="center">
+<strong>이름</strong>: 이유석 (LYSS)<br>
+<strong>역할</strong>: 1인 초보 개발자 with Claude AI<br>
+<strong><em>"처음부터 하나씩 배워가며 만드는 첫 작품 입니다.<br>혼자여도 할 수 있다는 포기하지 않는 마음!"</em></strong><br><br>
+<strong>Contact:</strong><br>
+<a href="https://github.com/LYSS-LGU"><img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1566899596/noticon/slhw4nu8hybreryigopq.png" width="25" height="25" alt="GitHub"></a>
+<a href="mailto:leeyss1991@gmail.com"><img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1606895317/noticon/cffnbxeed08p0l4u44ru.png" width="25" height="25" alt="Gmail"></a>
+<a href="mailto:lyss91@naver.com"><img src="https://noticon-static.tammolo.com/dgggcrkxq/image/upload/v1644169460/noticon/frvhykszxhjz4asz77oi.png" width="25" height="25" alt="Naver"></a>
+</td>
+</tr>
+</table>
 
 </div>
 

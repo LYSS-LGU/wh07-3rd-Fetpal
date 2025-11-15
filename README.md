@@ -75,13 +75,42 @@
 > **💡 개발 파트너**: 이 프로젝트는 초보 개발자가 **Claude AI**와 함께 협업하여 완성했습니다.
 > Claude는 코드 작성, 디버깅, 아키텍처 설계, 문서화 등 전 과정에서 **페어 프로그래밍(바이브코딩)** 파트너로 참여했습니다.
 
-|   **영역**   |         **기술 스택**         | **세부 내용**                            |
-| :----------: | :---------------------------: | :--------------------------------------- |
-|   **기획**   |      프로젝트 매니지먼트      | 요구사항 분석, WBS 작성, 시스템 설계     |
-| **Frontend** |  Next.js, React, TypeScript   | 사용자 인터페이스, 반응형 웹, 상태 관리  |
-| **Backend**  | Supabase, FastAPI, PostgreSQL | 데이터베이스 설계, API 개발, 인증 시스템 |
-|  **AI/ML**   |    YOLOv8, OpenCV, PyTorch    | 이미지 분석, 객체 탐지, 모델 학습        |
-|   **기타**   |        UI/UX, 아키텍처        | 디자인 시스템, 시스템 아키텍처 설계      |
+<div align="center">
+
+<table>
+<tr>
+<th>영역</th>
+<th>기술 스택</th>
+<th>세부 내용</th>
+</tr>
+<tr>
+<td align="center"><strong>기획</strong></td>
+<td align="center">프로젝트 매니지먼트</td>
+<td>요구사항 분석, WBS 작성, 시스템 설계</td>
+</tr>
+<tr>
+<td align="center"><strong>Frontend</strong></td>
+<td align="center">Next.js, React, TypeScript</td>
+<td>사용자 인터페이스, 반응형 웹, 상태 관리</td>
+</tr>
+<tr>
+<td align="center"><strong>Backend</strong></td>
+<td align="center">Supabase, FastAPI, PostgreSQL</td>
+<td>데이터베이스 설계, API 개발, 인증 시스템</td>
+</tr>
+<tr>
+<td align="center"><strong>AI/ML</strong></td>
+<td align="center">YOLOv8, OpenCV, PyTorch</td>
+<td>이미지 분석, 객체 탐지, 모델 학습</td>
+</tr>
+<tr>
+<td align="center"><strong>기타</strong></td>
+<td align="center">UI/UX, 아키텍처</td>
+<td>디자인 시스템, 시스템 아키텍처 설계</td>
+</tr>
+</table>
+
+</div>
 
 ---
 

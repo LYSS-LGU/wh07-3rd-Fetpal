@@ -48,6 +48,7 @@ node_modules/
 /*.png
 /*.jpg
 /*.jpeg
+!AI건강진단흐름도.png
 !README_images/
 
 # 중복/임시 Claude 파일들
@@ -59,4 +60,7 @@ _스프린트발표/
 
 # Draw.io 다이어그램 원본 파일 (보관용, Git 제외)
 _draw.io아키텍쳐흐름도/
+
+# Claude Code 개인 설정 파일 (로컬 환경 설정)
+.claude/settings.local.json
 

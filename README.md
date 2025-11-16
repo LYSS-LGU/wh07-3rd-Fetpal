@@ -122,18 +122,18 @@
 
 > 💡 각 문서는 독립된 Branch에서 상세하게 확인하실 수 있습니다.
 
-| 번호 | 문서명                                                                                                                                                                                              | 설명                           |
-| :--: | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------- |
-|  01  | **[프로젝트 기획서](./docs/01_프로젝트_기획서.md)** • [PDF](./docs/PDF_preview/01_프로젝트_기획서.pdf) • [Branch](https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/01_프로젝트기획서)                   | 프로젝트 개요, 목표, 일정      |
-|  02  | **[WBS 최신화](./docs/02_WBS_최신화.md)** • [PDF](./docs/PDF_preview/02_WBS_최신화.pdf) • [Branch](https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/02_WBS)                                          | 작업 분해 구조 및 진행 현황    |
-|  03  | **[시스템 흐름도](./docs/03_시스템_흐름도.md)** • [PDF](./docs/PDF_preview/03_시스템_흐름도.pdf) • [Branch](https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/03_시스템흐름도)                         | 사용자 시나리오 및 데이터 흐름 |
-|  04  | **[시스템 아키텍처](./docs/04_시스템_아키텍처.md)** • [PDF](./docs/PDF_preview/04_시스템_아키텍처.pdf) • [Branch](https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/04_시스템아키텍처)                   | 기술 스택 및 시스템 구조       |
-|  05  | **[ERD](./docs/05_ERD.md)** • [PDF](./docs/PDF_preview/05_ERD_최종스프린트대비.pdf) • [Branch](https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/05_ERD)                                              | 데이터베이스 설계 및 관계도    |
-|  06  | **[요구사항 정의서](./docs/06_요구사항_정의서.md)** • [PDF](./docs/PDF_preview/06_요구사항_정의서.pdf) • [Branch](https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/06_요구사항정의서)                   | 기능적/비기능적 요구사항       |
-|  07  | **[YOLO 모델 정의서](./docs/07_YOLO_모델_정의서.md)** • [PDF](./docs/PDF_preview/07_YOLO_모델_정의서.pdf) • [Branch](https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/07_YOLO모델정의서)                | YOLO 모델 상세 및 성능 지표    |
-|  08  | **[RAG-LLM 시스템 정의서](./docs/08_RAG-LLM_시스템_정의서.md)** • [PDF](./docs/PDF_preview/08_RAG-LLM_시스템_정의서.pdf) • [Branch](https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/08_RAG-LLM시스템정의서) | RAG 시스템 및 LLM 통합 구조    |
-|  09  | **[성능 평가 결과서](./docs/09_성능_평가_결과서.md)** • [PDF](./docs/PDF_preview/09_성능_평가_결과서.pdf) • [Branch](https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/09_서비스성능평가결과서)                | AI 모델 및 시스템 성능 분석    |
-|  10  | **[Supabase BaaS 가이드](./docs/10_Supabase_BaaS_가이드.md)** • [PDF](./docs/PDF_preview/10_Supabase_BaaS_가이드.pdf) • [Branch](https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/10_(부록)Supabase-BaaS가이드)    | BaaS 아키텍처 및 MCP 설명      |
+| 번호 | 문서명                                                                                                                                                                                                            | 설명                           |
+| :--: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------- |
+|  01  | **[프로젝트 기획서](./docs/01_프로젝트_기획서.md)** • [PDF](./docs/PDF_preview/01_프로젝트_기획서.pdf) • [Branch](https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/01_프로젝트기획서)                             | 프로젝트 개요, 목표, 일정      |
+|  02  | **[WBS 최신화](./docs/02_WBS_최신화.md)** • [PDF](./docs/PDF_preview/02_WBS_최신화.pdf) • [Branch](https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/02_WBS)                                                       | 작업 분해 구조 및 진행 현황    |
+|  03  | **[시스템 흐름도](./docs/03_시스템_흐름도.md)** • [PDF](./docs/PDF_preview/03_시스템_흐름도.pdf) • [Branch](https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/03_시스템흐름도)                                     | 사용자 시나리오 및 데이터 흐름 |
+|  04  | **[시스템 아키텍처](./docs/04_시스템_아키텍처.md)** • [PDF](./docs/PDF_preview/04_시스템_아키텍처.pdf) • [Branch](https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/04_시스템아키텍처)                             | 기술 스택 및 시스템 구조       |
+|  05  | **[ERD](./docs/05_ERD.md)** • [PDF](./docs/PDF_preview/05_ERD_최종스프린트대비.pdf) • [Branch](https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/05_ERD)                                                           | 데이터베이스 설계 및 관계도    |
+|  06  | **[요구사항 정의서](./docs/06_요구사항_정의서.md)** • [PDF](./docs/PDF_preview/06_요구사항_정의서.pdf) • [Branch](https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/06_요구사항정의서)                             | 기능적/비기능적 요구사항       |
+|  07  | **[YOLO 모델 정의서](./docs/07_YOLO_모델_정의서.md)** • [PDF](./docs/PDF_preview/07_YOLO_모델_정의서.pdf) • [Branch](https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/07_YOLO모델정의서)                          | YOLO 모델 상세 및 성능 지표    |
+|  08  | **[RAG-LLM 시스템 정의서](./docs/08_RAG-LLM_시스템_정의서.md)** • [PDF](./docs/PDF_preview/08_RAG-LLM_시스템_정의서.pdf) • [Branch](https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/08_RAG-LLM시스템정의서)      | RAG 시스템 및 LLM 통합 구조    |
+|  09  | **[성능 평가 결과서](./docs/09_성능_평가_결과서.md)** • [PDF](./docs/PDF_preview/09_성능_평가_결과서.pdf) • [Branch](https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/09_서비스성능평가결과서)                    | AI 모델 및 시스템 성능 분석    |
+|  10  | **[Supabase BaaS 가이드](./docs/10_Supabase_BaaS_가이드.md)** • [PDF](./docs/PDF_preview/10_Supabase_BaaS_가이드.pdf) • [Branch](<https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/10_(부록)Supabase-BaaS가이드>) | BaaS 아키텍처 및 MCP 설명      |
 
 <details>
 <summary>📖 Branch 가이드 보기</summary>
@@ -169,7 +169,9 @@
 
 ---
 
-### 🚨 해결하고자 하는 문제
+### 🚨 이런 상황에서 Fetpal이 필요하다고 느꼈어요
+
+#### 반려동물 1500만 시대, 여전히 겪고 있는 어려움
 
 <div align="center">
 
@@ -183,15 +185,26 @@
 
 > _"타지에서 처음 강아지를 키우는데, 하루에 몇 번 밥을 줘야 하는지, 언제 산책을 시켜야 하는지, 기본적인 훈련은 어떻게 시켜야 하는지 아무것도 모르겠어요."_
 
-**반려동물 1500만 시대, 수많은 보호자들이 위와 같은 고민을 매일 겪고 있습니다.**
+**수많은 보호자들이 위와 같은 고민을 매일 겪고 있습니다.**
 
 </div>
+
+#### 📊 한눈에 보는 현황
+
+- 💰 **의료비 부담**: 반려동물 의료비 평균 연 **150만 원**, 중증 질환 시 **500만 원 이상** (2024 KB경영연구소)
+- 🏥 **의료 접근성 한계**: 24시 동물병원 전국 **200개 미만**, 전체 동물병원의 **3%**에 불과
+- ❓ **정보 부족**: 반려동물 보호자 **72%**가 "건강 이상 징후 판단 어려움" 호소 (2024 반려동물 보고서)
+- 🆕 **초보 보호자 증가**: 전체 보호자 중 **45%**가 1년 미만 경험자 (2024 농림축산식품부)
+- 📚 **일상 케어 어려움**: 초보 보호자 **83%**가 "기본 케어 방법(급식, 산책, 훈련) 정보 부족" 토로
+- ⏰ **골든타임 놓침**: 응급 질환의 **38%**가 초기 대응 지연으로 악화 (대한수의사회)
+
+> 💡 **자세한 배경과 5가지 시나리오**는 **[01*프로젝트*기획서.md](./docs/01_프로젝트_기획서.md)**의 `1.3 문제 인식 및 현황`을 참고해주세요.
 
 ---
 
 ### 🎯 솔루션
 
-Fetpal은 이러한 **불안감과 정보 비대칭 문제**를 해결하고자 합니다:
+Fetpal은 이러한 **불안감과 일상적인 어려움** 속에서, 보호자들이 겪는 고민을 **조금 더 가볍게 덜어주기 위해** 시작된 서비스입니다:
 
 #### **🐾 응급 상황 지원**
 
@@ -310,6 +323,10 @@ sequenceDiagram
     AI_Server-->>Frontend: JSON 응답
     Frontend-->>User: 결과 시각화
 ```
+
+### 🏥 AI 건강 진단 흐름도
+
+![AI 건강 진단 흐름도](./AI건강진단흐름도.png)
 
 ---
 

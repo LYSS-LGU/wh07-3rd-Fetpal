@@ -462,7 +462,15 @@ uvicorn main:app --reload
 
 ---
 
-## 🙏 감사의 말 (Acknowledgments)
+## 🙏 감사의 말 & 회고 (Acknowledgments & Retrospective)
+
+### 📝 프로젝트 회고록
+
+**🎓 [LG U+ why not SW 7기 KDT 11월 2주차 회고록](https://velog.io/@lyss/LG-U-why-not-SW-7기-KDT-11월-2주차-회고록)**
+
+6개월간의 KDT 과정을 마무리하며 작성한 회고록입니다. 4L 프레임워크(Liked, Learned, Lacked, Longed For)를 통해 Fetpal 프로젝트의 전 과정을 돌아보고, 비전공 개발자로서의 성장 과정을 기록했습니다.
+
+### 🏫 교육 과정
 
 이 프로젝트는 **LG U+ Why not camp 7기** 3차 프로젝트의 일환으로 진행되었습니다.
 

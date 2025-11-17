@@ -22,6 +22,7 @@
 <br>
 
 **📚 [프로젝트 문서 (Docs)](./docs/)**
+**📄 [PDF 문서 미리보기 (PDF Preview)](./PDF_preview/)**
 
 > **📌 참고**: AI-hub 공공데이터를 활용하여 학습한 YOLO 모델은 배포를 하지 않고, 로컬 시연 영상으로 대체하였습니다.
 
@@ -468,7 +469,8 @@ uvicorn main:app --reload
 
 **🎓 [LG U+ why not SW 7기 KDT 11월 2주차 회고록](https://velog.io/@lyss/LG-U-why-not-SW-7기-KDT-11월-2주차-회고록)**
 
-6개월간의 KDT 과정을 마무리하며 작성한 회고록입니다. 4L 프레임워크(Liked, Learned, Lacked, Longed For)를 통해 Fetpal 프로젝트의 전 과정을 돌아보고, 비전공 개발자로서의 성장 과정을 기록했습니다.
+6개월간의 KDT 과정을 마무리하며 작성한 회고록입니다.
+4L 프레임워크(Liked, Learned, Lacked, Longed For)를 통해 Fetpal 프로젝트의 전 과정을 돌아보고, 비전공 개발자로서의 성장 과정을 기록했습니다.
 
 ### 🏫 교육 과정
 

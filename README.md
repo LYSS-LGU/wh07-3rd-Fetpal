@@ -11,18 +11,23 @@
 <th>Vercel 배포</th>
 <th>LG U+ 7기 레포</th>
 <th>Fetpal 레포</th>
+<th>시작페이지 시연</th>
+<th>AI 어시스턴트 시연</th>
 </tr>
 <tr>
 <td align="center"><img src="./QR_Codes/Fetpal_Vercel_QR.png" width="120" height="120" alt="Vercel QR"><br><a href="https://fetpal.vercel.app">Vercel Deployed</a></td>
 <td align="center"><img src="./QR_Codes/Fetpal_LGU7_QR.png" width="120" height="120" alt="LGU7 QR"><br><a href="https://github.com/LYSS-LGU/wh07-3rd-Fetpal">LG U+ 7기 Repository</a></td>
 <td align="center"><img src="./QR_Codes/Fetpal_Origin_QR.png" width="120" height="120" alt="Origin QR"><br><a href="https://github.com/LYSS-LGU/Fetpal">Fetpal Repository</a></td>
+<td align="center"><img src="./QR_Codes/Youtube_시작페이지_QR.png" width="120" height="120" alt="시작페이지 QR"><br><a href="https://youtu.be/TvTK6oGFl6Y">YouTube 시연영상</a></td>
+<td align="center"><img src="./QR_Codes/Youtube_AI어시스턴트_QR.png" width="120" height="120" alt="AI어시스턴트 QR"><br><a href="https://youtu.be/X8i-kZJ4lzc">YouTube 시연영상</a></td>
 </tr>
 </table>
 
 <br>
 
-**📚 [프로젝트 문서 (Docs)](./docs/)**
-**📄 [PDF 문서 미리보기 (PDF Preview)](./PDF_preview/)**
+**📚 [프로젝트 문서 (Docs)](./docs/)** |
+**📄 [PDF 문서 미리보기 (PDF Preview)](./PDF_preview/)** |
+**🎬 [Demo 영상 바로가기 (Demo Videos)](./Demo_Video/)**
 
 > **📌 참고**: AI-hub 공공데이터를 활용하여 학습한 YOLO 모델은 배포를 하지 않고, 로컬 시연 영상으로 대체하였습니다.
 

@@ -1,6 +1,6 @@
 # 🐾 Fetpal: AI 기반 반려동물 임시진단 및 케어 지원 서비스
 
-> **프로젝트 기간**: 2025.09.19 ~ 2025.11.20 (9주)<br> > **작성자**: LYSS with Claude<br> > **최종 업데이트**: 2025-11-14
+> **프로젝트 기간**: 2025.09.19 ~ 2025.11.20 (9주)<br> > **작성자**: LYSS with Claude<br> > **최종 업데이트**: 2025-11-18
 
 ## 🔗 프로젝트 링크 & QR 코드
 
@@ -140,6 +140,7 @@
 |  08  | **[RAG-LLM 시스템 정의서](./docs/08_RAG-LLM_시스템_정의서.md)** • [PDF](./docs/PDF_preview/08_RAG-LLM_시스템_정의서.pdf) • [Branch](https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/08_RAG-LLM시스템정의서)      | RAG 시스템 및 LLM 통합 구조    |
 |  09  | **[성능 평가 결과서](./docs/09_성능_평가_결과서.md)** • [PDF](./docs/PDF_preview/09_성능_평가_결과서.pdf) • [Branch](https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/09_서비스성능평가결과서)                    | AI 모델 및 시스템 성능 분석    |
 |  10  | **[Supabase BaaS 가이드](./docs/10_Supabase_BaaS_가이드.md)** • [PDF](./docs/PDF_preview/10_Supabase_BaaS_가이드.pdf) • [Branch](<https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/10_(부록)Supabase-BaaS가이드>) | BaaS 아키텍처 및 MCP 설명      |
+|  11  | **[해시태그 RAG 파이프라인](./docs/11_해시태그_RAG_파이프라인.md)** • [PDF](./docs/PDF_preview/11_해시태그_RAG_파이프라인.pdf) • [Branch](https://github.com/LYSS-LGU/wh07-3rd-Fetpal/tree/11_해시태그RAG파이프라인) | 해시태그 기반 RAG 데이터 파이프라인 구조 및 자동화 시스템 |
 
 <details>
 <summary>📖 Branch 가이드 보기</summary>

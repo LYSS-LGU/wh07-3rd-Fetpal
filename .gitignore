@@ -68,3 +68,6 @@ _draw.io아키텍쳐흐름도/
 # Claude Code 개인 설정 파일 (로컬 환경 설정)
 .claude/settings.local.json
 
+# 최종 발표 대비 대본 (내부 자료)
+_최종발표대비대본/
+

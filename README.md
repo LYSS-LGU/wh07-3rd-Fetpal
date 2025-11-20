@@ -27,7 +27,7 @@
 
 **📚 [프로젝트 문서 (Docs)](./docs/)** |
 **📄 [PDF 문서 미리보기 (PDF Preview)](./PDF_preview/)** |
-**🎬 [Demo 영상 바로가기 (Demo Videos)](./Demo_Video/)**
+**🎬 YouTube Demo 영상 바로가기**: [랜딩](https://youtu.be/TvTK6oGFl6Y) | [AI어시스턴트](https://youtu.be/X8i-kZJ4lzc)
 
 > **📌 참고**: AI-hub 공공데이터를 활용하여 학습한 YOLO 모델은 배포를 하지 않고, 로컬 시연 영상으로 대체하였습니다.
 

@@ -19,7 +19,7 @@
 <td align="center"><img src="./QR_Codes/Fetpal_LGU7_QR.png" width="120" height="120" alt="LGU7 QR"><br><a href="https://github.com/LYSS-LGU/wh07-3rd-Fetpal">LG U+ 7기 Repository</a></td>
 <td align="center"><img src="./QR_Codes/Fetpal_Origin_QR.png" width="120" height="120" alt="Origin QR"><br><a href="https://github.com/LYSS-LGU/Fetpal">Fetpal Repository</a></td>
 <td align="center"><img src="./QR_Codes/Fetpal_시작_v2_QR코드.png" width="120" height="120" alt="시작페이지 QR"><br><a href="https://drive.google.com/file/d/1ipHHCg3u_w1Dl4XIp9dLctKYZY6Ywjsr/view?usp=drive_link">시작 페이지 시연 v2</a></td>
-<td align="center"><img src="./QR_Codes/Fetpal_AI어시스턴트_v2_QR코드.png" width="120" height="120" alt="AI어시스턴트 QR"><br><a href="https://drive.google.com/file/d/1cPtkPzx00YYE5nRbC20H-hxSkTvbhh-1/view?usp=drive_link">AI 어시스턴트 시연 v2</a></td>
+<td align="center"><img src="./QR_Codes/Fetpal_AI어시스턴트_v3_QR코드.png" width="120" height="120" alt="AI어시스턴트 QR"><br><a href="https://drive.google.com/file/d/1UBJ0AOhhA97d7Jl2Nu8XlcKLgOr3-3Nr/view?usp=drive_link">AI 어시스턴트 시연 v3</a></td>
 </tr>
 </table>
 

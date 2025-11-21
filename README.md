@@ -8,14 +8,12 @@
 
 <table>
 <tr>
-<th>Vercel 배포</th>
 <th>LG U+ 7기 레포</th>
 <th>Fetpal 레포</th>
 <th>시작페이지 시연</th>
 <th>AI 어시스턴트 시연</th>
 </tr>
 <tr>
-<td align="center"><img src="./QR_Codes/Fetpal_Vercel_QR.png" width="120" height="120" alt="Vercel QR"><br><a href="https://fetpal.vercel.app">Vercel Deployed</a></td>
 <td align="center"><img src="./QR_Codes/Fetpal_LGU7_QR.png" width="120" height="120" alt="LGU7 QR"><br><a href="https://github.com/LYSS-LGU/wh07-3rd-Fetpal">LG U+ 7기 Repository</a></td>
 <td align="center"><img src="./QR_Codes/Fetpal_Origin_QR.png" width="120" height="120" alt="Origin QR"><br><a href="https://github.com/LYSS-LGU/Fetpal">Fetpal Repository</a></td>
 <td align="center"><img src="./QR_Codes/Fetpal_시작_v2_QR코드.png" width="120" height="120" alt="시작페이지 QR"><br><a href="https://drive.google.com/file/d/1ipHHCg3u_w1Dl4XIp9dLctKYZY6Ywjsr/view?usp=drive_link">시작 페이지 시연 v2</a></td>
@@ -469,11 +467,9 @@ uvicorn main:app --reload
 
 ### 🌐 배포
 
-- **Frontend**: Vercel (자동 배포)
 - **AI Server**: AWS EC2 (수동 배포)
-- **YOLO Model**: Railway (YOLO 배포)
-  > **📌 참고**: AI-hub 공공데이터를 활용하여 학습한 YOLO 모델은 배포를 하지 않고, 로컬 시연 영상으로 대체하였습니다.
 - **Database**: Supabase (클라우드)
+  > **📌 참고**: AI-hub 공공데이터를 활용하여 학습한 YOLO 모델은 배포를 하지 않고, 로컬 시연 영상으로 대체하였습니다.
 
 ---
 
